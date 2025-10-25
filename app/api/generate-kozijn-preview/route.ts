@@ -174,35 +174,17 @@ function buildKozijnPrompt(specs: KozijnSpecs): string {
   const kleurDesc = kleurDescriptions[specs.kleur] || specs.kleur;
   const glasDesc = glasDescriptions[specs.glasType] || specs.glasType;
 
-  return `Transformeer de ramen/kozijnen in de bijgevoegde foto naar nieuwe ${materiaalDesc} in de kleur ${kleurDesc}. 
-Het glas moet ${glasDesc} zijn. Het type kozijn is ${specs.kozijnType}.
+  return `Vervang de raamkozijnen in deze foto door nieuwe ${materiaalDesc} in de kleur ${kleurDesc}, met ${glasDesc}. Type: ${specs.kozijnType}.
 
-CRUCIALE INSTRUCTIES - VOLG DEZE EXACT:
+BELANGRIJKE REGELS:
+- Vervang ALLEEN de kozijnen, niets anders (muren, stenen, etc blijven precies hetzelfde)
+- Behoud exact dezelfde raamposities, grootte en vorm
+- VERWIJDER alle gordijnen, vitrages en raamdecoratie
+- VERWIJDER wat door het glas te zien is (kamers, landschap, etc)
+- Maak het glas neutraal met alleen subtiele reflecties
+- Laat de muren, stenen en architectuur volledig intact - verzin GEEN nieuwe texturen
+- Fotorealistisch resultaat
 
-1. KOZIJN & GLAS:
-   - Vervang ALLEEN de kozijnen naar ${materiaalDesc} in ${kleurDesc}
-   - Behoud EXACT dezelfde positie, grootte en vorm van de ramen
-   - Het glas moet VOLLEDIG SCHOON, helder en professioneel zijn met subtiele reflecties
-
-2. VERWIJDER ALLES WAT NIET HET KOZIJN/GLAS IS:
-   - VERWIJDER alle gordijnen, vitrages, jaloezieën en raamdecoratie VOLLEDIG
-   - VERWIJDER alle objecten achter/voor de ramen (plantjes, posters, decoraties)
-   - VERWIJDER alles wat door het glas te zien is (binnen/buiten uitzicht)
-   - VERVANG dit met een neutrale, licht-doorlatende weergave
-   - Het glas mag alleen subtiele reflecties van de omgeving tonen
-   - Geen zichtbare kamers, meubels, straten of landschappen door het glas
-
-3. FOCUS OP HET KOZIJN:
-   - De focus moet 100% op het nieuwe kozijn en het schone glas zijn
-   - Het resultaat moet tonen hoe het KOZIJN ZELF eruit ziet, niet wat erachter is
-   - Toon het kozijn als een professionele productfoto
-   - Behoud de belichting en schaduwen op het kozijn zelf
-
-4. BEHOUD VAN OMGEVING:
-   - Behoud de architectuur van het gebouw volledig intact
-   - Behoud alle details van muren, bakstenen, en omliggende elementen
-   - Houd de natuurlijke belichting van de gevel/muur
-
-Het eindresultaat moet een fotorealistische, professionele showcase zijn van het NIEUWE KOZIJN, waarbij de focus volledig ligt op het materiaal, de kleur en het ontwerp van het kozijn zelf - niet op wat erachter zit.`;
+Focus: toon alleen het nieuwe kozijn in ${kleurDesc} ${materiaalDesc}, verder blijft alles hetzelfde.`;
 }
 

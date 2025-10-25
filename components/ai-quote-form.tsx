@@ -506,7 +506,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                       {/* AI Preview */}
                       <div className="space-y-2">
                         <div 
-                          className="relative rounded-lg overflow-hidden border-2 border-primary cursor-pointer hover:border-primary/70 transition-colors group"
+                          className="relative rounded-lg overflow-hidden border-2 border-border cursor-pointer hover:border-primary transition-colors group"
                           onClick={() => setEnlargedImage(result.previewUrl || result.url)}
                         >
                           <img
