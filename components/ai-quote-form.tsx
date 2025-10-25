@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Progress } from "@/components/ui/progress"
-import { ChevronLeft, ChevronRight, Loader2, Check, Sparkles } from "lucide-react"
+import { ChevronLeft, ChevronRight, Loader2, Check, Sparkles, X } from "lucide-react"
 import { PhotoUpload } from "@/components/photo-upload"
 import { calculatePriceFromAI } from "@/lib/pricing/ai-calculator"
 
@@ -23,6 +23,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const [analysisResults, setAnalysisResults] = useState<any[]>([])
   const [priceResult, setPriceResult] = useState<any>(null)
   const formRef = useRef<HTMLDivElement>(null)
+  const [enlargedImage, setEnlargedImage] = useState<string | null>(null)
 
   const [formData, setFormData] = useState({
     postcode: "",
@@ -472,25 +473,58 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
             )}
           </div>
 
-          {/* AI Preview van nieuwe kozijnen */}
+          {/* Voor & Na Vergelijking */}
           {analysisResults.length > 0 && (
             <div className="bg-background rounded-lg p-4 text-left border-2 border-primary/20">
-              <h4 className="font-semibold text-base text-foreground mb-3">🎨 AI Preview van uw nieuwe {formData.materiaal} kozijnen</h4>
-              <div className="space-y-4">
+              <h4 className="font-semibold text-base text-foreground mb-3">🎨 Voor & Na: Uw nieuwe {formData.materiaal} kozijnen</h4>
+              <div className="space-y-6">
                 {analysisResults.map((result, idx) => (
-                  <div key={idx} className="space-y-2">
-                    <div className="relative rounded-lg overflow-hidden border-2 border-border">
-                      <img
-                        src={result.previewUrl || result.url}
-                        alt={`Preview ${idx + 1}`}
-                        className="w-full h-auto object-contain max-h-96"
-                      />
+                  <div key={idx} className="space-y-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Originele foto */}
+                      <div className="space-y-2">
+                        <div 
+                          className="relative rounded-lg overflow-hidden border-2 border-border cursor-pointer hover:border-primary transition-colors group"
+                          onClick={() => setEnlargedImage(result.url)}
+                        >
+                          <img
+                            src={result.url}
+                            alt={`Huidige kozijnen ${idx + 1}`}
+                            className="w-full h-auto object-contain max-h-64"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                            <span className="text-white opacity-0 group-hover:opacity-100 text-sm bg-black/50 px-3 py-1 rounded">
+                              🔍 Klik om te vergroten
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-sm text-center text-muted-foreground font-medium">
+                          📸 Huidige kozijnen
+                        </p>
+                      </div>
+
+                      {/* AI Preview */}
+                      <div className="space-y-2">
+                        <div 
+                          className="relative rounded-lg overflow-hidden border-2 border-primary cursor-pointer hover:border-primary/70 transition-colors group"
+                          onClick={() => setEnlargedImage(result.previewUrl || result.url)}
+                        >
+                          <img
+                            src={result.previewUrl || result.url}
+                            alt={`Nieuwe kozijnen ${idx + 1}`}
+                            className="w-full h-auto object-contain max-h-64"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                            <span className="text-white opacity-0 group-hover:opacity-100 text-sm bg-black/50 px-3 py-1 rounded">
+                              🔍 Klik om te vergroten
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-sm text-center text-primary font-medium">
+                          ✨ Nieuwe kozijnen
+                        </p>
+                      </div>
                     </div>
-                    <p className="text-sm text-center text-muted-foreground font-medium">
-                      {result.previewUrl && result.previewUrl !== result.url 
-                        ? `✨ AI Preview ${idx + 1}` 
-                        : `📸 Originele foto ${idx + 1}`}
-                    </p>
                   </div>
                 ))}
               </div>
@@ -596,6 +630,33 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
           >
             Nieuwe berekening starten
           </Button>
+        </div>
+      )}
+
+      {/* Lightbox Modal voor vergrote foto's */}
+      {enlargedImage && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm"
+          onClick={() => setEnlargedImage(null)}
+        >
+          <div className="relative max-w-7xl max-h-full">
+            <button
+              onClick={() => setEnlargedImage(null)}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 flex items-center gap-2 text-lg"
+            >
+              <X className="w-6 h-6" />
+              Sluiten
+            </button>
+            <img
+              src={enlargedImage}
+              alt="Vergrote weergave"
+              className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <p className="text-white text-center mt-4 text-sm">
+              Klik buiten de foto om te sluiten
+            </p>
+          </div>
         </div>
       )}
     </Card>
