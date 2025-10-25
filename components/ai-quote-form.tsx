@@ -359,11 +359,11 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                 <div className="pt-2">
                   <Label className="text-foreground text-sm mb-2 block">Foto's van uw ramen uploaden *</Label>
                   <p className="text-xs text-muted-foreground mb-2">
-                    Upload minimaal 3 foto's van binnen of buiten
+                    Upload minimaal 3 foto's van binnen of buiten (max 5)
                   </p>
                   <PhotoUpload 
                     onPhotosChange={setPhotos}
-                    maxPhotos={10}
+                    maxPhotos={5}
                     minPhotos={3}
                   />
                 </div>
@@ -468,23 +468,23 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
           {analysisResults.length > 0 && (
             <div className="bg-background rounded-lg p-4 text-left border-2 border-primary/20">
               <h4 className="font-semibold text-base text-foreground mb-3">🎨 AI Preview van uw nieuwe {formData.materiaal} kozijnen</h4>
-              <div className="grid grid-cols-2 gap-3">
-                {analysisResults.slice(0, 4).map((result, idx) => (
+              <div className="space-y-4">
+                {analysisResults.map((result, idx) => (
                   <div key={idx} className="space-y-2">
-                    <div className="relative aspect-video rounded-lg overflow-hidden border-2 border-border">
+                    <div className="relative rounded-lg overflow-hidden border-2 border-border">
                       <img
                         src={result.previewUrl || result.url}
                         alt={`Preview ${idx + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-auto object-contain max-h-96"
                       />
-                      <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                        ✨ AI
+                      <div className="absolute top-3 right-3 bg-green-500 text-white text-sm px-3 py-1.5 rounded-full font-semibold shadow-lg">
+                        ✨ AI Preview
                       </div>
                     </div>
-                    <p className="text-xs text-center text-muted-foreground">
+                    <p className="text-sm text-center text-muted-foreground font-medium">
                       {result.previewUrl && result.previewUrl !== result.url 
-                        ? `Gemini preview ${idx + 1}` 
-                        : `Origineel ${idx + 1}`}
+                        ? `✨ Gemini AI Preview ${idx + 1}` 
+                        : `📸 Originele foto ${idx + 1}`}
                     </p>
                   </div>
                 ))}
