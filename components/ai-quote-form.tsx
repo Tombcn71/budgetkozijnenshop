@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Progress } from "@/components/ui/progress"
-import { ChevronLeft, ChevronRight, Loader2, Check, Sparkles, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, Loader2, Check, Sparkles, X, ZoomIn } from "lucide-react"
 import { PhotoUpload } from "@/components/photo-upload"
 import { calculatePriceFromAI } from "@/lib/pricing/ai-calculator"
 
@@ -474,6 +474,9 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                             alt={`Huidige kozijnen ${idx + 1}`}
                             className="w-full h-auto object-contain max-h-64"
                           />
+                          <div className="absolute top-2 right-2 bg-black/60 p-1.5 rounded-full group-hover:bg-black/80 transition-colors">
+                            <ZoomIn className="w-4 h-4 text-white" />
+                          </div>
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                             <span className="text-white opacity-0 group-hover:opacity-100 text-sm bg-black/50 px-3 py-1 rounded">
                               🔍 Klik om te vergroten
@@ -496,6 +499,9 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                             alt={`Nieuwe kozijnen ${idx + 1}`}
                             className="w-full h-auto object-contain max-h-64"
                           />
+                          <div className="absolute top-2 right-2 bg-black/60 p-1.5 rounded-full group-hover:bg-black/80 transition-colors">
+                            <ZoomIn className="w-4 h-4 text-white" />
+                          </div>
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                             <span className="text-white opacity-0 group-hover:opacity-100 text-sm bg-black/50 px-3 py-1 rounded">
                               🔍 Klik om te vergroten
