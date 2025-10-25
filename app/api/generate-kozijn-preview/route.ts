@@ -99,22 +99,6 @@ export async function POST(request: Request) {
     console.log('📦 Response has candidates:', !!response.candidates);
     console.log('📦 Candidates length:', response.candidates?.length);
 
-    // Check for NO_IMAGE finish reason
-    if (response.candidates && response.candidates[0]?.finishReason === 'NO_IMAGE') {
-      console.log('⚠️ Gemini returned NO_IMAGE - model refused to generate image');
-      console.log('⚠️ This can happen if the image is too complex or the request is not suitable for image generation');
-      console.log('⚠️ Using original photo as fallback');
-      
-      // Return original image as fallback
-      return NextResponse.json({
-        success: true,
-        previewImage: imageUrl,
-        specs: kozijnSpecs,
-        fallback: true,
-        message: 'AI kon geen preview genereren, originele foto getoond'
-      });
-    }
-
     // Extract the generated image
     let generatedImageData: string | null = null;
     
@@ -131,14 +115,7 @@ export async function POST(request: Request) {
     }
 
     if (!generatedImageData) {
-      console.log('⚠️ No image data in response, using original as fallback');
-      return NextResponse.json({
-        success: true,
-        previewImage: imageUrl,
-        specs: kozijnSpecs,
-        fallback: true,
-        message: 'AI preview tijdelijk niet beschikbaar'
-      });
+      throw new Error('Geen afbeelding gegenereerd door Gemini - check console logs');
     }
 
     console.log('✅ Kozijn preview succesvol gegenereerd!');
