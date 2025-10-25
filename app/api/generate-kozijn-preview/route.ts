@@ -191,9 +191,9 @@ KRITIEK - WAT MOET EXACT HETZELFDE BLIJVEN:
 
 WAT MOET JE VERWIJDEREN/WEGHALEN:
 - VERWIJDER alle gordijnen, vitrages, jaloezieën VOLLEDIG
-- VERWIJDER het BUITEN uitzicht door het glas (bomen, straat, gebouwen, lucht, etc)
-- Het BINNEN interieur mag blijven (als binnenfoto)
-- Maak het glas semi-transparant/mat waar het buiten wegfiltert
+- FILTER en VERWIJDER het BUITEN uitzicht door het glas (bomen, straat, gebouwen, lucht, auto's, etc) - vervang dit met een neutrale achtergrond
+- Het BINNEN interieur mag blijven zichtbaar (als binnenfoto)
+- Het glas moet helder blijven, maar zonder het buiten uitzicht
 
 RESULTAAT: Exact dezelfde foto, maar met nieuwe ${kleurDesc} ${materiaalDesc} kozijnen en neutraal glas. De rest is 100% identiek.`;
 }
