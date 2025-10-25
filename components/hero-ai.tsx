@@ -15,7 +15,7 @@ export function HeroAI() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-black/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/25 to-transparent" />
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10 py-8 lg:py-16">
