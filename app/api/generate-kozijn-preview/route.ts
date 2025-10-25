@@ -179,16 +179,17 @@ Het glas moet ${glasDesc} zijn. Het type kozijn is ${specs.kozijnType}.
 
 Belangrijke instructies:
 - Behoud de EXACTE positie, grootte en vorm van de ramen zoals in de originele foto
-- Behoud de architectuur van het gebouw volledig intact
-- Vervang alleen de kozijnen en het glas, niets anders
-- VERWIJDER alle gordijnen, vitrages, jaloezieën en andere raamdecoratie - laat het glas helemaal leeg en transparant
-- VERWIJDER alle objecten achter de ramen (plantjes, decoratie, etc) - toon alleen het doorzicht door het glas
+- Behoud de architectuur van het gebouw volledig intact (muren, stenen blijven exact hetzelfde)
+- Vervang ALLEEN de kozijnen en het glas, niets anders
+- VERWIJDER alle gordijnen, vitrages, jaloezieën en andere raamdecoratie volledig
+- VERWIJDER alle objecten achter de ramen (plantjes, decoratie, meubels, etc)
+- VERWIJDER wat door het glas te zien is (binnen kamers, buiten landschap, straat, etc)
+- Maak het glas neutraal en schoon met alleen subtiele reflecties van de omgeving
+- Het glas moet helder zijn zonder zicht op wat erachter is
 - De nieuwe kozijnen moeten realistisch en professioneel geplaatst lijken
-- Het glas moet helder en schoon zijn met subtiele reflecties
 - Zorg dat de belichting en schaduwen natuurlijk blijven en passen bij de omgeving
-- Behoud alle details van de muren, bakstenen, en omliggende elementen
 - Het eindresultaat moet fotorealistisch zijn en lijken alsof het echt is
-- Focus volledig op de kozijnen en het glas, niet op wat erachter zit
+- Focus: het nieuwe kozijn zelf, niet wat erachter of erbinnen is
 
 Maak een hoogwaardige, professionele weergave van hoe deze woning eruit zou zien met de nieuwe kozijnen.`;
 }

@@ -84,8 +84,8 @@ export function PhotoUpload({
                   : "Sleep foto's hierheen of klik om te uploaden"
                 }
               </p>
-              <p className="text-sm text-muted-foreground">
-                {minPhotos} tot {maxPhotos} foto's • JPG, PNG, WEBP • Max 10MB per foto
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                {minPhotos} tot {maxPhotos} foto's • JPG, PNG, WEBP
               </p>
               {photos.length > 0 && (
                 <p className="text-sm text-primary font-medium mt-2">
@@ -116,7 +116,7 @@ export function PhotoUpload({
             )}
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {previews.map((preview, index) => (
               <div key={index} className="relative group">
                 <Card className="overflow-hidden border-2 border-border hover:border-primary transition-colors">
@@ -151,18 +151,17 @@ export function PhotoUpload({
 
       {/* Tips */}
       {photos.length === 0 && (
-        <Card className="p-4 bg-primary/5 border-primary/20">
-          <div className="flex gap-3">
-            <ImageIcon className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-foreground">
+        <Card className="p-3 bg-primary/5 border-primary/20">
+          <div className="flex gap-2">
+            <ImageIcon className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="text-xs font-medium text-foreground">
                 📸 Tips voor goede foto's:
               </p>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Fotografeer elke kamer van verschillende hoeken</li>
-                <li>• Zorg dat vloeren en meubels goed zichtbaar zijn</li>
+              <ul className="text-xs text-muted-foreground space-y-0.5">
+                <li>• Foto van buiten- of binnenkant raam</li>
                 <li>• Maak foto's bij goed daglicht</li>
-                <li>• Laat de volheid van de ruimte zien</li>
+                <li>• Zorg dat het hele raam zichtbaar is</li>
               </ul>
             </div>
           </div>
