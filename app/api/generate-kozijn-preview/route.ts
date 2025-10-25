@@ -174,17 +174,22 @@ function buildKozijnPrompt(specs: KozijnSpecs): string {
   const kleurDesc = kleurDescriptions[specs.kleur] || specs.kleur;
   const glasDesc = glasDescriptions[specs.glasType] || specs.glasType;
 
-  return `Vervang de raamkozijnen in deze foto door nieuwe ${materiaalDesc} in de kleur ${kleurDesc}, met ${glasDesc}. Type: ${specs.kozijnType}.
+  return `Gebruik de bijgevoegde foto van ramen/kozijnen en transformeer deze naar nieuwe, moderne ${materiaalDesc} in de kleur ${kleurDesc}. 
+Het glas moet ${glasDesc} zijn. Het type kozijn is ${specs.kozijnType}.
 
-BELANGRIJKE REGELS:
-- Vervang ALLEEN de kozijnen, niets anders (muren, stenen, etc blijven precies hetzelfde)
-- Behoud exact dezelfde raamposities, grootte en vorm
-- VERWIJDER alle gordijnen, vitrages en raamdecoratie
-- VERWIJDER wat door het glas te zien is (kamers, landschap, etc)
-- Maak het glas neutraal met alleen subtiele reflecties
-- Laat de muren, stenen en architectuur volledig intact - verzin GEEN nieuwe texturen
-- Fotorealistisch resultaat
+Belangrijke instructies:
+- Behoud de EXACTE positie, grootte en vorm van de ramen zoals in de originele foto
+- Behoud de architectuur van het gebouw volledig intact
+- Vervang alleen de kozijnen en het glas, niets anders
+- VERWIJDER alle gordijnen, vitrages, jaloezieën en andere raamdecoratie - laat het glas helemaal leeg en transparant
+- VERWIJDER alle objecten achter de ramen (plantjes, decoratie, etc) - toon alleen het doorzicht door het glas
+- De nieuwe kozijnen moeten realistisch en professioneel geplaatst lijken
+- Het glas moet helder en schoon zijn met subtiele reflecties
+- Zorg dat de belichting en schaduwen natuurlijk blijven en passen bij de omgeving
+- Behoud alle details van de muren, bakstenen, en omliggende elementen
+- Het eindresultaat moet fotorealistisch zijn en lijken alsof het echt is
+- Focus volledig op de kozijnen en het glas, niet op wat erachter zit
 
-Focus: toon alleen het nieuwe kozijn in ${kleurDesc} ${materiaalDesc}, verder blijft alles hetzelfde.`;
+Maak een hoogwaardige, professionele weergave van hoe deze woning eruit zou zien met de nieuwe kozijnen.`;
 }
 
