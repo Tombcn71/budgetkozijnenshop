@@ -42,10 +42,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const handleNext = async () => {
     if (currentStep === 1) {
       setCurrentStep(2)
-      // Scroll to top of form
-      if (formRef.current) {
-        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
+      // Scroll to top of page
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     } else if (currentStep === 2) {
       await analyzePhotos()
       setCurrentStep(3)
@@ -176,6 +174,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const handlePrevious = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
+      // Scroll to top of page
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
@@ -615,6 +615,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                 email: "",
                 telefoon: "",
               })
+              // Scroll to top of page
+              window.scrollTo({ top: 0, behavior: 'smooth' })
             }}
             className="text-foreground hover:text-foreground/80 hover:bg-transparent"
           >
