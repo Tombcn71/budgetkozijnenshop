@@ -28,7 +28,8 @@ export function Header() {
             <span className="font-normal text-base lg:text-2xl text-foreground">Kozijnenshop</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+          {/* Tijdelijk verborgen - komt later terug */}
+          {/* <nav className="hidden md:flex items-center gap-6 lg:gap-8">
             <a
               href="#diensten"
               className="text-sm lg:text-base text-foreground hover:text-primary transition-colors font-medium flex items-center gap-1"
@@ -48,7 +49,7 @@ export function Header() {
             >
               Contact
             </a>
-          </nav>
+          </nav> */}
 
           <div className="flex items-center gap-4 lg:gap-6">
             <a

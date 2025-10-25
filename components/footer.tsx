@@ -4,15 +4,16 @@ export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground py-12 lg:py-16">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 mb-8">
-          <div className="md:col-span-2 lg:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 mb-8">
+          <div className="md:col-span-1 lg:col-span-2">
             <h3 className="text-xl lg:text-2xl font-bold mb-4">Budget Kozijnenshop</h3>
             <p className="text-sm lg:text-base text-primary-foreground/80 leading-relaxed max-w-md">
               Uw betrouwbare partner voor nieuwe raamkozijnen tegen de laagste prijs. Direct een prijsindicatie met AI preview!
             </p>
           </div>
 
-          <div>
+          {/* Gemeentes tijdelijk verborgen - komt later terug */}
+          {/* <div>
             <h4 className="font-bold mb-4">Haaglanden</h4>
             <ul className="space-y-2 text-sm lg:text-base text-primary-foreground/80">
               <li>
@@ -141,7 +142,7 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           <div>
             <h4 className="font-bold mb-4">Contact</h4>
