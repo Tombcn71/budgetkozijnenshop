@@ -13,7 +13,7 @@ export function HeroAI() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10 py-8 lg:py-16">
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-start">
           <div className="text-center lg:text-left">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 lg:mb-6 leading-tight text-balance">
               Nieuwe raamkozijnen met laagste prijs garantie.
