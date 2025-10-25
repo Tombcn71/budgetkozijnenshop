@@ -176,6 +176,12 @@ function buildKozijnPrompt(specs: KozijnSpecs): string {
 
   return `Edit this photo: replace ONLY the window frame with new ${materiaalDesc} in ${kleurDesc} color.
 
+🚫 ABSOLUTE RULES - DO NOT BREAK THESE:
+- DO NOT ADD any new elements, textures, or materials that are not in the original photo
+- DO NOT invent brick walls, stone, wood panels, or any surface that wasn't there
+- DO NOT change what the wall is made of (if it's plaster, keep it plaster. If it's brick, keep it brick)
+- ONLY edit the window frame itself - nothing else around it
+
 STEP 1 - REMOVE THESE ITEMS (KEEP THE VIEW):
 - Remove ALL curtains, drapes, blinds, shades - delete completely
 - Remove ALL balcony items: chairs, tables, plants, pots, furniture, decorations
@@ -185,20 +191,29 @@ STEP 1 - REMOVE THESE ITEMS (KEEP THE VIEW):
 - Result: clear view through glass without any items/objects blocking it
 
 STEP 2 - REPLACE ONLY THE WINDOW FRAME:
-- Replace window frame with ${materiaalDesc} in ${kleurDesc}
+- Replace ONLY the window frame with ${materiaalDesc} in ${kleurDesc}
 - Frame type: ${specs.kozijnType}
 - Glass: ${glasDesc}, clear/transparent with view visible
+- STOP HERE - do not edit anything else
 
-STEP 3 - KEEP EVERYTHING ELSE IDENTICAL:
-- Wall texture stays EXACTLY the same (do NOT change)
-- Brick pattern stays EXACTLY as it is  
-- Wall color EXACTLY the same
-- Keep all damage, cracks, stains as they are
-- Window position EXACTLY the same
-- Lighting EXACTLY the same
+STEP 3 - PRESERVE EVERYTHING ELSE 100% IDENTICAL:
+- Wall material: if plaster/stucco → stays plaster/stucco, if brick → stays brick, if paint → stays paint
+- DO NOT add textures or materials that weren't in the original
+- Wall color stays EXACTLY the same RGB values
+- Keep all damage, cracks, stains, imperfections exactly as they are
+- Keep all shadows and light exactly as they are
+- Window position EXACTLY the same coordinates
+- Room interior EXACTLY the same
+- DO NOT add decorative elements
 
-CRITICAL: DELETE all balcony items (chairs, tables, plants, pots). DELETE all curtains. Keep the outdoor view/scenery. Do NOT add solid colors.
+CRITICAL PROHIBITION:
+- DO NOT invent new brick walls
+- DO NOT add stone textures
+- DO NOT add wood paneling
+- DO NOT change wall materials AT ALL
+- If you see a white plaster wall → keep it white plaster wall
+- If you see painted wall → keep it painted wall
 
-RESULT: Same photo, new ${kleurDesc} ${materiaalDesc} frame, NO curtains, balcony completely empty, clear view through glass.`;
+RESULT: Identical photo with ONLY the window frame replaced. Everything else is a perfect 1:1 copy of the original.`;
 }
 
