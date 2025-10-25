@@ -176,25 +176,28 @@ function buildKozijnPrompt(specs: KozijnSpecs): string {
 
   return `Edit this photo: replace ONLY the window frame with new ${materiaalDesc} in ${kleurDesc} color.
 
-STEP 1 - REMOVE THESE COMPLETELY:
-- Remove ALL curtains, drapes, blinds, shades (delete them entirely)
-- Remove the outdoor view through the glass (trees, buildings, street, sky, cars)
-- Replace outdoor view with neutral/blurred background
-- Keep indoor view visible (if photo is from inside)
+STEP 1 - FILTER OUT AND REMOVE COMPLETELY:
+- FILTER OUT all curtains, drapes, blinds, shades - delete them entirely
+- FILTER OUT the outdoor view through the glass: trees, buildings, street, sky, cars, nature
+- FILTER OUT outdoor scenery and replace with neutral soft background
+- Keep indoor view visible if photo is from inside
+- The glass should be clear but outdoor elements FILTERED OUT
 
-STEP 2 - CHANGE ONLY THE WINDOW FRAME:
+STEP 2 - REPLACE ONLY THE WINDOW FRAME:
 - Replace window frame with ${materiaalDesc} in ${kleurDesc}
 - Frame type: ${specs.kozijnType}
-- Glass: ${glasDesc}, clear/transparent
+- Glass: ${glasDesc}, clear/transparent but outdoor FILTERED OUT
 
 STEP 3 - KEEP EVERYTHING ELSE IDENTICAL:
-- Wall stays EXACTLY the same (do NOT create new textures)
-- Brick stays EXACTLY as it is
-- Wall color/paint EXACTLY the same
-- Damage, cracks, stains stay as they are
-- Window position and shape EXACTLY the same
-- Lighting on wall EXACTLY the same
+- Wall texture stays EXACTLY the same (do NOT change)
+- Brick pattern stays EXACTLY as it is  
+- Wall color EXACTLY the same
+- Keep all damage, cracks, stains as they are
+- Window position EXACTLY the same
+- Lighting EXACTLY the same
 
-RESULT: Same photo with new ${kleurDesc} ${materiaalDesc} window frame, no curtains, outdoor view removed. Everything else unchanged.`;
+CRITICAL: FILTER OUT outdoor view through glass. Replace with neutral background. Remove all curtains.
+
+RESULT: Same photo, new ${kleurDesc} ${materiaalDesc} frame, NO curtains, outdoor view FILTERED OUT.`;
 }
 
