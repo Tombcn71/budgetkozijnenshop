@@ -346,10 +346,10 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
             )}
 
             {currentStep === 2 && (
-              <div className="space-y-4">
+              <div className="space-y-3 -mx-6 lg:-mx-8 px-6 lg:px-8">
                 <div>
-                  <Label className="text-foreground text-sm mb-2 block text-center">Foto's van uw ramen uploaden *</Label>
-                  <p className="text-xs text-muted-foreground mb-3 text-center">
+                  <Label className="text-foreground text-base font-semibold mb-2 block">Foto's van uw ramen uploaden *</Label>
+                  <p className="text-sm text-muted-foreground mb-3">
                     Upload minimaal 1 foto van uw ramen (binnen of buitenkant)
                   </p>
                   <PhotoUpload 

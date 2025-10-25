@@ -190,10 +190,10 @@ KRITIEK - WAT MOET EXACT HETZELFDE BLIJVEN:
 - ALLES behalve het kozijn zelf blijft 100% identiek
 
 WAT MOET JE VERWIJDEREN/WEGHALEN:
-- Alle gordijnen, vitrages, jaloezieën VOLLEDIG weg
-- Als het een buitenfoto is: maak het glas mat/neutraal (geen zicht op binnen)
-- Als het een binnenfoto is: VERWIJDER alleen het buiten uitzicht door het glas
-- Het glas wordt neutraal/mat met alleen subtiele reflectie
+- VERWIJDER alle gordijnen, vitrages, jaloezieën VOLLEDIG
+- VERWIJDER het BUITEN uitzicht door het glas (bomen, straat, gebouwen, lucht, etc)
+- Het BINNEN interieur mag blijven (als binnenfoto)
+- Maak het glas semi-transparant/mat waar het buiten wegfiltert
 
 RESULTAAT: Exact dezelfde foto, maar met nieuwe ${kleurDesc} ${materiaalDesc} kozijnen en neutraal glas. De rest is 100% identiek.`;
 }
