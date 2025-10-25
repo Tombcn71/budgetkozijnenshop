@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Progress } from "@/components/ui/progress"
-import { ChevronLeft, ChevronRight, Loader2, Check, Sparkles, X, ZoomIn } from "lucide-react"
+import { ChevronLeft, ChevronRight, Loader2, Check, Sparkles, X, ZoomIn, Share2 } from "lucide-react"
 import { PhotoUpload } from "@/components/photo-upload"
 import { calculatePriceFromAI } from "@/lib/pricing/ai-calculator"
 
@@ -42,6 +42,30 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [currentStep])
+
+  const handleShare = async (imageUrl: string, title: string) => {
+    try {
+      // Check if Web Share API is supported
+      if (navigator.share) {
+        // Fetch the image and convert to blob
+        const response = await fetch(imageUrl)
+        const blob = await response.blob()
+        const file = new File([blob], 'kozijnen.jpg', { type: 'image/jpeg' })
+        
+        await navigator.share({
+          title: title,
+          text: `Bekijk mijn nieuwe ${formData.materiaal} kozijnen in ${formData.kleur}!`,
+          files: [file]
+        })
+      } else {
+        // Fallback: copy link to clipboard
+        await navigator.clipboard.writeText(imageUrl)
+        alert('Link gekopieerd naar clipboard!')
+      }
+    } catch (error) {
+      console.log('Share cancelled or failed:', error)
+    }
+  }
 
   const handleNext = async () => {
     if (currentStep === 1) {
@@ -470,21 +494,30 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                       {/* Originele foto */}
                       <div className="space-y-2">
                         <div 
-                          className="relative rounded-lg overflow-hidden border-2 border-border cursor-pointer hover:border-primary transition-colors group"
-                          onClick={() => setEnlargedImage(result.url)}
+                          className="relative rounded-lg overflow-hidden border-2 border-border group"
                         >
                           <img
                             src={result.url}
                             alt={`Huidige kozijnen ${idx + 1}`}
-                            className="w-full h-auto object-contain max-h-64"
+                            className="w-full h-auto object-contain max-h-64 cursor-pointer"
+                            onClick={() => setEnlargedImage(result.url)}
                           />
-                          <div className="absolute top-2 right-2 bg-black/60 p-1.5 rounded-full group-hover:bg-black/80 transition-colors">
-                            <ZoomIn className="w-4 h-4 text-white" />
-                          </div>
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                            <span className="text-white opacity-0 group-hover:opacity-100 text-sm bg-black/50 px-3 py-1 rounded">
-                              🔍 Klik om te vergroten
-                            </span>
+                          <div className="absolute top-2 right-2 flex gap-2">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                handleShare(result.url, 'Huidige kozijnen')
+                              }}
+                              className="bg-black/60 p-1.5 rounded-full hover:bg-black/80 transition-colors"
+                            >
+                              <Share2 className="w-4 h-4 text-white" />
+                            </button>
+                            <button
+                              onClick={() => setEnlargedImage(result.url)}
+                              className="bg-black/60 p-1.5 rounded-full hover:bg-black/80 transition-colors"
+                            >
+                              <ZoomIn className="w-4 h-4 text-white" />
+                            </button>
                           </div>
                         </div>
                         <p className="text-sm text-center text-muted-foreground font-medium">
@@ -495,21 +528,30 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                       {/* AI Preview */}
                       <div className="space-y-2">
                         <div 
-                          className="relative rounded-lg overflow-hidden border-2 border-border cursor-pointer hover:border-primary transition-colors group"
-                          onClick={() => setEnlargedImage(result.previewUrl || result.url)}
+                          className="relative rounded-lg overflow-hidden border-2 border-border group"
                         >
                           <img
                             src={result.previewUrl || result.url}
                             alt={`Nieuwe kozijnen ${idx + 1}`}
-                            className="w-full h-auto object-contain max-h-64"
+                            className="w-full h-auto object-contain max-h-64 cursor-pointer"
+                            onClick={() => setEnlargedImage(result.previewUrl || result.url)}
                           />
-                          <div className="absolute top-2 right-2 bg-black/60 p-1.5 rounded-full group-hover:bg-black/80 transition-colors">
-                            <ZoomIn className="w-4 h-4 text-white" />
-                          </div>
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                            <span className="text-white opacity-0 group-hover:opacity-100 text-sm bg-black/50 px-3 py-1 rounded">
-                              🔍 Klik om te vergroten
-                            </span>
+                          <div className="absolute top-2 right-2 flex gap-2">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                handleShare(result.previewUrl || result.url, 'Nieuwe kozijnen')
+                              }}
+                              className="bg-black/60 p-1.5 rounded-full hover:bg-black/80 transition-colors"
+                            >
+                              <Share2 className="w-4 h-4 text-white" />
+                            </button>
+                            <button
+                              onClick={() => setEnlargedImage(result.previewUrl || result.url)}
+                              className="bg-black/60 p-1.5 rounded-full hover:bg-black/80 transition-colors"
+                            >
+                              <ZoomIn className="w-4 h-4 text-white" />
+                            </button>
                           </div>
                         </div>
                         <p className="text-sm text-center text-primary font-medium">
@@ -623,32 +665,44 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
         </div>
       )}
 
-      {/* Lightbox Modal voor vergrote foto's */}
-      {enlargedImage && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm"
-          onClick={() => setEnlargedImage(null)}
-        >
-          <div className="relative max-w-7xl max-h-full">
-            <button
+          {/* Lightbox Modal voor vergrote foto's */}
+          {enlargedImage && (
+            <div 
+              className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm"
               onClick={() => setEnlargedImage(null)}
-              className="absolute -top-12 right-0 text-white hover:text-gray-300 flex items-center gap-2 text-lg"
             >
-              <X className="w-6 h-6" />
-              Sluiten
-            </button>
-            <img
-              src={enlargedImage}
-              alt="Vergrote weergave"
-              className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            />
-            <p className="text-white text-center mt-4 text-sm">
-              Klik buiten de foto om te sluiten
-            </p>
-          </div>
-        </div>
-      )}
+              <div className="relative max-w-7xl max-h-full">
+                <div className="absolute -top-12 right-0 flex items-center gap-4">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleShare(enlargedImage, 'Mijn nieuwe kozijnen')
+                    }}
+                    className="text-white hover:text-gray-300 flex items-center gap-2 text-lg"
+                  >
+                    <Share2 className="w-5 h-5" />
+                    Delen
+                  </button>
+                  <button
+                    onClick={() => setEnlargedImage(null)}
+                    className="text-white hover:text-gray-300 flex items-center gap-2 text-lg"
+                  >
+                    <X className="w-6 h-6" />
+                    Sluiten
+                  </button>
+                </div>
+                <img
+                  src={enlargedImage}
+                  alt="Vergrote weergave"
+                  className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+                  onClick={(e) => e.stopPropagation()}
+                />
+                <p className="text-white text-center mt-4 text-sm">
+                  Klik buiten de foto om te sluiten
+                </p>
+              </div>
+            </div>
+          )}
     </Card>
   )
 }
