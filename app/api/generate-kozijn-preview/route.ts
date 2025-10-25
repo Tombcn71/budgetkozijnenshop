@@ -181,10 +181,14 @@ Belangrijke instructies:
 - Behoud de EXACTE positie, grootte en vorm van de ramen zoals in de originele foto
 - Behoud de architectuur van het gebouw volledig intact
 - Vervang alleen de kozijnen en het glas, niets anders
+- VERWIJDER alle gordijnen, vitrages, jaloezieën en andere raamdecoratie - laat het glas helemaal leeg en transparant
+- VERWIJDER alle objecten achter de ramen (plantjes, decoratie, etc) - toon alleen het doorzicht door het glas
 - De nieuwe kozijnen moeten realistisch en professioneel geplaatst lijken
+- Het glas moet helder en schoon zijn met subtiele reflecties
 - Zorg dat de belichting en schaduwen natuurlijk blijven en passen bij de omgeving
 - Behoud alle details van de muren, bakstenen, en omliggende elementen
 - Het eindresultaat moet fotorealistisch zijn en lijken alsof het echt is
+- Focus volledig op de kozijnen en het glas, niet op wat erachter zit
 
 Maak een hoogwaardige, professionele weergave van hoe deze woning eruit zou zien met de nieuwe kozijnen.`;
 }

@@ -359,7 +359,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                 <div className="pt-2">
                   <Label className="text-foreground text-sm mb-2 block">Foto's van uw ramen uploaden *</Label>
                   <p className="text-xs text-muted-foreground mb-2">
-                    Upload minimaal 3 foto's van binnen of buiten (max 5)
+                    Upload 3-5 foto's van uw ramen (bij voorkeur buitenkant)
                   </p>
                   <PhotoUpload 
                     onPhotosChange={setPhotos}
@@ -477,13 +477,10 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                         alt={`Preview ${idx + 1}`}
                         className="w-full h-auto object-contain max-h-96"
                       />
-                      <div className="absolute top-3 right-3 bg-green-500 text-white text-sm px-3 py-1.5 rounded-full font-semibold shadow-lg">
-                        ✨ AI Preview
-                      </div>
                     </div>
                     <p className="text-sm text-center text-muted-foreground font-medium">
                       {result.previewUrl && result.previewUrl !== result.url 
-                        ? `✨ Gemini AI Preview ${idx + 1}` 
+                        ? `✨ AI Preview ${idx + 1}` 
                         : `📸 Originele foto ${idx + 1}`}
                     </p>
                   </div>
