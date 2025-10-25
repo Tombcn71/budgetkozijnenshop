@@ -176,12 +176,13 @@ function buildKozijnPrompt(specs: KozijnSpecs): string {
 
   return `Edit this photo: replace ONLY the window frame with new ${materiaalDesc} in ${kleurDesc} color.
 
-STEP 1 - REMOVE OBJECTS ONLY (NOT THE VIEW):
-- Remove ALL curtains, drapes, blinds, shades completely
-- Remove OBJECTS visible through glass: furniture on balcony, plants, decorations, items
-- Keep the background view (sky, buildings, nature) - just remove objects/items
-- Do NOT replace view with solid color or blur
-- Glass stays clear, outdoor scenery stays visible, only remove physical objects
+STEP 1 - REMOVE THESE ITEMS (KEEP THE VIEW):
+- Remove ALL curtains, drapes, blinds, shades - delete completely
+- Remove ALL balcony items: chairs, tables, plants, pots, furniture, decorations
+- Remove ALL objects visible through window: delete them entirely
+- Keep sky, buildings, architecture visible in background
+- Do NOT add solid color, blur or replacement - just delete the objects
+- Result: clear view through glass without any items/objects blocking it
 
 STEP 2 - REPLACE ONLY THE WINDOW FRAME:
 - Replace window frame with ${materiaalDesc} in ${kleurDesc}
@@ -196,8 +197,8 @@ STEP 3 - KEEP EVERYTHING ELSE IDENTICAL:
 - Window position EXACTLY the same
 - Lighting EXACTLY the same
 
-CRITICAL: Remove curtains and objects/items through glass. Keep the outdoor scenery visible. Do NOT add solid colors or blur.
+CRITICAL: DELETE all balcony items (chairs, tables, plants, pots). DELETE all curtains. Keep the outdoor view/scenery. Do NOT add solid colors.
 
-RESULT: Same photo, new ${kleurDesc} ${materiaalDesc} frame, NO curtains, NO objects on balcony, view stays visible.`;
+RESULT: Same photo, new ${kleurDesc} ${materiaalDesc} frame, NO curtains, balcony completely empty, clear view through glass.`;
 }
 

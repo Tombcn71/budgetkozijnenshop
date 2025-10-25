@@ -42,10 +42,6 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const handleNext = async () => {
     if (currentStep === 1) {
       setCurrentStep(2)
-      // Prevent scroll when changing steps
-      setTimeout(() => {
-        window.scrollTo({ top: window.scrollY, behavior: 'auto' })
-      }, 0)
     } else if (currentStep === 2) {
       await analyzePhotos()
       setCurrentStep(3)
