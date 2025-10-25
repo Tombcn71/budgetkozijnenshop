@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -26,14 +26,12 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null)
 
   const [formData, setFormData] = useState({
-    postcode: "",
     materiaal: "", // kunststof, hout, aluminium
     kleur: "", // wit, grijs, zwart, houtkleur, etc
     kozijnType: "", // draaikiepraam, schuifraam, vaste beglazing, etc
     vierkanteMeterRamen: "",
     aantalRamen: "",
     glasType: "", // dubbel glas, HR++, triple glas
-    locatie: "", // binnen of buiten foto
     montage: true,
     afvoerOudeKozijnen: true,
     naam: "",
@@ -50,12 +48,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
     }
   }
 
-  // Scroll to top of form when step changes
-  useEffect(() => {
-    if (formRef.current) {
-      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }, [currentStep])
+  // Removed auto-scroll functionality per user request
 
   const analyzePhotos = async () => {
     if (photos.length === 0) return
@@ -197,8 +190,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
             </h3>
           </div>
           <p className="text-sm italic text-muted-foreground mb-4">
-            {currentStep === 1 && "Vul uw voorkeuren in en upload foto's van uw huidige ramen"}
-            {currentStep === 2 && "Upload minimaal 3 foto's van uw ramen (binnen of buiten)"}
+            {currentStep === 1 && "Vul uw voorkeuren in voor de nieuwe kozijnen"}
+            {currentStep === 2 && "Upload minimaal 1 foto van uw ramen (binnen of buiten)"}
           </p>
 
           <div className="mb-6">
@@ -213,17 +206,6 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
           <form className="space-y-4">
             {currentStep === 1 && (
               <div className="space-y-4">
-                <div>
-                  <Label className="text-foreground text-sm mb-2 block">Postcode *</Label>
-                  <Input
-                    placeholder="Bijv. 3000 AB"
-                    value={formData.postcode}
-                    onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
-                    className="bg-background border-0 h-11"
-                    required
-                  />
-                </div>
-
                 <div>
                   <Label className="text-foreground text-sm mb-2 block">Materiaal Kozijnen *</Label>
                   <Select
@@ -283,6 +265,24 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                 </div>
 
                 <div>
+                  <Label className="text-foreground text-sm mb-2 block">Type Glas *</Label>
+                  <Select
+                    value={formData.glasType}
+                    onValueChange={(value) => setFormData({ ...formData, glasType: value })}
+                  >
+                    <SelectTrigger className="bg-background border-0 h-11">
+                      <SelectValue placeholder="Kies glastype" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="dubbel">Dubbel glas</SelectItem>
+                      <SelectItem value="hr++">HR++ glas</SelectItem>
+                      <SelectItem value="triple">Triple glas</SelectItem>
+                      <SelectItem value="geluidswerend">Geluidswerend glas</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
                   <Label className="text-foreground text-sm mb-2 block">Aantal Ramen *</Label>
                   <Input
                     type="number"
@@ -314,28 +314,6 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
-            )}
-
-            {currentStep === 2 && (
-              <div className="space-y-4">
-                <div>
-                  <Label className="text-foreground text-sm mb-2 block">Type Glas *</Label>
-                  <Select
-                    value={formData.glasType}
-                    onValueChange={(value) => setFormData({ ...formData, glasType: value })}
-                  >
-                    <SelectTrigger className="bg-background border-0 h-11">
-                      <SelectValue placeholder="Kies glastype" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="dubbel">Dubbel glas</SelectItem>
-                      <SelectItem value="hr++">HR++ glas</SelectItem>
-                      <SelectItem value="triple">Triple glas</SelectItem>
-                      <SelectItem value="geluidswerend">Geluidswerend glas</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
 
                 <div className="space-y-3">
                   <Label className="text-foreground text-sm block">Extra Services</Label>
@@ -364,16 +342,20 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                     </label>
                   </div>
                 </div>
+              </div>
+            )}
 
+            {currentStep === 2 && (
+              <div className="space-y-4">
                 <div className="pt-2">
                   <Label className="text-foreground text-sm mb-2 block">Foto's van uw ramen uploaden *</Label>
                   <p className="text-xs text-muted-foreground mb-2">
-                    Upload 3-5 foto's van uw ramen (bij voorkeur buitenkant)
+                    Upload minimaal 1 foto van uw ramen (binnen of buitenkant)
                   </p>
                   <PhotoUpload 
                     onPhotosChange={setPhotos}
                     maxPhotos={5}
-                    minPhotos={3}
+                    minPhotos={1}
                   />
                 </div>
                 
@@ -411,8 +393,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                 type="button"
                 onClick={handleNext}
                 disabled={
-                  (currentStep === 1 && (!formData.postcode || !formData.materiaal || !formData.kleur || !formData.kozijnType || !formData.aantalRamen || !formData.vierkanteMeterRamen)) ||
-                  (currentStep === 2 && (photos.length < 3 || !formData.glasType)) ||
+                  (currentStep === 1 && (!formData.materiaal || !formData.kleur || !formData.kozijnType || !formData.glasType || !formData.aantalRamen || !formData.vierkanteMeterRamen)) ||
+                  (currentStep === 2 && photos.length < 1) ||
                   isAnalyzing
                 }
                 className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 disabled:opacity-50"
@@ -611,14 +593,12 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
               setAnalysisResults([])
               setPriceResult(null)
               setFormData({
-                postcode: "",
                 materiaal: "",
                 kleur: "",
                 kozijnType: "",
                 vierkanteMeterRamen: "",
                 aantalRamen: "",
                 glasType: "",
-                locatie: "",
                 montage: true,
                 afvoerOudeKozijnen: true,
                 naam: "",
