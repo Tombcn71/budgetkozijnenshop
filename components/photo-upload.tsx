@@ -55,13 +55,13 @@ export function PhotoUpload({
   const photosRemaining = maxPhotos - photos.length
 
   return (
-    <div className="space-y-4 w-full max-w-full overflow-hidden">
+    <div className="space-y-3 w-full max-w-full overflow-hidden">
       {/* Upload Zone */}
       {photos.length < maxPhotos && (
         <Card
           {...getRootProps()}
           className={`
-            border-2 border-dashed p-4 sm:p-6 lg:p-8 transition-all cursor-pointer
+            border-2 border-dashed p-3 sm:p-4 lg:p-6 transition-all cursor-pointer
             ${isDragActive 
               ? 'border-primary bg-primary/5' 
               : 'border-border hover:border-primary/50 hover:bg-muted/50'
@@ -69,23 +69,23 @@ export function PhotoUpload({
           `}
         >
           <input {...getInputProps()} />
-          <div className="flex flex-col items-center justify-center text-center space-y-3">
+          <div className="flex flex-col items-center justify-center text-center space-y-2">
             <div className={`
-              rounded-full p-3 transition-colors
+              rounded-full p-2 transition-colors
               ${isDragActive ? 'bg-primary/10' : 'bg-muted'}
             `}>
-              <Upload className={`w-6 h-6 sm:w-8 sm:h-8 ${isDragActive ? 'text-primary' : 'text-muted-foreground'}`} />
+              <Upload className={`w-5 h-5 sm:w-6 sm:h-6 ${isDragActive ? 'text-primary' : 'text-muted-foreground'}`} />
             </div>
             
             <div>
-              <p className="text-sm sm:text-base lg:text-lg font-semibold text-foreground mb-1 sm:mb-2">
+              <p className="text-xs sm:text-sm font-semibold text-foreground mb-1">
                 {isDragActive 
-                  ? "Drop foto's hier" 
-                  : "Sleep foto's hierheen of klik om te uploaden"
+                  ? "Drop hier" 
+                  : "Klik om foto's te uploaden"
                 }
               </p>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                {minPhotos} tot {maxPhotos} foto's • JPG, PNG, WEBP
+              <p className="text-xs text-muted-foreground">
+                {minPhotos}-{maxPhotos} foto's • JPG, PNG
               </p>
               {photos.length > 0 && (
                 <p className="text-sm text-primary font-medium mt-2">
@@ -99,24 +99,24 @@ export function PhotoUpload({
 
       {/* Photos Grid */}
       {photos.length > 0 && (
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-foreground">
+            <p className="text-xs sm:text-sm font-medium text-foreground">
               Geüploade foto's ({photos.length}/{maxPhotos})
             </p>
             {!isMinimumMet && (
-              <p className="text-sm text-muted-foreground">
-                Nog {minPhotos - photos.length} foto's minimaal nodig
+              <p className="text-xs text-muted-foreground">
+                Nog {minPhotos - photos.length} nodig
               </p>
             )}
             {isMinimumMet && (
-              <p className="text-sm text-primary font-medium flex items-center gap-1">
-                ✓ Minimum bereikt
+              <p className="text-xs sm:text-sm text-primary font-medium flex items-center gap-1">
+                ✓ Klaar
               </p>
             )}
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
             {previews.map((preview, index) => (
               <div key={index} className="relative group">
                 <Card className="overflow-hidden border-2 border-border hover:border-primary transition-colors">
@@ -151,20 +151,10 @@ export function PhotoUpload({
 
       {/* Tips */}
       {photos.length === 0 && (
-        <Card className="p-3 bg-primary/5 border-primary/20">
-          <div className="flex gap-2">
-            <ImageIcon className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="text-xs font-medium text-foreground">
-                📸 Tips voor goede foto's:
-              </p>
-              <ul className="text-xs text-muted-foreground space-y-0.5">
-                <li>• Foto van buiten- of binnenkant raam</li>
-                <li>• Maak foto's bij goed daglicht</li>
-                <li>• Zorg dat het hele raam zichtbaar is</li>
-              </ul>
-            </div>
-          </div>
+        <Card className="p-2 bg-primary/5 border-primary/20">
+          <p className="text-xs text-muted-foreground text-center">
+            📸 Tip: Foto van hele raam bij daglicht
+          </p>
         </Card>
       )}
     </div>

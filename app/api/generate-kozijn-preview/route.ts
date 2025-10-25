@@ -176,17 +176,17 @@ function buildKozijnPrompt(specs: KozijnSpecs): string {
 
   return `Edit this photo: replace ONLY the window frame with new ${materiaalDesc} in ${kleurDesc} color.
 
-STEP 1 - FILTER OUT AND REMOVE COMPLETELY:
-- FILTER OUT all curtains, drapes, blinds, shades - delete them entirely
-- FILTER OUT the outdoor view through the glass: trees, buildings, street, sky, cars, nature
-- FILTER OUT outdoor scenery and replace with neutral soft background
-- Keep indoor view visible if photo is from inside
-- The glass should be clear but outdoor elements FILTERED OUT
+STEP 1 - REMOVE OBJECTS ONLY (NOT THE VIEW):
+- Remove ALL curtains, drapes, blinds, shades completely
+- Remove OBJECTS visible through glass: furniture on balcony, plants, decorations, items
+- Keep the background view (sky, buildings, nature) - just remove objects/items
+- Do NOT replace view with solid color or blur
+- Glass stays clear, outdoor scenery stays visible, only remove physical objects
 
 STEP 2 - REPLACE ONLY THE WINDOW FRAME:
 - Replace window frame with ${materiaalDesc} in ${kleurDesc}
 - Frame type: ${specs.kozijnType}
-- Glass: ${glasDesc}, clear/transparent but outdoor FILTERED OUT
+- Glass: ${glasDesc}, clear/transparent with view visible
 
 STEP 3 - KEEP EVERYTHING ELSE IDENTICAL:
 - Wall texture stays EXACTLY the same (do NOT change)
@@ -196,8 +196,8 @@ STEP 3 - KEEP EVERYTHING ELSE IDENTICAL:
 - Window position EXACTLY the same
 - Lighting EXACTLY the same
 
-CRITICAL: FILTER OUT outdoor view through glass. Replace with neutral background. Remove all curtains.
+CRITICAL: Remove curtains and objects/items through glass. Keep the outdoor scenery visible. Do NOT add solid colors or blur.
 
-RESULT: Same photo, new ${kleurDesc} ${materiaalDesc} frame, NO curtains, outdoor view FILTERED OUT.`;
+RESULT: Same photo, new ${kleurDesc} ${materiaalDesc} frame, NO curtains, NO objects on balcony, view stays visible.`;
 }
 

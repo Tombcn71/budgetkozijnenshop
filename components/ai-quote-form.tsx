@@ -182,21 +182,21 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const progressPercentage = (currentStep / 3) * 100
 
   return (
-    <Card ref={formRef} className={`p-6 lg:p-8 bg-white shadow-2xl border-0 ${className}`}>
+    <Card ref={formRef} className={`p-4 sm:p-6 lg:p-8 bg-white shadow-2xl border-0 ${className}`}>
       {currentStep < 3 ? (
         <>
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="w-10 h-10 lg:w-7 lg:h-7 text-primary" />
-            <h3 className="font-bold text-xl text-foreground">
+          <div className="flex items-center gap-2 mb-2">
+            <Sparkles className="w-6 h-6 lg:w-7 lg:h-7 text-primary" />
+            <h3 className="font-bold text-base sm:text-lg lg:text-xl text-foreground">
               Direct een prijsindicatie en AI preview van uw nieuwe kozijnen.
             </h3>
           </div>
-          <p className="text-sm italic text-muted-foreground mb-4">
+          <p className="text-xs sm:text-sm italic text-muted-foreground mb-3">
             {currentStep === 1 && "Vul uw voorkeuren in voor de nieuwe kozijnen"}
-            {currentStep === 2 && "Upload minimaal 1 foto van uw ramen (binnen of buiten)"}
+            {currentStep === 2 && "Upload minimaal 1 foto van uw ramen"}
           </p>
 
-          <div className="mb-6">
+          <div className="mb-4">
             <div className="flex justify-between text-xs text-foreground mb-2">
               <span className={currentStep >= 1 ? "font-bold" : ""}>Gegevens</span>
               <span className={currentStep >= 2 ? "font-bold" : ""}>Foto's</span>
@@ -348,11 +348,11 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
             )}
 
             {currentStep === 2 && (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <div>
-                  <Label className="text-foreground text-sm font-medium mb-2 block">Foto's van uw ramen uploaden *</Label>
-                  <p className="text-xs text-muted-foreground mb-3">
-                    Upload minimaal 1 foto van uw ramen
+                  <Label className="text-foreground text-xs sm:text-sm font-medium mb-1 block">Upload foto's *</Label>
+                  <p className="text-xs text-muted-foreground mb-2">
+                    Minimaal 1 foto (binnen of buiten)
                   </p>
                   <PhotoUpload 
                     onPhotosChange={setPhotos}
@@ -379,7 +379,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
               </div>
             )}
 
-            <div className="flex gap-2 pt-4">
+            <div className="flex gap-2 pt-2 sm:pt-3">
               {currentStep > 1 && !isAnalyzing && (
                 <Button
                   type="button"
