@@ -96,26 +96,51 @@ export async function POST(request: Request) {
     });
 
     console.log('📦 Gemini response received');
+    console.log('📦 Full response:', JSON.stringify(response, null, 2));
     console.log('📦 Response has candidates:', !!response.candidates);
     console.log('📦 Candidates length:', response.candidates?.length);
 
     // Extract the generated image
     let generatedImageData: string | null = null;
     
-    if (response.candidates && response.candidates[0] && response.candidates[0].content && response.candidates[0].content.parts) {
-      for (const part of response.candidates[0].content.parts) {
-        if (part.inlineData) {
-          generatedImageData = part.inlineData.data;
-          console.log('✅ Image data found, size:', generatedImageData.length, 'bytes');
-          break;
+    if (response.candidates && response.candidates[0]) {
+      console.log('📦 Candidate 0 structure:', JSON.stringify(response.candidates[0], null, 2));
+      
+      if (response.candidates[0].content && response.candidates[0].content.parts) {
+        console.log('📦 Parts count:', response.candidates[0].content.parts.length);
+        
+        for (let i = 0; i < response.candidates[0].content.parts.length; i++) {
+          const part = response.candidates[0].content.parts[i];
+          console.log(`📦 Part ${i}:`, {
+            hasText: !!part.text,
+            hasInlineData: !!part.inlineData,
+            keys: Object.keys(part)
+          });
+          
+          if (part.text) {
+            console.log(`📝 Text in part ${i}:`, part.text);
+          }
+          
+          if (part.inlineData) {
+            generatedImageData = part.inlineData.data;
+            console.log('✅ Image data found in part', i, ', size:', generatedImageData.length, 'bytes');
+            break;
+          }
         }
+      } else {
+        console.log('❌ No content.parts in candidate[0]');
       }
     } else {
-      console.log('❌ Response structure unexpected:', JSON.stringify(response, null, 2));
+      console.log('❌ No candidates in response');
     }
 
     if (!generatedImageData) {
-      throw new Error('Geen afbeelding gegenereerd door Gemini - check console logs');
+      console.error('❌ GEEN AFBEELDING DATA GEVONDEN');
+      console.error('Dit kan betekenen:');
+      console.error('1. De GOOGLE_AI_API_KEY is niet correct ingesteld in Vercel');
+      console.error('2. Het model gemini-2.5-flash-image is niet beschikbaar');
+      console.error('3. De API key heeft geen toegang tot image generation');
+      throw new Error('Geen afbeelding gegenereerd door Gemini - check de Vercel logs voor meer details');
     }
 
     console.log('✅ Kozijn preview succesvol gegenereerd!');
