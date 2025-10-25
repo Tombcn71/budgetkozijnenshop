@@ -182,13 +182,24 @@ function buildKozijnPrompt(specs: KozijnSpecs): string {
 - DO NOT change what the wall is made of (if it's plaster, keep it plaster. If it's brick, keep it brick)
 - ONLY edit the window frame itself - nothing else around it
 
-STEP 1 - REMOVE THESE ITEMS (KEEP THE VIEW):
-- Remove ALL curtains, drapes, blinds, shades - delete completely
+⚠️ STEP 1 - DELETE CURTAINS & OBJECTS (CRITICAL):
+CURTAINS MUST BE 100% INVISIBLE:
+- Delete ALL curtains completely - they must NOT be visible at all
+- Delete ALL drapes - remove every pixel
+- Delete ALL blinds - make them disappear completely
+- Delete ALL shades - total removal
+- Delete ALL fabric/textile near window - zero visibility
+- If curtains are white, beige, colored - DELETE ALL
+- If curtains are open or closed - DELETE ALL
+- Curtains are FORBIDDEN in the result image
+
+OTHER ITEMS TO DELETE:
 - Remove ALL balcony items: chairs, tables, plants, pots, furniture, decorations
 - Remove ALL objects visible through window: delete them entirely
 - Keep sky, buildings, architecture visible in background
 - Do NOT add solid color, blur or replacement - just delete the objects
-- Result: clear view through glass without any items/objects blocking it
+
+RESULT OF STEP 1: Window with ZERO curtains visible, clear glass, outdoor view visible
 
 STEP 2 - REPLACE ONLY THE WINDOW FRAME:
 - Replace ONLY the window frame with ${materiaalDesc} in ${kleurDesc}
@@ -211,9 +222,16 @@ CRITICAL PROHIBITION:
 - DO NOT add stone textures
 - DO NOT add wood paneling
 - DO NOT change wall materials AT ALL
+- CURTAINS MUST BE 100% DELETED - ZERO VISIBILITY
+- NO curtains, drapes, blinds, or fabric visible anywhere
 - If you see a white plaster wall → keep it white plaster wall
 - If you see painted wall → keep it painted wall
 
-RESULT: Identical photo with ONLY the window frame replaced. Everything else is a perfect 1:1 copy of the original.`;
+FINAL CHECK BEFORE RETURNING IMAGE:
+✓ Are curtains completely gone? (must be YES)
+✓ Is only the window frame changed? (must be YES)
+✓ Are wall materials unchanged? (must be YES)
+
+RESULT: Identical photo with ONLY the window frame replaced. NO CURTAINS VISIBLE. Everything else is a perfect 1:1 copy of the original.`;
 }
 
