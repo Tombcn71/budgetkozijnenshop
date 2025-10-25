@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -22,7 +22,6 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analysisResults, setAnalysisResults] = useState<any[]>([])
   const [priceResult, setPriceResult] = useState<any>(null)
-  const formRef = useRef<HTMLDivElement>(null)
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null)
 
   const [formData, setFormData] = useState({
@@ -42,10 +41,6 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const handleNext = async () => {
     if (currentStep === 1) {
       setCurrentStep(2)
-      // Scroll to top after state update
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' })
-      }, 0)
     } else if (currentStep === 2) {
       await analyzePhotos()
       setCurrentStep(3)
@@ -176,17 +171,13 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const handlePrevious = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
-      // Scroll to top after state update
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' })
-      }, 0)
     }
   }
 
   const progressPercentage = (currentStep / 3) * 100
 
   return (
-    <Card ref={formRef} className={`p-4 sm:p-6 lg:p-8 bg-white shadow-2xl border-0 ${className}`}>
+    <Card className={`p-4 sm:p-6 lg:p-8 bg-white shadow-2xl border-0 ${className}`}>
       {currentStep < 3 ? (
         <>
           <div className="flex items-center gap-2 mb-2">
@@ -619,10 +610,6 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                 email: "",
                 telefoon: "",
               })
-              // Scroll to top after state update
-              setTimeout(() => {
-                window.scrollTo({ top: 0, behavior: 'instant' })
-              }, 0)
             }}
             className="text-foreground hover:text-foreground/80 hover:bg-transparent"
           >
