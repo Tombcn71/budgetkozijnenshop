@@ -42,6 +42,10 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const handleNext = async () => {
     if (currentStep === 1) {
       setCurrentStep(2)
+      // Scroll to top of form
+      if (formRef.current) {
+        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
     } else if (currentStep === 2) {
       await analyzePhotos()
       setCurrentStep(3)
