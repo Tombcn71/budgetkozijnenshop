@@ -209,12 +209,12 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
     <Card className={`p-4 sm:p-6 lg:p-8 bg-white shadow-2xl border-0 ${className}`}>
       {currentStep < 3 ? (
         <>
-          <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-6 h-6 lg:w-7 lg:h-7 text-primary" />
-            <h3 className="font-bold text-base sm:text-lg lg:text-xl text-foreground">
-              Direct een prijsindicatie en AI preview van uw nieuwe kozijnen.
-            </h3>
-          </div>
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-6 h-6 lg:w-7 lg:h-7 text-primary" />
+              <h2 className="font-bold text-base sm:text-lg lg:text-xl text-foreground">
+                Direct een prijsindicatie en AI preview van uw nieuwe kozijnen.
+              </h2>
+            </div>
           <p className="text-xs sm:text-sm italic text-muted-foreground mb-3">
             {currentStep === 1 && "Vul uw voorkeuren in voor de nieuwe kozijnen"}
             {currentStep === 2 && "Upload minimaal 1 foto van uw ramen"}
@@ -226,7 +226,14 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
               <span className={currentStep >= 2 ? "font-bold" : ""}>Foto's</span>
               <span className={currentStep >= 3 ? "font-bold" : ""}>Resultaat</span>
             </div>
-            <Progress value={progressPercentage} className="h-2 bg-muted" />
+            <Progress 
+              value={progressPercentage} 
+              className="h-2 bg-muted" 
+              aria-label={`Stap ${currentStep} van 3`}
+              aria-valuenow={progressPercentage}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            />
           </div>
 
           <form className="space-y-4">
@@ -445,11 +452,11 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
       ) : (
         <div className="text-center space-y-6">
           <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full mb-2">
-            <Check className="w-4 h-4" />
-            <span className="text-sm font-semibold">AI Analyse & Preview Klaar</span>
-          </div>
+              <Check className="w-4 h-4" />
+              <span className="text-sm font-semibold">AI Analyse & Preview Klaar</span>
+            </div>
 
-          <h3 className="font-bold text-2xl text-foreground">Uw Instant Offerte:</h3>
+            <h2 className="font-bold text-2xl text-foreground">Uw Instant Offerte:</h2>
 
           <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg p-6 border-2 border-primary/20">
             <p className="text-4xl font-bold text-primary mb-2">
@@ -476,17 +483,17 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
               </div>
             )}
             {formData.afvoerOudeKozijnen && (
-              <div className="flex justify-between text-sm">
+            <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Afvoer oude kozijnen</span>
                 <span className="font-medium">€{priceResult?.breakdown.afvoer || 200}</span>
-              </div>
+            </div>
             )}
           </div>
 
           {/* Voor & Na Vergelijking */}
           {analysisResults.length > 0 && (
             <div className="bg-background rounded-lg p-4 text-left border-2 border-primary/20">
-              <h4 className="font-semibold text-base text-foreground mb-3">🎨 Voor & Na: Uw nieuwe {formData.materiaal} kozijnen</h4>
+              <h3 className="font-semibold text-base text-foreground mb-3">🎨 Voor & Na: Uw nieuwe {formData.materiaal} kozijnen</h3>
               <div className="space-y-6">
                 {analysisResults.map((result, idx) => (
                   <div key={idx} className="space-y-3">
@@ -509,12 +516,16 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                                 handleShare(result.url, 'Huidige kozijnen')
                               }}
                               className="bg-black/60 p-1.5 rounded-full hover:bg-black/80 transition-colors"
+                              aria-label="Deel huidige kozijn foto"
+                              title="Deel foto"
                             >
                               <Share2 className="w-4 h-4 text-white" />
                             </button>
                             <button
                               onClick={() => setEnlargedImage(result.url)}
                               className="bg-black/60 p-1.5 rounded-full hover:bg-black/80 transition-colors"
+                              aria-label="Vergroot huidige kozijn foto"
+                              title="Vergroot foto"
                             >
                               <ZoomIn className="w-4 h-4 text-white" />
                             </button>
@@ -543,25 +554,29 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                                 handleShare(result.previewUrl || result.url, 'Nieuwe kozijnen')
                               }}
                               className="bg-black/60 p-1.5 rounded-full hover:bg-black/80 transition-colors"
+                              aria-label="Deel nieuwe kozijn preview"
+                              title="Deel preview"
                             >
                               <Share2 className="w-4 h-4 text-white" />
                             </button>
                             <button
                               onClick={() => setEnlargedImage(result.previewUrl || result.url)}
                               className="bg-black/60 p-1.5 rounded-full hover:bg-black/80 transition-colors"
+                              aria-label="Vergroot nieuwe kozijn preview"
+                              title="Vergroot preview"
                             >
                               <ZoomIn className="w-4 h-4 text-white" />
                             </button>
                           </div>
-                        </div>
+                </div>
                         <p className="text-sm text-center text-primary font-medium">
                           ✨ Nieuwe kozijnen
                         </p>
-                      </div>
-                    </div>
-                  </div>
+                </div>
+                </div>
+                </div>
                 ))}
-              </div>
+                </div>
               <div className="mt-4 p-3 bg-primary/5 rounded-lg">
                 <p className="text-xs text-foreground text-center">
                   ✨ <strong>Powered by Google Gemini "Nano Banana"</strong> - Deze previews zijn gegenereerd door AI op basis van uw gekozen specificaties: {formData.materiaal} kozijnen in {formData.kleur} met {formData.glasType}.
@@ -572,29 +587,29 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
 
           {/* Specificaties overzicht */}
           <div className="bg-muted/30 rounded-lg p-4 text-left">
-            <h4 className="font-bold text-base text-foreground mb-3">📋 Uw Specificaties:</h4>
-            
-            <div className="bg-background rounded-md p-3 space-y-2 text-sm">
-              <div className="flex justify-between">
+            <h3 className="font-bold text-base text-foreground mb-3">📋 Uw Specificaties:</h3>
+                
+                <div className="bg-background rounded-md p-3 space-y-2 text-sm">
+                  <div className="flex justify-between">
                 <span className="text-muted-foreground">Aantal ramen:</span>
                 <span className="font-medium text-foreground">{formData.aantalRamen}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Totaal m² glas:</span>
                 <span className="font-medium text-foreground">{formData.vierkanteMeterRamen}</span>
-              </div>
-              <div className="flex justify-between">
+                  </div>
+                  <div className="flex justify-between">
                 <span className="text-muted-foreground">Materiaal:</span>
                 <span className="font-medium text-foreground">{formData.materiaal}</span>
-              </div>
+                  </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Kleur:</span>
                 <span className="font-medium text-foreground">{formData.kleur}</span>
-              </div>
+                    </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Type:</span>
                 <span className="font-medium text-foreground">{formData.kozijnType}</span>
-              </div>
+                </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Glastype:</span>
                 <span className="font-medium text-foreground">{formData.glasType}</span>
@@ -701,8 +716,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                   Klik buiten de foto om te sluiten
                 </p>
               </div>
-            </div>
-          )}
+        </div>
+      )}
     </Card>
   )
 }

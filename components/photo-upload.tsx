@@ -133,6 +133,8 @@ export function PhotoUpload({
                       size="icon"
                       variant="destructive"
                       className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8"
+                      aria-label={`Verwijder foto ${index + 1}`}
+                      title="Verwijder foto"
                     >
                       <X className="w-4 h-4" />
                     </Button>

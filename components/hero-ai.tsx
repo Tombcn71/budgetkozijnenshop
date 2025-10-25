@@ -1,13 +1,18 @@
 import { AIQuoteForm } from "@/components/ai-quote-form"
+import Image from "next/image"
 
 export function HeroAI() {
   return (
     <section className="relative min-h-[500px] lg:min-h-[600px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img
+        <Image
           src="https://images.pexels.com/photos/5691531/pexels-photo-5691531.jpeg"
           alt="Vakman installeert raamkozijnen"
-          className="w-full h-full object-cover"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-black/10 to-transparent" />
       </div>
