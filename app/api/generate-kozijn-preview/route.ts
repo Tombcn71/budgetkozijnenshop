@@ -43,10 +43,13 @@ export async function POST(request: Request) {
     }
 
     const kozijnSpecs: KozijnSpecs = specs;
-    const ai = getGeminiClient();
-
+    
     console.log('🔑 Gemini API Key aanwezig:', !!process.env.GOOGLE_AI_API_KEY);
-    console.log('📡 Gemini request verzenden...');
+    console.log('🔑 Alternative Key aanwezig:', !!process.env.GEMINI_API_KEY);
+    
+    const ai = getGeminiClient();
+    console.log('📡 Gemini client geïnitialiseerd');
+    console.log('📡 Gemini request verzenden met specs:', JSON.stringify(kozijnSpecs));
 
     // Build a detailed prompt for window frame transformation
     const prompt = buildKozijnPrompt(kozijnSpecs);
@@ -61,25 +64,29 @@ export async function POST(request: Request) {
       // If base64 image data is provided directly
       contentParts.push({
         inlineData: {
-          mimeType: "image/png",
+          mimeType: "image/jpeg",
           data: imageData,
         },
       });
     } else if (imageUrl) {
       // Fetch the image and convert to base64
       const imageResponse = await fetch(imageUrl);
+      const contentType = imageResponse.headers.get('content-type') || 'image/jpeg';
       const imageBuffer = await imageResponse.arrayBuffer();
       const base64Image = Buffer.from(imageBuffer).toString('base64');
       
+      console.log('📷 Image fetched, type:', contentType, 'size:', imageBuffer.byteLength);
+      
       contentParts.push({
         inlineData: {
-          mimeType: "image/png",
+          mimeType: contentType,
           data: base64Image,
         },
       });
     }
 
     // Generate the image with Gemini
+    console.log('🤖 Calling Gemini API with model: gemini-2.5-flash-image');
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-image",
       contents: contentParts,
@@ -88,18 +95,27 @@ export async function POST(request: Request) {
       }
     });
 
+    console.log('📦 Gemini response received');
+    console.log('📦 Response has candidates:', !!response.candidates);
+    console.log('📦 Candidates length:', response.candidates?.length);
+
     // Extract the generated image
     let generatedImageData: string | null = null;
     
-    for (const part of response.candidates[0].content.parts) {
-      if (part.inlineData) {
-        generatedImageData = part.inlineData.data;
-        break;
+    if (response.candidates && response.candidates[0] && response.candidates[0].content && response.candidates[0].content.parts) {
+      for (const part of response.candidates[0].content.parts) {
+        if (part.inlineData) {
+          generatedImageData = part.inlineData.data;
+          console.log('✅ Image data found, size:', generatedImageData.length, 'bytes');
+          break;
+        }
       }
+    } else {
+      console.log('❌ Response structure unexpected:', JSON.stringify(response, null, 2));
     }
 
     if (!generatedImageData) {
-      throw new Error('Geen afbeelding gegenereerd door Gemini');
+      throw new Error('Geen afbeelding gegenereerd door Gemini - check console logs');
     }
 
     console.log('✅ Kozijn preview succesvol gegenereerd!');
