@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -37,6 +37,11 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
     email: "",
     telefoon: "",
   })
+
+  // Scroll to top when step changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }, [currentStep])
 
   const handleNext = async () => {
     if (currentStep === 1) {
