@@ -52,17 +52,17 @@ export async function POST(request: Request) {
     console.log('📡 Gemini request verzenden met specs:', JSON.stringify(kozijnSpecs));
 
     // Build a detailed prompt for window frame transformation
-    const prompt = buildKozijnPrompt(kozijnSpecs);
+    const promptText = buildKozijnPrompt(kozijnSpecs);
 
-    // Prepare the content parts
-    const contentParts: any[] = [
-      { text: prompt }
+    // Prepare the prompt array as per Nano Banana docs
+    const prompt: any[] = [
+      { text: promptText }
     ];
 
     // Add the image
     if (imageData) {
       // If base64 image data is provided directly
-      contentParts.push({
+      prompt.push({
         inlineData: {
           mimeType: "image/jpeg",
           data: imageData,
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
       
       console.log('📷 Image fetched, type:', contentType, 'size:', imageBuffer.byteLength);
       
-      contentParts.push({
+      prompt.push({
         inlineData: {
           mimeType: contentType,
           data: base64Image,
@@ -89,7 +89,7 @@ export async function POST(request: Request) {
     console.log('🤖 Calling Gemini API with model: gemini-2.5-flash-image');
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-image",
-      contents: contentParts,
+      contents: prompt,
       config: {
         responseModalities: ['Image']
       }
