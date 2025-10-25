@@ -174,27 +174,27 @@ function buildKozijnPrompt(specs: KozijnSpecs): string {
   const kleurDesc = kleurDescriptions[specs.kleur] || specs.kleur;
   const glasDesc = glasDescriptions[specs.glasType] || specs.glasType;
 
-  return `Vervang de raamkozijnen in deze foto door nieuwe ${materiaalDesc} in de kleur ${kleurDesc}, met ${glasDesc}. Type: ${specs.kozijnType}.
+  return `Edit this photo: replace ONLY the window frame with new ${materiaalDesc} in ${kleurDesc} color.
 
-KRITIEK - WAT MAG JE AANPASSEN:
-- ALLEEN het raamkozijn (het frame rondom het glas)
-- ALLEEN het glas in het raam
+STEP 1 - REMOVE THESE COMPLETELY:
+- Remove ALL curtains, drapes, blinds, shades (delete them entirely)
+- Remove the outdoor view through the glass (trees, buildings, street, sky, cars)
+- Replace outdoor view with neutral/blurred background
+- Keep indoor view visible (if photo is from inside)
 
-KRITIEK - WAT MOET EXACT HETZELFDE BLIJVEN:
-- De muur PRECIES zoals hij is (VERZIN GEEN nieuwe muur, stenen, of texturen)
-- De bakstenen PRECIES zoals ze zijn
-- De verf/kleur van de muur EXACT hetzelfde
-- Alle schade, barsten, vlekken op de muur blijven zoals ze zijn
-- De positie en vorm van het raam EXACT hetzelfde
-- De belichting op de muur EXACT hetzelfde
-- ALLES behalve het kozijn zelf blijft 100% identiek
+STEP 2 - CHANGE ONLY THE WINDOW FRAME:
+- Replace window frame with ${materiaalDesc} in ${kleurDesc}
+- Frame type: ${specs.kozijnType}
+- Glass: ${glasDesc}, clear/transparent
 
-WAT MOET JE VERWIJDEREN/WEGHALEN:
-- VERWIJDER alle gordijnen, vitrages, jaloezieën VOLLEDIG
-- FILTER en VERWIJDER het BUITEN uitzicht door het glas (bomen, straat, gebouwen, lucht, auto's, etc) - vervang dit met een neutrale achtergrond
-- Het BINNEN interieur mag blijven zichtbaar (als binnenfoto)
-- Het glas moet helder blijven, maar zonder het buiten uitzicht
+STEP 3 - KEEP EVERYTHING ELSE IDENTICAL:
+- Wall stays EXACTLY the same (do NOT create new textures)
+- Brick stays EXACTLY as it is
+- Wall color/paint EXACTLY the same
+- Damage, cracks, stains stay as they are
+- Window position and shape EXACTLY the same
+- Lighting on wall EXACTLY the same
 
-RESULTAAT: Exact dezelfde foto, maar met nieuwe ${kleurDesc} ${materiaalDesc} kozijnen en neutraal glas. De rest is 100% identiek.`;
+RESULT: Same photo with new ${kleurDesc} ${materiaalDesc} window frame, no curtains, outdoor view removed. Everything else unchanged.`;
 }
 

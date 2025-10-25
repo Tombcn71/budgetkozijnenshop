@@ -346,11 +346,11 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
             )}
 
             {currentStep === 2 && (
-              <div className="space-y-3 -mx-6 lg:-mx-8 px-6 lg:px-8">
+              <div className="space-y-3">
                 <div>
-                  <Label className="text-foreground text-base font-semibold mb-2 block">Foto's van uw ramen uploaden *</Label>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Upload minimaal 1 foto van uw ramen (binnen of buitenkant)
+                  <Label className="text-foreground text-sm font-medium mb-2 block">Foto's van uw ramen uploaden *</Label>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Upload minimaal 1 foto van uw ramen
                   </p>
                   <PhotoUpload 
                     onPhotosChange={setPhotos}
@@ -377,13 +377,13 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
               </div>
             )}
 
-            <div className="flex gap-3 pt-4">
+            <div className="flex gap-2 pt-4">
               {currentStep > 1 && !isAnalyzing && (
                 <Button
                   type="button"
                   onClick={handlePrevious}
                   variant="outline"
-                  className="flex-1 bg-muted hover:bg-muted/90 text-foreground border-0 h-12"
+                  className="flex-1 bg-muted hover:bg-muted/90 text-foreground border-0 h-10 text-sm"
                 >
                   <ChevronLeft className="w-4 h-4 mr-1" />
                   Vorige
@@ -397,16 +397,18 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                   (currentStep === 2 && photos.length < 1) ||
                   isAnalyzing
                 }
-                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 disabled:opacity-50"
+                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-10 text-sm disabled:opacity-50"
               >
                 {isAnalyzing ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Analyseren & Genereren...
+                    <span className="hidden sm:inline">Analyseren & Genereren...</span>
+                    <span className="sm:hidden">Bezig...</span>
                   </>
                 ) : (
                   <>
-                    {currentStep === 2 ? "Bereken Prijs & Genereer Preview" : "Volgende"}
+                    <span className="hidden sm:inline">{currentStep === 2 ? "Bereken Prijs & Preview" : "Volgende"}</span>
+                    <span className="sm:hidden">{currentStep === 2 ? "Bereken" : "Volgende"}</span>
                     {currentStep < 2 && <ChevronRight className="w-4 h-4 ml-1" />}
                   </>
                 )}
