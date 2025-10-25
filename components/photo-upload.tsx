@@ -55,7 +55,7 @@ export function PhotoUpload({
   const photosRemaining = maxPhotos - photos.length
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-full max-w-full overflow-hidden">
       {/* Upload Zone */}
       {photos.length < maxPhotos && (
         <Card
