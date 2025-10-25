@@ -61,7 +61,7 @@ export function PhotoUpload({
         <Card
           {...getRootProps()}
           className={`
-            border-2 border-dashed p-8 transition-all cursor-pointer
+            border-2 border-dashed p-4 sm:p-6 lg:p-8 transition-all cursor-pointer
             ${isDragActive 
               ? 'border-primary bg-primary/5' 
               : 'border-border hover:border-primary/50 hover:bg-muted/50'
@@ -69,16 +69,16 @@ export function PhotoUpload({
           `}
         >
           <input {...getInputProps()} />
-          <div className="flex flex-col items-center justify-center text-center space-y-4">
+          <div className="flex flex-col items-center justify-center text-center space-y-3">
             <div className={`
-              rounded-full p-4 transition-colors
+              rounded-full p-3 transition-colors
               ${isDragActive ? 'bg-primary/10' : 'bg-muted'}
             `}>
-              <Upload className={`w-8 h-8 ${isDragActive ? 'text-primary' : 'text-muted-foreground'}`} />
+              <Upload className={`w-6 h-6 sm:w-8 sm:h-8 ${isDragActive ? 'text-primary' : 'text-muted-foreground'}`} />
             </div>
             
             <div>
-              <p className="text-lg font-semibold text-foreground mb-2">
+              <p className="text-sm sm:text-base lg:text-lg font-semibold text-foreground mb-1 sm:mb-2">
                 {isDragActive 
                   ? "Drop foto's hier" 
                   : "Sleep foto's hierheen of klik om te uploaden"

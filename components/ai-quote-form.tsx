@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -22,6 +22,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analysisResults, setAnalysisResults] = useState<any[]>([])
   const [priceResult, setPriceResult] = useState<any>(null)
+  const formRef = useRef<HTMLDivElement>(null)
 
   const [formData, setFormData] = useState({
     postcode: "",
@@ -47,6 +48,13 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
       setCurrentStep(3)
     }
   }
+
+  // Scroll to top of form when step changes
+  useEffect(() => {
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [currentStep])
 
   const analyzePhotos = async () => {
     if (photos.length === 0) return
@@ -178,7 +186,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const progressPercentage = (currentStep / 3) * 100
 
   return (
-    <Card className={`p-6 lg:p-8 bg-white shadow-2xl border-0 ${className}`}>
+    <Card ref={formRef} className={`p-6 lg:p-8 bg-white shadow-2xl border-0 ${className}`}>
       {currentStep < 3 ? (
         <>
           <div className="flex items-center gap-2 mb-3">
