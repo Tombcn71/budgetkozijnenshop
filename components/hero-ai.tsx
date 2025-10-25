@@ -10,6 +10,7 @@ export function HeroAI() {
           alt="Vakman installeert raamkozijnen"
           fill
           priority
+          fetchPriority="high"
           quality={85}
           sizes="100vw"
           className="object-cover"
