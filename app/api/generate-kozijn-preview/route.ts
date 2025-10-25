@@ -174,23 +174,27 @@ function buildKozijnPrompt(specs: KozijnSpecs): string {
   const kleurDesc = kleurDescriptions[specs.kleur] || specs.kleur;
   const glasDesc = glasDescriptions[specs.glasType] || specs.glasType;
 
-  return `Gebruik de bijgevoegde foto van ramen/kozijnen en transformeer deze naar nieuwe, moderne ${materiaalDesc} in de kleur ${kleurDesc}. 
-Het glas moet ${glasDesc} zijn. Het type kozijn is ${specs.kozijnType}.
+  return `Vervang de raamkozijnen in deze foto door nieuwe ${materiaalDesc} in de kleur ${kleurDesc}, met ${glasDesc}. Type: ${specs.kozijnType}.
 
-Belangrijke instructies:
-- Behoud de EXACTE positie, grootte en vorm van de ramen zoals in de originele foto
-- Behoud de architectuur van het gebouw volledig intact (muren, stenen blijven exact hetzelfde)
-- Vervang ALLEEN de kozijnen en het glas, niets anders
-- VERWIJDER alle gordijnen, vitrages, jaloezieën en andere raamdecoratie volledig
-- VERWIJDER alle objecten achter de ramen (plantjes, decoratie, meubels, etc)
-- VERWIJDER wat door het glas te zien is (binnen kamers, buiten landschap, straat, etc)
-- Maak het glas neutraal en schoon met alleen subtiele reflecties van de omgeving
-- Het glas moet helder zijn zonder zicht op wat erachter is
-- De nieuwe kozijnen moeten realistisch en professioneel geplaatst lijken
-- Zorg dat de belichting en schaduwen natuurlijk blijven en passen bij de omgeving
-- Het eindresultaat moet fotorealistisch zijn en lijken alsof het echt is
-- Focus: het nieuwe kozijn zelf, niet wat erachter of erbinnen is
+KRITIEK - WAT MAG JE AANPASSEN:
+- ALLEEN het raamkozijn (het frame rondom het glas)
+- ALLEEN het glas in het raam
 
-Maak een hoogwaardige, professionele weergave van hoe deze woning eruit zou zien met de nieuwe kozijnen.`;
+KRITIEK - WAT MOET EXACT HETZELFDE BLIJVEN:
+- De muur PRECIES zoals hij is (VERZIN GEEN nieuwe muur, stenen, of texturen)
+- De bakstenen PRECIES zoals ze zijn
+- De verf/kleur van de muur EXACT hetzelfde
+- Alle schade, barsten, vlekken op de muur blijven zoals ze zijn
+- De positie en vorm van het raam EXACT hetzelfde
+- De belichting op de muur EXACT hetzelfde
+- ALLES behalve het kozijn zelf blijft 100% identiek
+
+WAT MOET JE VERWIJDEREN/WEGHALEN:
+- Alle gordijnen, vitrages, jaloezieën
+- Alle objecten voor/achter de ramen
+- Wat door het glas zichtbaar is (binnen kamers OF buiten uitzicht)
+- Maak het glas mat/neutraal met alleen lichte reflectie
+
+RESULTAAT: Exact dezelfde foto, maar met nieuwe ${kleurDesc} ${materiaalDesc} kozijnen en neutraal glas. De rest is 100% identiek.`;
 }
 
