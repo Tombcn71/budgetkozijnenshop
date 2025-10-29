@@ -211,7 +211,6 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
     if (currentStep === 1) {
       setCurrentStep(2)
     } else if (currentStep === 2) {
-      await analyzePhotos()
       setCurrentStep(3)
     }
   }
@@ -344,13 +343,14 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
           </div>
           <p className="text-xs sm:text-sm italic text-muted-foreground mb-3">
             {currentStep === 1 && "Selecteer uw woningtype"}
-            {currentStep === 2 && "Vul uw voorkeuren in en upload optioneel foto's voor AI preview"}
+            {currentStep === 2 && "Vul uw voorkeuren in voor de kozijnen"}
+            {currentStep === 3 && "Bekijk uw offerte en upload optioneel foto's voor AI preview"}
           </p>
 
           <div className="mb-4">
             <div className="flex justify-between text-xs text-foreground mb-2">
               <span className={currentStep >= 1 ? "font-bold" : ""}>Woningtype</span>
-              <span className={currentStep >= 2 ? "font-bold" : ""}>Gegevens</span>
+              <span className={currentStep >= 2 ? "font-bold" : ""}>Details</span>
               <span className={currentStep >= 3 ? "font-bold" : ""}>Offerte</span>
             </div>
             <Progress 
@@ -403,7 +403,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
 
             {currentStep === 2 && (
               <div className="space-y-4">
-                {/* STAP 2A: Aantal Kozijnen, Glasoppervlakte, Glastype */}
+                {/* STAP 2: Details - Aantal Kozijnen, Glasoppervlakte, Glastype, Extra Services */}
                 {formData.woningtype && (
                   <>
                     {/* Aantal Kozijnen */}
@@ -486,161 +486,42 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                     <p className="text-xs text-muted-foreground italic">
                       💡 Niet zeker van de maten? Kies een schatting - we bespreken de exacte details later
                     </p>
-                  </>
-                )}
 
-                {/* STAP 2B: AI Preview Sectie - Optioneel maar aanbevolen */}
-                <div className="bg-primary/5 border-2 border-primary/20 rounded-lg p-4">
-                  <div className="flex items-start gap-2 mb-3">
-                    <Sparkles className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h3 className="font-semibold text-sm text-foreground mb-1">
-                        ✨ AI Preview (Aanbevolen)
-                      </h3>
-                      <p className="text-xs text-muted-foreground">
-                        Upload foto's van uw huidige ramen en zie direct hoe de nieuwe kozijnen eruit gaan zien!
-                      </p>
-                    </div>
-                  </div>
+                    {/* Extra Services sectie */}
+                    <div className="space-y-3">
+                      <Label className="text-foreground text-sm block">Extra Services</Label>
+                      
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="montage"
+                          checked={formData.montage}
+                          onCheckedChange={(checked) => setFormData({ ...formData, montage: checked as boolean })}
+                          className="border-input data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                        />
+                        <label htmlFor="montage" className="text-sm text-foreground cursor-pointer">
+                          Montage (aangeraden)
+                        </label>
+                      </div>
 
-                  <div className="space-y-4">
-                    {/* Foto Upload */}
-                    <div>
-                      <Label className="text-foreground text-xs sm:text-sm font-medium mb-1 block">
-                        Upload foto's (optioneel)
-                      </Label>
-                      <p className="text-xs text-muted-foreground mb-2">
-                        0-5 foto's (binnen of buiten)
-                      </p>
-                      <PhotoUpload 
-                        onPhotosChange={setPhotos}
-                        maxPhotos={5}
-                        minPhotos={0}
-                      />
-                    </div>
-
-                    {/* Materiaal, Kleur, Type Kozijn - Alleen tonen als foto's zijn geüpload */}
-                    {photos.length > 0 && (
-                      <>
-                        <div className="border-t border-border pt-4">
-                          <p className="text-xs text-muted-foreground mb-3">
-                            Voor AI preview: kies materiaal, kleur en type kozijn
-                          </p>
-
-                          <div className="space-y-3">
-                            <div>
-                              <Label className="text-foreground text-sm mb-2 block">Materiaal Kozijnen *</Label>
-                              <Select
-                                value={formData.materiaal}
-                                onValueChange={(value) => setFormData({ ...formData, materiaal: value })}
-                              >
-                                <SelectTrigger className="bg-background border-0 h-11">
-                                  <SelectValue placeholder="Kies materiaal" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="kunststof">Kunststof (PVC)</SelectItem>
-                                  <SelectItem value="hout">Hout</SelectItem>
-                                  <SelectItem value="aluminium">Aluminium</SelectItem>
-                                  <SelectItem value="hout-aluminium">Hout/Aluminium combinatie</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-
-                            <div>
-                              <Label className="text-foreground text-sm mb-2 block">Kleur *</Label>
-                              <Select
-                                value={formData.kleur}
-                                onValueChange={(value) => setFormData({ ...formData, kleur: value })}
-                              >
-                                <SelectTrigger className="bg-background border-0 h-11">
-                                  <SelectValue placeholder="Kies kleur" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="wit">Wit</SelectItem>
-                                  <SelectItem value="creme">Crème</SelectItem>
-                                  <SelectItem value="grijs">Grijs (RAL 7016)</SelectItem>
-                                  <SelectItem value="antraciet">Antraciet (RAL 7021)</SelectItem>
-                                  <SelectItem value="zwart">Zwart</SelectItem>
-                                  <SelectItem value="donkergroen">Donkergroen (RAL 6009)</SelectItem>
-                                  <SelectItem value="houtkleur">Houtkleur</SelectItem>
-                                </SelectContent>
-                              </Select>
-                  </div>
-
-                            <div>
-                              <Label className="text-foreground text-sm mb-2 block">Type Kozijn *</Label>
-                              <Select
-                                value={formData.kozijnType}
-                                onValueChange={(value) => setFormData({ ...formData, kozijnType: value })}
-                              >
-                                <SelectTrigger className="bg-background border-0 h-11">
-                                  <SelectValue placeholder="Selecteer type" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="draaikiepraam">Draaikiepraam</SelectItem>
-                                  <SelectItem value="draadraam">Draadraam</SelectItem>
-                                  <SelectItem value="kiepraam">Kiepraam</SelectItem>
-                                  <SelectItem value="schuifraam">Schuifraam</SelectItem>
-                                  <SelectItem value="vaste-beglazing">Vaste beglazing</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                {/* Extra Services sectie */}
-                <div className="space-y-3">
-                  <Label className="text-foreground text-sm block">Extra Services</Label>
-
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="montage"
-                      checked={formData.montage}
-                      onCheckedChange={(checked) => setFormData({ ...formData, montage: checked as boolean })}
-                      className="border-input data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-                    />
-                    <label htmlFor="montage" className="text-sm text-foreground cursor-pointer">
-                      Montage (aangeraden)
-                    </label>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="afvoer"
-                      checked={formData.afvoerOudeKozijnen}
-                      onCheckedChange={(checked) => setFormData({ ...formData, afvoerOudeKozijnen: checked as boolean })}
-                      className="border-input data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-                    />
-                    <label htmlFor="afvoer" className="text-sm text-foreground cursor-pointer">
-                      Afvoer oude kozijnen
-                    </label>
-                  </div>
-                </div>
-                
-                {isAnalyzing && (
-                  <Card className="p-4 bg-primary/5 border-primary/20">
-                    <div className="flex items-center gap-3">
-                      <Loader2 className="w-5 h-5 text-primary animate-spin" />
-                      <div>
-                        <p className="text-sm font-medium text-foreground">
-                          AI analyseert uw foto's en genereert preview...
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Dit kan 30-60 seconden duren
-                        </p>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="afvoer"
+                          checked={formData.afvoerOudeKozijnen}
+                          onCheckedChange={(checked) => setFormData({ ...formData, afvoerOudeKozijnen: checked as boolean })}
+                          className="border-input data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                        />
+                        <label htmlFor="afvoer" className="text-sm text-foreground cursor-pointer">
+                          Afvoer oude kozijnen
+                        </label>
                       </div>
                     </div>
-                  </Card>
+                  </>
                 )}
               </div>
             )}
 
             <div className="flex gap-2 pt-2 sm:pt-3">
-              {currentStep > 1 && !isAnalyzing && (
+              {currentStep > 1 && (
                 <Button
                   type="button"
                   onClick={handlePrevious}
@@ -656,34 +537,151 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                 onClick={handleNext}
                 disabled={
                   (currentStep === 1 && !formData.woningtype) ||
-                  (currentStep === 2 && (!formData.aantalRamen || !formData.glasoppervlakte || (photos.length > 0 && (!formData.materiaal || !formData.kleur || !formData.kozijnType)))) ||
-                  isAnalyzing
+                  (currentStep === 2 && (!formData.aantalRamen || !formData.glasoppervlakte))
                 }
                 className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-10 text-sm disabled:opacity-50"
               >
-                {isAnalyzing ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    <span className="hidden sm:inline">{photos.length > 0 ? "AI Preview Genereren..." : "Offerte Voorbereiden..."}</span>
-                    <span className="sm:hidden">Bezig...</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="hidden sm:inline">{currentStep === 2 ? "Bekijk Offerte" : "Volgende"}</span>
-                    <span className="sm:hidden">{currentStep === 2 ? "Offerte" : "Volgende"}</span>
-                    {currentStep < 2 && <ChevronRight className="w-4 h-4 ml-1" />}
-                  </>
-                )}
+                <>
+                  <span className="hidden sm:inline">{currentStep === 2 ? "Bekijk Offerte" : "Volgende"}</span>
+                  <span className="sm:hidden">{currentStep === 2 ? "Offerte" : "Volgende"}</span>
+                  {currentStep < 2 && <ChevronRight className="w-4 h-4 ml-1" />}
+                </>
               </Button>
             </div>
           </form>
         </>
       ) : (
         <div className="text-center space-y-6">
-          <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full mb-2">
-            <Check className="w-4 h-4" />
-              <span className="text-sm font-semibold">AI Analyse & Preview Klaar</span>
-          </div>
+          {/* AI Preview Upload Sectie */}
+          {analysisResults.length === 0 && (
+            <div className="bg-primary/5 border-2 border-primary/20 rounded-lg p-4 text-left">
+              <div className="flex items-start gap-2 mb-3">
+                <Sparkles className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-base text-foreground mb-1">
+                    ✨ Upload foto's voor AI Preview (Optioneel)
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Upload foto's van uw huidige ramen en zie direct hoe de nieuwe kozijnen eruit gaan zien!
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                {/* Foto Upload */}
+                <div>
+                  <Label className="text-foreground text-xs sm:text-sm font-medium mb-1 block">
+                    Upload foto's (0-5 foto's)
+                  </Label>
+                  <p className="text-xs text-muted-foreground mb-2">
+                    Binnen of buiten foto's van uw huidige ramen
+                  </p>
+                  <PhotoUpload 
+                    onPhotosChange={setPhotos}
+                    maxPhotos={5}
+                    minPhotos={0}
+                  />
+                </div>
+
+                {/* Materiaal, Kleur, Type Kozijn - Alleen tonen als foto's zijn geüpload */}
+                {photos.length > 0 && (
+                  <>
+                    <div className="border-t border-border pt-4">
+                      <p className="text-xs text-muted-foreground mb-3">
+                        Voor AI preview: kies materiaal, kleur en type kozijn
+                      </p>
+
+                      <div className="space-y-3">
+                        <div>
+                          <Label className="text-foreground text-sm mb-2 block">Materiaal Kozijnen *</Label>
+                          <Select
+                            value={formData.materiaal}
+                            onValueChange={(value) => setFormData({ ...formData, materiaal: value })}
+                          >
+                            <SelectTrigger className="bg-background border-0 h-11">
+                              <SelectValue placeholder="Kies materiaal" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="kunststof">Kunststof (PVC)</SelectItem>
+                              <SelectItem value="hout">Hout</SelectItem>
+                              <SelectItem value="aluminium">Aluminium</SelectItem>
+                              <SelectItem value="hout-aluminium">Hout/Aluminium combinatie</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div>
+                          <Label className="text-foreground text-sm mb-2 block">Kleur *</Label>
+                          <Select
+                            value={formData.kleur}
+                            onValueChange={(value) => setFormData({ ...formData, kleur: value })}
+                          >
+                            <SelectTrigger className="bg-background border-0 h-11">
+                              <SelectValue placeholder="Kies kleur" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="wit">Wit</SelectItem>
+                              <SelectItem value="creme">Crème</SelectItem>
+                              <SelectItem value="grijs">Grijs (RAL 7016)</SelectItem>
+                              <SelectItem value="antraciet">Antraciet (RAL 7021)</SelectItem>
+                              <SelectItem value="zwart">Zwart</SelectItem>
+                              <SelectItem value="donkergroen">Donkergroen (RAL 6009)</SelectItem>
+                              <SelectItem value="houtkleur">Houtkleur</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div>
+                          <Label className="text-foreground text-sm mb-2 block">Type Kozijn *</Label>
+                          <Select
+                            value={formData.kozijnType}
+                            onValueChange={(value) => setFormData({ ...formData, kozijnType: value })}
+                          >
+                            <SelectTrigger className="bg-background border-0 h-11">
+                              <SelectValue placeholder="Selecteer type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="draaikiepraam">Draaikiepraam</SelectItem>
+                              <SelectItem value="draadraam">Draadraam</SelectItem>
+                              <SelectItem value="kiepraam">Kiepraam</SelectItem>
+                              <SelectItem value="schuifraam">Schuifraam</SelectItem>
+                              <SelectItem value="vaste-beglazing">Vaste beglazing</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <Button
+                          onClick={analyzePhotos}
+                          disabled={!formData.materiaal || !formData.kleur || !formData.kozijnType || isAnalyzing}
+                          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-11"
+                        >
+                          {isAnalyzing ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              AI Preview Genereren...
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-4 h-4 mr-2" />
+                              Genereer AI Preview
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Success banner na AI preview */}
+          {analysisResults.length > 0 && (
+            <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full mb-2">
+              <Check className="w-4 h-4" />
+              <span className="text-sm font-semibold">AI Preview Gegenereerd!</span>
+            </div>
+          )}
 
             <h2 className="font-bold text-2xl text-foreground">Uw Instant Offerte:</h2>
 
@@ -884,8 +882,31 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
             </p>
           </div>
 
-          <div className="space-y-3 text-left pt-4">
-            <Label className="text-foreground text-sm">Uw gegevens voor bevestiging:</Label>
+          <div className="flex gap-3">
+            <Button 
+              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-base"
+              onClick={(e) => {
+                e.preventDefault();
+                if (typeof window !== 'undefined' && (window as any).Calendly) {
+                  (window as any).Calendly.initPopupWidget({url: 'https://calendly.com/tbvanreijn'});
+                }
+              }}
+            >
+              📞 Gratis Adviesgesprek
+            </Button>
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-white px-2 text-muted-foreground">Of vul uw gegevens in</span>
+            </div>
+          </div>
+
+          <div className="space-y-3 text-left">
+            <Label className="text-foreground text-sm">Uw gegevens voor offerte bevestiging:</Label>
             <Input
               placeholder="Naam"
               value={formData.naam}
@@ -908,8 +929,11 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
             />
           </div>
 
-          <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-base">
-            Bevestig Offerte & Plan Opname
+          <Button 
+            type="submit"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-base"
+          >
+            Verstuur Offerte Aanvraag
           </Button>
 
           <Button
