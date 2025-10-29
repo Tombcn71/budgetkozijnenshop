@@ -343,14 +343,14 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
               </h2>
           </div>
           <p className="text-xs sm:text-sm italic text-muted-foreground mb-3">
-            {currentStep === 1 && "Vul uw voorkeuren in voor de nieuwe kozijnen"}
-            {currentStep === 2 && "Upload foto's voor AI preview (optioneel maar aanbevolen)"}
+            {currentStep === 1 && "Selecteer uw woningtype"}
+            {currentStep === 2 && "Vul uw voorkeuren in en upload optioneel foto's voor AI preview"}
           </p>
 
           <div className="mb-4">
             <div className="flex justify-between text-xs text-foreground mb-2">
-              <span className={currentStep >= 1 ? "font-bold" : ""}>Gegevens</span>
-              <span className={currentStep >= 2 ? "font-bold" : ""}>Preview</span>
+              <span className={currentStep >= 1 ? "font-bold" : ""}>Woningtype</span>
+              <span className={currentStep >= 2 ? "font-bold" : ""}>Gegevens</span>
               <span className={currentStep >= 3 ? "font-bold" : ""}>Offerte</span>
             </div>
             <Progress 
@@ -366,7 +366,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
           <form className="space-y-4">
             {currentStep === 1 && (
               <div className="space-y-4">
-                {/* STAP 1A: Woningtype Selectie */}
+                {/* STAP 1: Alleen Woningtype Selectie */}
                 <div>
                   <Label className="text-foreground text-sm font-semibold mb-3 block">
                     Wat voor type woning heeft u? *
@@ -398,52 +398,56 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                     ))}
                   </div>
                 </div>
+              </div>
+            )}
 
-                {/* STAP 1B: Details (alleen tonen als woningtype gekozen) */}
+            {currentStep === 2 && (
+              <div className="space-y-4">
+                {/* STAP 2A: Aantal Kozijnen, Glasoppervlakte, Glastype */}
                 {formData.woningtype && (
                   <>
                     {/* Aantal Kozijnen */}
-                <div>
+                    <div>
                       <Label className="text-foreground text-sm mb-2 block">Hoeveel kozijnen wilt u vervangen? *</Label>
-                  <Select
+                      <Select
                         value={formData.aantalRamen}
                         onValueChange={(value) => setFormData({ ...formData, aantalRamen: value })}
-                  >
-                    <SelectTrigger className="bg-background border-0 h-11">
+                      >
+                        <SelectTrigger className="bg-background border-0 h-11">
                           <SelectValue placeholder="Kies aantal kozijnen" />
-                    </SelectTrigger>
-                    <SelectContent>
+                        </SelectTrigger>
+                        <SelectContent>
                           {getKozijnenOptions(formData.woningtype).map(num => (
                             <SelectItem key={num} value={num.toString()}>
                               {num} kozijnen
                             </SelectItem>
                           ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
                     {/* Glasoppervlakte */}
-                <div>
+                    <div>
                       <Label className="text-foreground text-sm mb-2 block">Totale glasoppervlakte (alle ramen samen) *</Label>
-                  <Select
+                      <Select
                         value={formData.glasoppervlakte}
                         onValueChange={(value) => setFormData({ ...formData, glasoppervlakte: value })}
-                  >
-                    <SelectTrigger className="bg-background border-0 h-11">
+                      >
+                        <SelectTrigger className="bg-background border-0 h-11">
                           <SelectValue placeholder="Kies glasoppervlakte" />
-                    </SelectTrigger>
-                    <SelectContent>
+                        </SelectTrigger>
+                        <SelectContent>
                           {getGlasoppervlakteOptions(formData.woningtype).map(num => (
                             <SelectItem key={num} value={num.toString()}>
                               {num} m²
                             </SelectItem>
                           ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
                     {/* Glastype (HR++ of HR+++) */}
-                <div>
+                    <div>
                       <Label className="text-foreground text-sm font-semibold mb-3 block">
                         Welk type glas wenst u? *
                       </Label>
@@ -460,7 +464,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                           <div className="font-semibold text-foreground text-sm">HR++ glas</div>
                           <div className="text-xs text-muted-foreground mt-1">
                             Standaard isolatie - inbegrepen in prijs
-                </div>
+                          </div>
                         </button>
                         <button
                           type="button"
@@ -474,22 +478,18 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                           <div className="font-semibold text-foreground text-sm">HR+++ glas</div>
                           <div className="text-xs text-muted-foreground mt-1">
                             Beste isolatie - +10% op totaalprijs
-              </div>
+                          </div>
                         </button>
-                  </div>
-                  </div>
+                      </div>
+                    </div>
 
                     <p className="text-xs text-muted-foreground italic">
                       💡 Niet zeker van de maten? Kies een schatting - we bespreken de exacte details later
                     </p>
                   </>
                 )}
-              </div>
-            )}
 
-            {currentStep === 2 && (
-              <div className="space-y-4">
-                {/* AI Preview Sectie - Optioneel maar aanbevolen */}
+                {/* STAP 2B: AI Preview Sectie - Optioneel maar aanbevolen */}
                 <div className="bg-primary/5 border-2 border-primary/20 rounded-lg p-4">
                   <div className="flex items-start gap-2 mb-3">
                     <Sparkles className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -655,8 +655,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                 type="button"
                 onClick={handleNext}
                 disabled={
-                  (currentStep === 1 && (!formData.woningtype || !formData.aantalRamen || !formData.glasoppervlakte)) ||
-                  (currentStep === 2 && photos.length > 0 && (!formData.materiaal || !formData.kleur || !formData.kozijnType)) ||
+                  (currentStep === 1 && !formData.woningtype) ||
+                  (currentStep === 2 && (!formData.aantalRamen || !formData.glasoppervlakte || (photos.length > 0 && (!formData.materiaal || !formData.kleur || !formData.kozijnType)))) ||
                   isAnalyzing
                 }
                 className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-10 text-sm disabled:opacity-50"
