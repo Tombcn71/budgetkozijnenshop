@@ -156,7 +156,7 @@ const structuredData = {
       "@type": "Article",
       "@id": "https://budgetkozijnenshop.nl/kozijnen-rotterdam#waarom-vervangen",
       "headline": "Kozijnen Vervangen in Rotterdam: Kustklimaat, Besparing en Duurzaamheid",
-      "description": "Alles over kozijnen vervangen in Rotterdam: naoorlogse woningen, kustklimaat en energiebesparing.",
+      "description": "Alles over kozijnen vervangen in Rotterdam: energiebesparing en duurzaamheid.",
       "about": [
         {
           "@type": "Thing",
@@ -313,10 +313,6 @@ export default function KozijnenRotterdamPage() {
                   <ul className="space-y-3 text-gray-600">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span>Veel naoorlogse woningen (jaren 50-70) met verouderde kozijnen</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <span>Kustklimaat: extra slijtage door wind, regen en zout</span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -416,7 +412,7 @@ export default function KozijnenRotterdamPage() {
               <h2 className="text-3xl lg:text-4xl font-bold mb-8">Kozijnen Vervangen in Rotterdam: Kustklimaat en Duurzaamheid</h2>
               
               <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                Rotterdam is een stad in beweging. Van het karakteristieke Delfshaven tot de moderne architectuur van de Kop van Zuid - Rotterdam combineert geschiedenis met innovatie. Deze diversiteit zien we ook terug in de woningvoorraad. Veel Rotterdammers wonen in naoorlogse woningen uit de jaren 50, 60 en 70, vaak met kozijnen die dringend aan vervanging toe zijn.
+                Rotterdam is een stad in beweging. Van het karakteristieke Delfshaven tot de moderne architectuur van de Kop van Zuid - Rotterdam combineert geschiedenis met innovatie.
               </p>
 
               <h3 className="text-2xl font-bold mt-8 mb-4">De invloed van het kustklimaat</h3>
@@ -439,17 +435,7 @@ export default function KozijnenRotterdamPage() {
                 De ISDE-subsidie is in Rotterdam ruim beschikbaar en wordt actief gepromoot. Daarnaast zijn er vaak lokale initiatieven waarbij wijken gezamenlijk verduurzamen, wat kan leiden tot extra voordelen en kortingen.
               </p>
 
-              <h3 className="text-2xl font-bold mt-8 mb-4">Naoorlogse woningen: een speciale categorie</h3>
-              
-              <p className="text-gray-700 leading-relaxed mb-4">
-                Een groot deel van Rotterdam is herbouwd na de Tweede Wereldoorlog. De wederopbouwarchitectuur is iconisch, maar de woningen uit die periode hebben vaak kozijnen die niet meer voldoen aan moderne eisen. Veel van deze kozijnen zijn standaard uitgevoerd en relatief eenvoudig te vervangen.
-              </p>
-
-              <p className="text-gray-700 leading-relaxed mb-6">
-                Bij portiekflats en eengezinswoningen uit de jaren 50-70 is het vervangen van kozijnen vaak een logische stap binnen een bredere verduurzaming. Denk aan spouwmuurisolatie, dakisolatie en eventueel zonnepanelen. Door deze maatregelen te combineren, kunt u uw energielabel aanzienlijk verbeteren.
-              </p>
-
-              <h3 className="text-2xl font-bold mt-8 mb-4">Isolatie en geluidswering in de stad</h3>
+<h3 className="text-2xl font-bold mt-8 mb-4">Isolatie en geluidswering in de stad</h3>
               
               <p className="text-gray-700 leading-relaxed mb-4">
                 Rotterdam is een levendige havenstad met veel verkeersbewegingen. Of u nu woont in het centrum, nabij de haven, of in een buitenwijk langs een drukke weg - geluidsisolatie is voor veel Rotterdammers een belangrijk onderwerp. Moderne kozijnen met HR++ of HR+++ beglazing bieden naast thermische isolatie ook uitstekende akoestische isolatie.

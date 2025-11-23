@@ -34,28 +34,6 @@ const faqsAmsterdam = [
   {
     question: "Zijn de kozijnen voorzien van inbraakwerend beslag?",
     answer: "Ja, alle kozijnen worden standaard geleverd met SKG-gecertificeerd hang- en sluitwerk (SKG** of SKG***) en voldoen aan het Politiekeurmerk Veilig Wonen (PKVW). Dit biedt optimale beveiliging tegen inbraak."
-  },
-  
-  // Amsterdam-specifieke vragen
-  {
-    question: "Werken jullie ook in beschermde stadsgezichten in Amsterdam?",
-    answer: "Ja, wij hebben ruime ervaring met kozijnen in beschermde stadsgezichten en bij monumentale panden. Wij zorgen ervoor dat de kozijnen voldoen aan welstandseisen en passen bij het karakter van uw pand en de omgeving. In wijken zoals de Grachtengordel, Jordaan en De Pijp weten wij precies welke eisen gelden.",
-    citySpecific: true
-  },
-  {
-    question: "Hoe gaan jullie om met de bereikbaarheid in de Amsterdamse binnenstad?",
-    answer: "Wij zijn gewend te werken in de smalle straten van Amsterdam. Onze monteurs plannen hun werkzaamheden zorgvuldig, regelen eventuele parkeervergunningen en zorgen voor minimale overlast voor u en uw buren. Ook in nauwe stegen en bij grachten hebben wij oplossingen.",
-    citySpecific: true
-  },
-  {
-    question: "Kan ik kozijnen plaatsen in een grachtenpand zonder het authentieke karakter te verliezen?",
-    answer: "Absoluut. Moderne kozijnen kunnen worden uitgevoerd met smalle profielen, authentieke kleuren en klassieke raamindelingen. Zo behoudt u het monumentale karakter van uw grachtenpand, maar profiteert u wel van moderne isolatie, geluidswering en onderhoudsgemak.",
-    citySpecific: true
-  },
-  {
-    question: "Helpen jullie met vergunningen voor monumentale panden in Amsterdam?",
-    answer: "Ja, wij adviseren u over de benodigde vergunningen. Voor monumentale panden is vaak een monumentenvergunning nodig. Wij kunnen u ondersteunen bij het aanvraagproces en zorgen ervoor dat de kozijnen voldoen aan alle eisen van de gemeente Amsterdam.",
-    citySpecific: true
   }
 ]
 

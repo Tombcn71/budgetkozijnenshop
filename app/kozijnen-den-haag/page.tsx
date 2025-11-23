@@ -315,10 +315,6 @@ export default function KozijnenDenHaagPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span>Mix van monumentale panden en naoorlogse bouw</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <span>Geluidsisolatie: stad én kustweer</span>
                     </li>
                   </ul>
@@ -447,17 +443,7 @@ export default function KozijnenDenHaagPage() {
                 Door te investeren in kozijnen met speciale geluidswerend glas, kunt u de geluidsoverlast aanzienlijk verminderen. Dit draagt bij aan rust, concentratie en slaapkwaliteit. Vooral in de binnenstad en in wijken nabij hoofdwegen merken bewoners direct het verschil.
               </p>
 
-              <h3 className="text-2xl font-bold mt-8 mb-4">Naoorlogse woonwijken</h3>
-              
-              <p className="text-gray-700 leading-relaxed mb-4">
-                Delen van Den Haag, zoals de Schilderswijk, Transvaal en Morgenstond, kennen veel naoorlogse woningbouw. Deze woningen hebben vaak originele kozijnen uit de jaren 50, 60 of 70. Deze kozijnen voldoen niet meer aan moderne isolatie-eisen en zijn vaak dringend aan vervanging toe.
-              </p>
-
-              <p className="text-gray-700 leading-relaxed mb-6">
-                Het vervangen van deze kozijnen is relatief eenvoudig en levert direct resultaat op. De woningen worden comfortabeler, de energierekening daalt en het energielabel verbetert. In veel gevallen is dit onderdeel van een bredere verduurzaming, samen met andere isolatiemaatregelen.
-              </p>
-
-              <h3 className="text-2xl font-bold mt-8 mb-4">Energiebesparing en duurzaamheid</h3>
+<h3 className="text-2xl font-bold mt-8 mb-4">Energiebesparing en duurzaamheid</h3>
               
               <p className="text-gray-700 leading-relaxed mb-4">
                 Den Haag zet sterk in op duurzaamheid en klimaatadaptatie. De gemeente stimuleert woningeigenaren om te verduurzamen via verschillende regelingen en voorlichtingscampagnes. Het vervangen van oude kozijnen past perfect in deze aanpak.

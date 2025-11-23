@@ -34,18 +34,6 @@ const faqsRotterdam = [
   {
     question: "Zijn de kozijnen voorzien van inbraakwerend beslag?",
     answer: "Ja, alle kozijnen worden standaard geleverd met SKG-gecertificeerd hang- en sluitwerk (SKG** of SKG***) en voldoen aan het Politiekeurmerk Veilig Wonen (PKVW). Dit biedt optimale beveiliging tegen inbraak."
-  },
-  
-  // Rotterdam-specifieke vragen
-  {
-    question: "Welke oplossingen hebben jullie voor naoorlogse woningen in Rotterdam?",
-    answer: "Naoorlogse woningen uit de jaren 50-70 hebben vaak standaard kozijnen die relatief eenvoudig te vervangen zijn. Wij hebben veel ervaring met dit type woningen in wijken zoals Pendrecht, Lombardijen en Ommoord. De vervanging verloopt soepel en levert direct resultaat op in comfort en energiebesparing.",
-    citySpecific: true
-  },
-  {
-    question: "Werken jullie ook in karakteristieke wijken zoals Delfshaven en Kralingen?",
-    answer: "Ja, wij hebben ervaring met diverse Rotterdamse wijken, van karakteristieke panden in Delfshaven tot moderne architectuur aan de Kop van Zuid. Voor elk type woning bieden wij passende oplossingen die aansluiten bij de lokale bouwstijl en uw wensen.",
-    citySpecific: true
   }
 ]
 

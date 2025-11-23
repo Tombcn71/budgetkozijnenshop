@@ -34,28 +34,6 @@ const faqsUtrecht = [
   {
     question: "Zijn de kozijnen voorzien van inbraakwerend beslag?",
     answer: "Ja, alle kozijnen worden standaard geleverd met SKG-gecertificeerd hang- en sluitwerk (SKG** of SKG***) en voldoen aan het Politiekeurmerk Veilig Wonen (PKVW). Dit biedt optimale beveiliging tegen inbraak."
-  },
-  
-  // Utrecht-specifieke vragen
-  {
-    question: "Helpen nieuwe kozijnen bij het behalen van energielabel C voor 2030?",
-    answer: "Ja, het vervangen van oude kozijnen door moderne isolerende kozijnen is vaak een van de meest effectieve maatregelen om uw energielabel te verbeteren. Wij adviseren u graag over welke stappen nodig zijn om vóór 2030 aan de eisen te voldoen.",
-    citySpecific: true
-  },
-  {
-    question: "Ik verhuur mijn woning in Utrecht. Hoe helpen nieuwe kozijnen mij als verhuurder?",
-    answer: "Een beter energielabel maakt uw woning aantrekkelijker voor huurders en verhoogt de huurwaarde. Vanaf 2030 is minimaal label C verplicht voor verhuur. Door nu al te investeren in nieuwe kozijnen, bent u voorbereid en profiteert u direct van hogere huurinkomsten en snellere verhuur.",
-    citySpecific: true
-  },
-  {
-    question: "Werken jullie ook in het historische centrum van Utrecht?",
-    answer: "Ja, wij hebben ervaring met panden in de Utrechtse binnenstad, inclusief monumentale gebouwen en panden in beschermde gebieden. Wij zorgen ervoor dat de kozijnen voldoen aan welstandseisen en passen bij het karakter van uw pand.",
-    citySpecific: true
-  },
-  {
-    question: "Kunnen nieuwe kozijnen de waarde van mijn Utrechtse woning verhogen?",
-    answer: "Ja, in Utrecht waar de woningprijzen sterk zijn gestegen, draagt een goed energielabel bij aan een hogere woningwaarde en snellere verkoop. Kopers waarderen energiezuinige woningen en zijn bereid meer te betalen voor een woning die 2030-proof is.",
-    citySpecific: true
   }
 ]
 

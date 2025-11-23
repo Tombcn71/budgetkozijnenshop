@@ -34,28 +34,6 @@ const faqsDenHaag = [
   {
     question: "Zijn de kozijnen voorzien van inbraakwerend beslag?",
     answer: "Ja, alle kozijnen worden standaard geleverd met SKG-gecertificeerd hang- en sluitwerk (SKG** of SKG***) en voldoen aan het Politiekeurmerk Veilig Wonen (PKVW). Dit biedt optimale beveiliging tegen inbraak."
-  },
-  
-  // Den Haag-specifieke vragen
-  {
-    question: "Zijn jullie kozijnen geschikt voor het kustklimaat bij Scheveningen?",
-    answer: "Ja, onze kozijnen zijn speciaal geschikt voor kustklimaat. Ze hebben zoutbestendige coatings, roestvrij beslag en flexibele kitvoegen die bestand zijn tegen zeelucht, wind en vocht. Dit maakt ze ideaal voor wijken nabij de kust zoals Scheveningen, Duindorp en Kijkduin.",
-    citySpecific: true
-  },
-  {
-    question: "Werken jullie ook in monumentale wijken zoals het Statenkwartier?",
-    answer: "Ja, wij hebben ruime ervaring met monumentale panden en beschermde stadsgezichten in Den Haag. Wij zorgen ervoor dat de kozijnen voldoen aan welstandseisen en passen bij het karakter van wijken zoals het Statenkwartier, Archipelbuurt en het historische centrum.",
-    citySpecific: true
-  },
-  {
-    question: "Kunnen nieuwe kozijnen de geluidsoverlast in de stad verminderen?",
-    answer: "Ja, moderne kozijnen met hoogwaardige beglazing bieden uitstekende geluidsisolatie. Vooral in drukke gebieden zoals het centrum of nabij hoofdwegen merkt u direct het verschil. Dit draagt bij aan rust, concentratie en slaapkwaliteit.",
-    citySpecific: true
-  },
-  {
-    question: "Welke oplossingen hebben jullie voor naoorlogse woningen in Den Haag?",
-    answer: "Veel Haagse wijken zoals Transvaal, Schilderswijk en Morgenstond hebben naoorlogse woningen met originele kozijnen die aan vervanging toe zijn. Wij hebben veel ervaring met dit type woningen en kunnen u adviseren over de beste aanpak voor isolatie en comfort.",
-    citySpecific: true
   }
 ]
 
