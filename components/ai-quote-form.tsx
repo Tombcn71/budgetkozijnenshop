@@ -157,6 +157,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analysisResults, setAnalysisResults] = useState<any[]>([])
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null)
+  const [isSendingEmail, setIsSendingEmail] = useState(false)
+  const [emailSent, setEmailSent] = useState(false)
 
   const [formData, setFormData] = useState({
     woningtype: "" as WoningtypeKey | "",
@@ -204,6 +206,49 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
       }
     } catch (error) {
       console.log('Share cancelled or failed:', error)
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!formData.naam || !formData.email) {
+      alert('Vul alstublieft uw naam en e-mail in')
+      return
+    }
+
+    setIsSendingEmail(true)
+
+    try {
+      const response = await fetch('/api/send-quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formData,
+          analysisResults,
+          priceRange,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Kon offerte niet verzenden')
+      }
+
+      setEmailSent(true)
+      console.log('✅ Offerte verzonden:', data)
+
+      // Toon succes bericht
+      setTimeout(() => {
+        alert('✅ Offerte verzonden! Check uw email en we nemen zo spoedig mogelijk contact met u op.')
+      }, 500)
+
+    } catch (error: any) {
+      console.error('❌ Offerte verzenden mislukt:', error)
+      alert('Er ging iets mis bij het verzenden. Probeer het opnieuw of neem contact op.')
+    } finally {
+      setIsSendingEmail(false)
     }
   }
 
@@ -931,9 +976,23 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
 
           <Button 
             type="submit"
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-base"
+            onClick={handleSubmit}
+            disabled={!formData.naam || !formData.email || isSendingEmail || emailSent}
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-base disabled:opacity-50"
           >
-            Verstuur Offerte Aanvraag
+            {isSendingEmail ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Verzenden...
+              </>
+            ) : emailSent ? (
+              <>
+                <Check className="w-4 h-4 mr-2" />
+                Verzonden! Check uw email
+              </>
+            ) : (
+              'Verstuur Offerte Aanvraag'
+            )}
           </Button>
 
           <Button
@@ -942,6 +1001,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
               setCurrentStep(1)
               setPhotos([])
               setAnalysisResults([])
+              setIsSendingEmail(false)
+              setEmailSent(false)
               setFormData({
                 woningtype: "",
                 aantalRamen: "",
