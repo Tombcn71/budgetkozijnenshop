@@ -354,8 +354,210 @@ export default function CalculatorDataPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* LEFT: Test Scenario */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          {/* LEFT: Tarieven Aanpassen */}
+          <div className="space-y-6">
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-lg shadow-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-green-900">Provider: Pas Tarieven Aan</h2>
+                <button
+                  onClick={resetTarieven}
+                  className="text-xs px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                >
+                  Reset
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-green-900">Materiaal Prijzen (per m²)</label>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Kunststof:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.materiaal.kunststof}
+                        onChange={(e) => setTarieven({...tarieven, materiaal: {...tarieven.materiaal, kunststof: parseInt(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Hout:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.materiaal.hout}
+                        onChange={(e) => setTarieven({...tarieven, materiaal: {...tarieven.materiaal, hout: parseInt(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Aluminium:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.materiaal.aluminium}
+                        onChange={(e) => setTarieven({...tarieven, materiaal: {...tarieven.materiaal, aluminium: parseInt(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-green-200">
+                  <label className="block text-sm font-semibold mb-2 text-green-900">Glas Prijzen (per m²)</label>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Dubbel:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.glas.dubbel}
+                        onChange={(e) => setTarieven({...tarieven, glas: {...tarieven.glas, dubbel: parseInt(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">HR++:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.glas["hr++"]}
+                        onChange={(e) => setTarieven({...tarieven, glas: {...tarieven.glas, "hr++": parseInt(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Triple:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.glas.triple}
+                        onChange={(e) => setTarieven({...tarieven, glas: {...tarieven.glas, triple: parseInt(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-green-200">
+                  <label className="block text-sm font-semibold mb-2 text-green-900">Type Multipliers</label>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Draai:</span>
+                      <input
+                        type="number"
+                        step="0.1"
+                        value={tarieven.type.draai}
+                        onChange={(e) => setTarieven({...tarieven, type: {...tarieven.type, draai: parseFloat(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                      <span className="text-sm">×</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Draai-kiep:</span>
+                      <input
+                        type="number"
+                        step="0.1"
+                        value={tarieven.type["draai-kiep"]}
+                        onChange={(e) => setTarieven({...tarieven, type: {...tarieven.type, "draai-kiep": parseFloat(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                      <span className="text-sm">×</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Schuif:</span>
+                      <input
+                        type="number"
+                        step="0.1"
+                        value={tarieven.type.schuif}
+                        onChange={(e) => setTarieven({...tarieven, type: {...tarieven.type, schuif: parseFloat(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                      <span className="text-sm">×</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-green-200">
+                  <label className="block text-sm font-semibold mb-2 text-green-900">Kleur Toeslagen (per raam)</label>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Wit:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.kleur.wit}
+                        onChange={(e) => setTarieven({...tarieven, kleur: {...tarieven.kleur, wit: parseInt(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Grijs:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.kleur.grijs}
+                        onChange={(e) => setTarieven({...tarieven, kleur: {...tarieven.kleur, grijs: parseInt(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Zwart:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.kleur.zwart}
+                        onChange={(e) => setTarieven({...tarieven, kleur: {...tarieven.kleur, zwart: parseInt(e.target.value)}})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-green-200">
+                  <label className="block text-sm font-semibold mb-2 text-green-900">Service Kosten</label>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Montage:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.montage}
+                        onChange={(e) => setTarieven({...tarieven, montage: parseInt(e.target.value)})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                      <span className="text-xs text-gray-500">/raam</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Afvoer:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.afvoer}
+                        onChange={(e) => setTarieven({...tarieven, afvoer: parseInt(e.target.value)})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                      <span className="text-xs text-gray-500">forfait</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-24">Minimum:</span>
+                      <span className="text-sm">€</span>
+                      <input
+                        type="number"
+                        value={tarieven.minimum}
+                        onChange={(e) => setTarieven({...tarieven, minimum: parseInt(e.target.value)})}
+                        className="flex-1 px-3 py-1 border rounded text-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* MIDDLE: Test Scenario */}
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
