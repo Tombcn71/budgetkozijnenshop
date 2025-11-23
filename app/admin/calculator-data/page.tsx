@@ -5,37 +5,37 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { AlertCircle, Download, Save } from "lucide-react"
 
-// Basis structuur voor alle prijzen
-const LEGE_PRIJSMATRIX = {
+// Voorbeeld prijzen (Bart past deze aan)
+const VOORBEELD_PRIJSMATRIX = {
   // Materiaal + Glas combinaties (prijs per m²)
-  "kunststof-dubbel": 0,
-  "kunststof-hr++": 0,
-  "kunststof-triple": 0,
-  "hout-dubbel": 0,
-  "hout-hr++": 0,
-  "hout-triple": 0,
-  "aluminium-dubbel": 0,
-  "aluminium-hr++": 0,
-  "aluminium-triple": 0,
+  "kunststof-dubbel": 280,
+  "kunststof-hr++": 360,
+  "kunststof-triple": 460,
+  "hout-dubbel": 450,
+  "hout-hr++": 530,
+  "hout-triple": 630,
+  "aluminium-dubbel": 550,
+  "aluminium-hr++": 630,
+  "aluminium-triple": 730,
   
   // Kozijn profielen (toeslag per m²)
   "profiel-60mm": 0,
-  "profiel-70mm": 0,
-  "profiel-80mm": 0,
+  "profiel-70mm": 20,
+  "profiel-80mm": 40,
   
   // Type multipliers
-  "type-draai": 1.0,
+  "type-draai": 0.9,
   "type-draai-kiep": 1.0,
-  "type-schuif": 1.0,
-  "type-vast": 1.0,
+  "type-schuif": 1.2,
+  "type-vast": 0.7,
   
   // Kleur toeslagen (per raam)
   "kleur-wit": 0,
   "kleur-creme": 0,
-  "kleur-grijs": 0,
-  "kleur-antraciet": 0,
-  "kleur-zwart": 0,
-  "kleur-houtkleur": 0,
+  "kleur-grijs": 50,
+  "kleur-antraciet": 50,
+  "kleur-zwart": 75,
+  "kleur-houtkleur": 100,
   
   // Service
   "montage-per-raam": 75,
@@ -53,7 +53,7 @@ const LEGE_PRIJSMATRIX = {
 }
 
 export default function CalculatorDataPage() {
-  const [prijzen, setPrijzen] = useState(LEGE_PRIJSMATRIX)
+  const [prijzen, setPrijzen] = useState(VOORBEELD_PRIJSMATRIX)
   const [testBerekening, setTestBerekening] = useState({
     materiaal: "kunststof",
     glas: "hr++",
@@ -694,46 +694,71 @@ export default function CalculatorDataPage() {
               </div>
 
               <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg p-4 text-white">
-                <h3 className="font-bold mb-3">Berekening</h3>
-                <div className="space-y-2 text-sm font-mono">
-                  <div className="flex justify-between">
-                    <span>Basis (€{result.basisPrijs}/m²):</span>
-                    <span>€{Math.round(testBerekening.m2 * result.basisPrijs)}</span>
+                <h3 className="font-bold mb-3">Berekening Breakdown</h3>
+                <div className="space-y-2 text-xs">
+                  <div className="bg-white/10 rounded p-2">
+                    <p className="font-semibold mb-1">1. Kozijn Materiaal</p>
+                    <div className="pl-2 space-y-0.5 font-mono">
+                      <div className="flex justify-between">
+                        <span>Basis {testBerekening.materiaal} + {testBerekening.glas}:</span>
+                        <span>€{result.basisPrijs}/m²</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>+ Profiel {testBerekening.profiel}:</span>
+                        <span>€{result.profielToeslag}/m²</span>
+                      </div>
+                      <div className="flex justify-between text-yellow-300">
+                        <span>= €{result.basisPrijs + result.profielToeslag}/m² × {testBerekening.m2}m² × {result.typeMultiplier}</span>
+                        <span className="font-bold">€{result.kozijn}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Profiel (€{result.profielToeslag}/m²):</span>
-                    <span>€{Math.round(testBerekening.m2 * result.profielToeslag)}</span>
+
+                  <div className="space-y-1 font-mono">
+                    <div className="flex justify-between">
+                      <span>2. Kleur ({testBerekening.aantalRamen} × €{result.kleurToeslag}):</span>
+                      <span>€{result.kleur}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>3. Montage materiaal ({testBerekening.aantalRamen}×):</span>
+                      <span>€{result.montage}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>4. Arbeid (inmeten + {testBerekening.aantalRamen}×{result.urenPerRaam}u×€{result.uurloon}):</span>
+                      <span>€{result.arbeid}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>5. Afvoer:</span>
+                      <span>€{result.afvoer}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Type ({result.typeMultiplier}×):</span>
-                    <span className="text-yellow-300">= €{result.kozijn}</span>
+
+                  <div className="border-t border-white/20 pt-2 mt-2 space-y-1 font-mono">
+                    <div className="flex justify-between text-sm">
+                      <span>Subtotaal:</span>
+                      <span>€{result.subtotaal}</span>
+                    </div>
+                    {prijzen["prijzen-zijn-inclusief-btw"] ? (
+                      <>
+                        <div className="flex justify-between text-yellow-200 text-xs">
+                          <span>Waarvan BTW ({prijzen["btw-percentage"]}%):</span>
+                          <span>€{result.btwBedrag}</span>
+                        </div>
+                        <div className="flex justify-between text-xs">
+                          <span>Excl BTW zou zijn:</span>
+                          <span>€{result.totaalExclBTW}</span>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex justify-between text-yellow-200">
+                        <span>+ BTW ({prijzen["btw-percentage"]}%):</span>
+                        <span>€{result.btwBedrag}</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex justify-between border-t border-white/20 pt-2">
-                    <span>Kleur (€{result.kleurToeslag}):</span>
-                    <span>€{result.kleur}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Montage materiaal:</span>
-                    <span>€{result.montage}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Arbeid ({testBerekening.aantalRamen}×{result.urenPerRaam}u×€{result.uurloon}):</span>
-                    <span>€{result.arbeid}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Afvoer:</span>
-                    <span>€{result.afvoer}</span>
-                  </div>
-                  <div className="flex justify-between border-t border-white/20 pt-2 mt-2">
-                    <span>{prijzen["prijzen-zijn-inclusief-btw"] ? "TOTAAL INCL" : "Subtotaal EXCL"} BTW:</span>
-                    <span>€{prijzen["prijzen-zijn-inclusief-btw"] ? result.totaalInclBTW : result.totaalExclBTW}</span>
-                  </div>
-                  <div className="flex justify-between text-yellow-200">
-                    <span>BTW ({prijzen["btw-percentage"]}%):</span>
-                    <span>€{result.btwBedrag}</span>
-                  </div>
+
                   <div className="flex justify-between border-t-2 border-white/40 pt-2 mt-2 text-lg font-bold">
-                    <span>{prijzen["prijzen-zijn-inclusief-btw"] ? "Klant betaalt" : "TOTAAL INCL BTW"}:</span>
+                    <span>KLANT BETAALT:</span>
                     <span className="text-yellow-300">€{result.totaal}</span>
                   </div>
                 </div>
