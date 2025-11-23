@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { AlertCircle, Calculator, CheckCircle } from "lucide-react"
+import { AlertCircle, Calculator, CheckCircle, Download } from "lucide-react"
 
 // START TARIEVEN (uit lib/pricing/ai-calculator.ts)
 const START_TARIEVEN = {
@@ -360,12 +360,21 @@ export default function CalculatorDataPage() {
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-lg shadow-lg p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-green-900">Provider: Pas Tarieven Aan</h2>
-                <button
-                  onClick={resetTarieven}
-                  className="text-xs px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                >
-                  Reset
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={resetTarieven}
+                    className="text-xs px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={downloadTarieven}
+                    className="text-xs px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-1"
+                  >
+                    <Download className="w-3 h-3" />
+                    Download
+                  </button>
+                </div>
               </div>
 
               <div className="space-y-4">
