@@ -7,7 +7,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { AIQuoteForm } from "@/components/ai-quote-form"
 import { HowItWorks } from "@/components/how-it-works"
-import { FAQ } from "@/components/faq"
+import { FAQDenHaag } from "@/components/faq-den-haag"
 import { CheckCircle2, MapPin, Home, TrendingUp, Euro, Shield } from "lucide-react"
 
 // Structured Data
@@ -544,7 +544,7 @@ export default function KozijnenDenHaagPage() {
           </div>
         </section>
         
-        <FAQ />
+        <FAQDenHaag />
 
         {/* Google Maps Sectie */}
         <section className="py-12 lg:py-16 bg-gradient-to-b from-gray-50 to-white">
