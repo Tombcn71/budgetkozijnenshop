@@ -38,18 +38,8 @@ const faqsRotterdam = [
   
   // Rotterdam-specifieke vragen
   {
-    question: "Zijn jullie kozijnen bestand tegen het Rotterdamse kustklimaat?",
-    answer: "Ja, onze kozijnen zijn speciaal geschikt voor kustklimaat. Ze hebben UV-bestendige en zoutbestendige coatings, roestvrij beslag en flexibele kitvoegen die bestand zijn tegen wind, regen en zeelucht. Dit maakt ze perfect voor Rotterdam en omgeving, inclusief wijken nabij de haven.",
-    citySpecific: true
-  },
-  {
     question: "Welke oplossingen hebben jullie voor naoorlogse woningen in Rotterdam?",
     answer: "Naoorlogse woningen uit de jaren 50-70 hebben vaak standaard kozijnen die relatief eenvoudig te vervangen zijn. Wij hebben veel ervaring met dit type woningen in wijken zoals Pendrecht, Lombardijen en Ommoord. De vervanging verloopt soepel en levert direct resultaat op in comfort en energiebesparing.",
-    citySpecific: true
-  },
-  {
-    question: "Kan ik subsidie krijgen van de gemeente Rotterdam voor verduurzaming?",
-    answer: "Rotterdam stimuleert duurzaamheid actief. Naast de landelijke ISDE-subsidie zijn er regelmatig lokale initiatieven en wijkgerichte acties. Wij adviseren u graag over de actuele mogelijkheden en kunnen u ondersteunen bij aanvragen.",
     citySpecific: true
   },
   {
