@@ -67,26 +67,39 @@ export default function CalculatorDataPage() {
     }
   ]
 
+  // ECHTE TARIEVEN UIT lib/pricing/ai-calculator.ts
   const pricingFactors = {
+    materialen: {
+      "kunststof": { pricePerM2: 280, description: "Kunststof kozijn" },
+      "hout": { pricePerM2: 450, description: "Houten kozijn" },
+      "aluminium": { pricePerM2: 550, description: "Aluminium kozijn" },
+      "hout-aluminium": { pricePerM2: 650, description: "Hout-aluminium combinatie" }
+    },
     glassTypes: {
-      "HR++": { basePrice: 76, markup: 1.25, description: "Standaard dubbel glas" },
-      "HR+++": { basePrice: 113, markup: 1.25, description: "Triple glas, beste isolatie" }
+      "dubbel": { pricePerM2: 80, description: "Standaard dubbel glas" },
+      "hr++": { pricePerM2: 120, description: "HR++ isolatieglas" },
+      "triple": { pricePerM2: 180, description: "Triple glas, beste isolatie" },
+      "geluidswerend": { pricePerM2: 220, description: "Geluidswerend glas" }
     },
     frameTypes: {
-      "draairaam": { multiplier: 1.0, description: "Standaard draairaam" },
-      "draaikiepraam": { multiplier: 1.15, description: "Draai-kiep functionaliteit" },
-      "schuifraam": { multiplier: 1.3, description: "Schuifmechanisme" }
+      "draaikiepraam": { multiplier: 1.0, description: "Draai-kiep raam (standaard)" },
+      "draadraam": { multiplier: 0.9, description: "Alleen draairaam (-10%)" },
+      "kiepraam": { multiplier: 0.95, description: "Alleen kiepraam (-5%)" },
+      "schuifraam": { multiplier: 1.2, description: "Schuifraam (+20%)" },
+      "vaste-beglazing": { multiplier: 0.7, description: "Vaste beglazing (-30%)" }
     },
-    laborCosts: {
-      perWindow: 100,
-      minimumCharge: 200,
-      travelCosts: {
-        "Rotterdam": 0,
-        "Den Haag": 25,
-        "Schiedam": 15,
-        "overig": 50
-      }
-    }
+    kleurToeslagen: {
+      "wit": { toeslag: 0, description: "Wit (standaard)" },
+      "creme": { toeslag: 0, description: "Creme (standaard)" },
+      "grijs": { toeslag: 50, description: "Grijs (+€50/raam)" },
+      "antraciet": { toeslag: 50, description: "Antraciet (+€50/raam)" },
+      "zwart": { toeslag: 75, description: "Zwart (+€75/raam)" },
+      "donkergroen": { toeslag: 50, description: "Donkergroen (+€50/raam)" },
+      "houtkleur": { toeslag: 100, description: "Houtkleur (+€100/raam)" }
+    },
+    montage: 75,        // €75 per raam
+    afvoer: 200,        // €200 forfait
+    minimumPrijs: 1500  // €1500 minimum totaalprijs
   }
 
   return (
@@ -127,86 +140,79 @@ export default function CalculatorDataPage() {
             <div className="space-y-6">
               {/* Formula 1 */}
               <div className="bg-white rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-purple-900">1. Basis Kozijnprijs</h3>
+                <h3 className="text-xl font-semibold mb-4 text-purple-900">1. Kozijn Materiaalkosten</h3>
                 <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
                   <p className="font-bold mb-2">Formule:</p>
-                  <p>Kozijnprijs = (Oppervlakte × Glasprijsₘ²) × KozijntypeMultiplier</p>
+                  <p>Kozijn = (Oppervlakteₘ² × MateriaalPrijsₘ² × TypeMultiplier) + (AantalRamen × KleurToeslag)</p>
                 </div>
                 <div className="space-y-2 text-sm">
-                  <p><strong>Oppervlakte:</strong> Breedte (m) × Hoogte (m)</p>
-                  <p><strong>Glasprijsₘ²:</strong> HR++ = €94/m² | HR+++ = €177/m²</p>
-                  <p><strong>KozijntypeMultiplier:</strong> Draai = 1.0× | Draai-kiep = 1.15× | Schuif = 1.3×</p>
+                  <p><strong>Oppervlakte:</strong> Totale m² van alle ramen</p>
+                  <p><strong>MateriaalPrijsₘ²:</strong> Kunststof €280 | Hout €450 | Aluminium €550</p>
+                  <p><strong>TypeMultiplier:</strong> Draai-kiep 1.0× | Draai 0.9× | Schuif 1.2× | Vast 0.7×</p>
+                  <p><strong>KleurToeslag:</strong> Wit/Creme €0 | Grijs/Antraciet €50 | Zwart €75 | Houtkleur €100</p>
                 </div>
                 <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
                   <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
-                  <p className="text-sm">Raam 1.2m × 1.4m, HR++ glas, draai-kiep</p>
-                  <p className="text-sm">(1.2 × 1.4) × 94 × 1.15 = <strong>€181.34</strong></p>
+                  <p className="text-sm">2 ramen van 1.5m × 1.2m = 3.6m², kunststof, draai-kiep, wit</p>
+                  <p className="text-sm">(3.6 × 280 × 1.0) + (2 × 0) = <strong>€1,008</strong></p>
                 </div>
               </div>
 
               {/* Formula 2 */}
               <div className="bg-white rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-purple-900">2. Montagekosten</h3>
+                <h3 className="text-xl font-semibold mb-4 text-purple-900">2. Glaskosten</h3>
                 <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
                   <p className="font-bold mb-2">Formule:</p>
-                  <p>Montage = MAX(AantalRamen × €100, €200) + Reiskosten</p>
+                  <p>Glas = Oppervlakteₘ² × GlasPrijsₘ²</p>
                 </div>
                 <div className="space-y-2 text-sm">
-                  <p><strong>Per raam:</strong> €100</p>
-                  <p><strong>Minimum:</strong> €200 (ook voor 1 raam)</p>
-                  <p><strong>Reiskosten:</strong> Rotterdam €0 | Den Haag €25 | Schiedam €15 | Overig €50</p>
+                  <p><strong>Dubbel glas:</strong> €80/m²</p>
+                  <p><strong>HR++ glas:</strong> €120/m²</p>
+                  <p><strong>Triple glas:</strong> €180/m²</p>
+                  <p><strong>Geluidswerend:</strong> €220/m²</p>
                 </div>
                 <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
                   <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
-                  <p className="text-sm">3 ramen in Den Haag</p>
-                  <p className="text-sm">MAX(3 × 100, 200) + 25 = <strong>€325</strong></p>
+                  <p className="text-sm">3.6m² met HR++ glas</p>
+                  <p className="text-sm">3.6 × 120 = <strong>€432</strong></p>
                 </div>
               </div>
 
               {/* Formula 3 */}
               <div className="bg-white rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-purple-900">3. Totaalprijs</h3>
+                <h3 className="text-xl font-semibold mb-4 text-purple-900">3. Montage & Afvoer</h3>
                 <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
                   <p className="font-bold mb-2">Formule:</p>
-                  <p>Totaal = ΣKozijnprijzen + Montagekosten + BTW(21%)</p>
+                  <p>Montage = AantalRamen × €75 (indien gekozen)</p>
+                  <p>Afvoer = €200 forfait (indien gekozen)</p>
                 </div>
                 <div className="space-y-2 text-sm">
-                  <p><strong>ΣKozijnprijzen:</strong> Som van alle individuele kozijnen</p>
-                  <p><strong>Montagekosten:</strong> Uit formule 2</p>
-                  <p><strong>BTW:</strong> 21% over totaal excl. BTW</p>
+                  <p><strong>Montage:</strong> €75 per raam (optioneel)</p>
+                  <p><strong>Afvoer oude kozijnen:</strong> €200 forfait (optioneel)</p>
                 </div>
                 <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
                   <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
-                  <p className="text-sm">3 ramen à €181.34 + montage €325</p>
-                  <p className="text-sm">(544.02 + 325) × 1.21 = <strong>€1,051.47</strong></p>
+                  <p className="text-sm">2 ramen met montage + afvoer</p>
+                  <p className="text-sm">(2 × 75) + 200 = <strong>€350</strong></p>
                 </div>
               </div>
 
-              {/* Formula 4 - Advanced */}
+              {/* Formula 4 */}
               <div className="bg-white rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-purple-900">4. Toeslagen & Kortingen</h3>
+                <h3 className="text-xl font-semibold mb-4 text-purple-900">4. Totaalprijs & Minimum</h3>
                 <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
-                  <p className="font-bold mb-2">Optionele aanpassingen:</p>
-                  <p>Aangepast = Basistotaal × (1 + ToeslagFactor) × (1 - KortingFactor)</p>
+                  <p className="font-bold mb-2">Formule:</p>
+                  <p>Subtotaal = Kozijn + Glas + Montage + Afvoer</p>
+                  <p className="mt-2"><strong>Totaal = MAX(Subtotaal, €1.500)</strong></p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="font-semibold mb-2">Toeslagen (+):</p>
-                    <ul className="space-y-1 ml-4">
-                      <li>• Hoge verdieping (&gt;2e): +10%</li>
-                      <li>• Moeilijke toegang: +15%</li>
-                      <li>• Spoed (&lt;2 weken): +20%</li>
-                      <li>• Monument: +25%</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-semibold mb-2">Kortingen (-):</p>
-                    <ul className="space-y-1 ml-4">
-                      <li>• Hele woning (&gt;8 ramen): -10%</li>
-                      <li>• Flexibel planning: -5%</li>
-                      <li>• Combinatie isolatie: -5%</li>
-                    </ul>
-                  </div>
+                <div className="space-y-2 text-sm">
+                  <p><strong>Minimum totaalprijs:</strong> €1.500</p>
+                  <p><strong>Alle prijzen zijn inclusief BTW</strong></p>
+                </div>
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
+                  <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
+                  <p className="text-sm">Kozijn €1,008 + Glas €432 + Montage €150 + Afvoer €200</p>
+                  <p className="text-sm">MAX(1790, 1500) = <strong>€1,790</strong></p>
                 </div>
               </div>
             </div>
@@ -219,6 +225,31 @@ export default function CalculatorDataPage() {
               <h2 className="text-2xl font-bold">Huidige Prijsfactoren</h2>
             </div>
 
+            {/* Materialen */}
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">Kozijn Materialen</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="px-4 py-3 text-left font-semibold">Type</th>
+                      <th className="px-4 py-3 text-left font-semibold">Prijs/m²</th>
+                      <th className="px-4 py-3 text-left font-semibold">Omschrijving</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {Object.entries(pricingFactors.materialen).map(([key, value]) => (
+                      <tr key={key} className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium capitalize">{key}</td>
+                        <td className="px-4 py-3 font-bold text-blue-600">€{value.pricePerM2}</td>
+                        <td className="px-4 py-3 text-gray-600">{value.description}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
             {/* Glass Types */}
             <div className="mb-6">
               <h3 className="text-xl font-semibold mb-4 text-gray-800">Glastypen</h3>
@@ -227,21 +258,15 @@ export default function CalculatorDataPage() {
                   <thead className="bg-gray-100">
                     <tr>
                       <th className="px-4 py-3 text-left font-semibold">Type</th>
-                      <th className="px-4 py-3 text-left font-semibold">Basis Prijs/m²</th>
-                      <th className="px-4 py-3 text-left font-semibold">Markup</th>
-                      <th className="px-4 py-3 text-left font-semibold">Finale Prijs/m²</th>
+                      <th className="px-4 py-3 text-left font-semibold">Prijs/m²</th>
                       <th className="px-4 py-3 text-left font-semibold">Omschrijving</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {Object.entries(pricingFactors.glassTypes).map(([key, value]) => (
                       <tr key={key} className="hover:bg-gray-50">
-                        <td className="px-4 py-3 font-medium">{key}</td>
-                        <td className="px-4 py-3">€{value.basePrice}</td>
-                        <td className="px-4 py-3">{value.markup}x</td>
-                        <td className="px-4 py-3 font-bold text-green-600">
-                          €{Math.round(value.basePrice * value.markup)}
-                        </td>
+                        <td className="px-4 py-3 font-medium capitalize">{key}</td>
+                        <td className="px-4 py-3 font-bold text-green-600">€{value.pricePerM2}</td>
                         <td className="px-4 py-3 text-gray-600">{value.description}</td>
                       </tr>
                     ))}
@@ -285,26 +310,54 @@ export default function CalculatorDataPage() {
               </div>
             </div>
 
-            {/* Labor Costs */}
+            {/* Kleur Toeslagen */}
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">Kleur Toeslagen (per raam)</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="px-4 py-3 text-left font-semibold">Kleur</th>
+                      <th className="px-4 py-3 text-left font-semibold">Toeslag per raam</th>
+                      <th className="px-4 py-3 text-left font-semibold">Omschrijving</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {Object.entries(pricingFactors.kleurToeslagen).map(([key, value]) => (
+                      <tr key={key} className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium capitalize">{key}</td>
+                        <td className="px-4 py-3 font-bold text-orange-600">
+                          {value.toeslag === 0 ? '€0' : `+€${value.toeslag}`}
+                        </td>
+                        <td className="px-4 py-3 text-gray-600">{value.description}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Service Costs */}
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Montagekosten</h3>
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">Service Kosten</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-blue-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Per Kozijn</p>
+                  <p className="text-sm text-gray-600 mb-1">Montage per Raam</p>
                   <p className="text-2xl font-bold text-blue-600">
-                    €{pricingFactors.laborCosts.perWindow}
+                    €{pricingFactors.montage}
                   </p>
                 </div>
                 <div className="bg-green-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Minimum</p>
+                  <p className="text-sm text-gray-600 mb-1">Afvoer Oude Kozijnen</p>
                   <p className="text-2xl font-bold text-green-600">
-                    €{pricingFactors.laborCosts.minimumCharge}
+                    €{pricingFactors.afvoer}
                   </p>
+                  <p className="text-xs text-gray-500 mt-1">Forfait</p>
                 </div>
                 <div className="bg-purple-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Reiskosten (gem.)</p>
+                  <p className="text-sm text-gray-600 mb-1">Minimum Totaalprijs</p>
                   <p className="text-2xl font-bold text-purple-600">
-                    €0-€50
+                    €{pricingFactors.minimumPrijs}
                   </p>
                 </div>
               </div>
@@ -439,36 +492,41 @@ export default function CalculatorDataPage() {
             </div>
             
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <h3 className="font-semibold mb-4">Basis scenario: 1 draai-kiep raam met HR++ glas</h3>
+              <h3 className="font-semibold mb-4">Voorbeeld: 2 kunststof draai-kiep ramen (wit) met HR++ glas + montage + afvoer</h3>
               <div className="space-y-3 font-mono text-sm">
                 <div className="flex justify-between pb-2 border-b border-white/20">
                   <span>Afmetingen:</span>
-                  <span className="font-bold">1.2m × 1.4m = 1.68m²</span>
+                  <span className="font-bold">2× (1.5m × 1.2m) = 3.6m²</span>
+                </div>
+                <div className="flex justify-between pb-2 border-b border-white/20">
+                  <span>Kozijn (kunststof):</span>
+                  <span className="font-bold">3.6 × €280 × 1.0 = €1,008</span>
+                </div>
+                <div className="flex justify-between pb-2 border-b border-white/20">
+                  <span>Kleur (wit):</span>
+                  <span className="font-bold">2 × €0 = €0</span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-white/20">
                   <span>HR++ glas:</span>
-                  <span className="font-bold">1.68 × €94 = €157.92</span>
+                  <span className="font-bold">3.6 × €120 = €432</span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>Draai-kiep (1.15×):</span>
-                  <span className="font-bold">€157.92 × 1.15 = €181.61</span>
+                  <span>Montage:</span>
+                  <span className="font-bold">2 × €75 = €150</span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>Montage (min):</span>
+                  <span>Afvoer oude kozijnen:</span>
                   <span className="font-bold">€200</span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>Subtotaal excl BTW:</span>
-                  <span className="font-bold">€381.61</span>
-                </div>
-                <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>BTW (21%):</span>
-                  <span className="font-bold">€80.14</span>
+                  <span>Subtotaal:</span>
+                  <span className="font-bold">€1,790</span>
                 </div>
                 <div className="flex justify-between pt-2 text-lg">
-                  <span className="font-bold">TOTAAL incl BTW:</span>
-                  <span className="font-bold text-yellow-300">€461.75</span>
+                  <span className="font-bold">TOTAAL (incl BTW):</span>
+                  <span className="font-bold text-yellow-300">€1,790</span>
                 </div>
+                <p className="text-xs text-white/70 mt-2">* Prijzen zijn inclusief BTW</p>
               </div>
             </div>
           </div>
