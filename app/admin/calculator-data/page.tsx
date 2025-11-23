@@ -117,6 +117,101 @@ export default function CalculatorDataPage() {
             </p>
           </div>
 
+          {/* Calculation Formulas */}
+          <div className="bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-lg shadow-lg p-6 lg:p-8 mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <Calculator className="w-8 h-8 text-purple-600" />
+              <h2 className="text-2xl font-bold">Berekeningsformules</h2>
+            </div>
+
+            <div className="space-y-6">
+              {/* Formula 1 */}
+              <div className="bg-white rounded-lg p-6">
+                <h3 className="text-xl font-semibold mb-4 text-purple-900">1. Basis Kozijnprijs</h3>
+                <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
+                  <p className="font-bold mb-2">Formule:</p>
+                  <p>Kozijnprijs = (Oppervlakte × Glasprijsₘ²) × KozijntypeMultiplier</p>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <p><strong>Oppervlakte:</strong> Breedte (m) × Hoogte (m)</p>
+                  <p><strong>Glasprijsₘ²:</strong> HR++ = €94/m² | HR+++ = €177/m²</p>
+                  <p><strong>KozijntypeMultiplier:</strong> Draai = 1.0× | Draai-kiep = 1.15× | Schuif = 1.3×</p>
+                </div>
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
+                  <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
+                  <p className="text-sm">Raam 1.2m × 1.4m, HR++ glas, draai-kiep</p>
+                  <p className="text-sm">(1.2 × 1.4) × 94 × 1.15 = <strong>€181.34</strong></p>
+                </div>
+              </div>
+
+              {/* Formula 2 */}
+              <div className="bg-white rounded-lg p-6">
+                <h3 className="text-xl font-semibold mb-4 text-purple-900">2. Montagekosten</h3>
+                <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
+                  <p className="font-bold mb-2">Formule:</p>
+                  <p>Montage = MAX(AantalRamen × €100, €200) + Reiskosten</p>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <p><strong>Per raam:</strong> €100</p>
+                  <p><strong>Minimum:</strong> €200 (ook voor 1 raam)</p>
+                  <p><strong>Reiskosten:</strong> Rotterdam €0 | Den Haag €25 | Schiedam €15 | Overig €50</p>
+                </div>
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
+                  <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
+                  <p className="text-sm">3 ramen in Den Haag</p>
+                  <p className="text-sm">MAX(3 × 100, 200) + 25 = <strong>€325</strong></p>
+                </div>
+              </div>
+
+              {/* Formula 3 */}
+              <div className="bg-white rounded-lg p-6">
+                <h3 className="text-xl font-semibold mb-4 text-purple-900">3. Totaalprijs</h3>
+                <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
+                  <p className="font-bold mb-2">Formule:</p>
+                  <p>Totaal = ΣKozijnprijzen + Montagekosten + BTW(21%)</p>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <p><strong>ΣKozijnprijzen:</strong> Som van alle individuele kozijnen</p>
+                  <p><strong>Montagekosten:</strong> Uit formule 2</p>
+                  <p><strong>BTW:</strong> 21% over totaal excl. BTW</p>
+                </div>
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
+                  <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
+                  <p className="text-sm">3 ramen à €181.34 + montage €325</p>
+                  <p className="text-sm">(544.02 + 325) × 1.21 = <strong>€1,051.47</strong></p>
+                </div>
+              </div>
+
+              {/* Formula 4 - Advanced */}
+              <div className="bg-white rounded-lg p-6">
+                <h3 className="text-xl font-semibold mb-4 text-purple-900">4. Toeslagen & Kortingen</h3>
+                <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
+                  <p className="font-bold mb-2">Optionele aanpassingen:</p>
+                  <p>Aangepast = Basistotaal × (1 + ToeslagFactor) × (1 - KortingFactor)</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="font-semibold mb-2">Toeslagen (+):</p>
+                    <ul className="space-y-1 ml-4">
+                      <li>• Hoge verdieping (&gt;2e): +10%</li>
+                      <li>• Moeilijke toegang: +15%</li>
+                      <li>• Spoed (&lt;2 weken): +20%</li>
+                      <li>• Monument: +25%</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-semibold mb-2">Kortingen (-):</p>
+                    <ul className="space-y-1 ml-4">
+                      <li>• Hele woning (&gt;8 ramen): -10%</li>
+                      <li>• Flexibel planning: -5%</li>
+                      <li>• Combinatie isolatie: -5%</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Current Pricing Factors */}
           <div className="bg-white rounded-lg shadow-lg p-6 lg:p-8 mb-8">
             <div className="flex items-center gap-3 mb-6">
@@ -336,51 +431,117 @@ export default function CalculatorDataPage() {
             </div>
           </div>
 
+          {/* Quick Calculator */}
+          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg shadow-xl p-6 lg:p-8 mb-8 text-white">
+            <div className="flex items-center gap-3 mb-6">
+              <Calculator className="w-8 h-8" />
+              <h2 className="text-2xl font-bold">Snelle Rekencheck</h2>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+              <h3 className="font-semibold mb-4">Basis scenario: 1 draai-kiep raam met HR++ glas</h3>
+              <div className="space-y-3 font-mono text-sm">
+                <div className="flex justify-between pb-2 border-b border-white/20">
+                  <span>Afmetingen:</span>
+                  <span className="font-bold">1.2m × 1.4m = 1.68m²</span>
+                </div>
+                <div className="flex justify-between pb-2 border-b border-white/20">
+                  <span>HR++ glas:</span>
+                  <span className="font-bold">1.68 × €94 = €157.92</span>
+                </div>
+                <div className="flex justify-between pb-2 border-b border-white/20">
+                  <span>Draai-kiep (1.15×):</span>
+                  <span className="font-bold">€157.92 × 1.15 = €181.61</span>
+                </div>
+                <div className="flex justify-between pb-2 border-b border-white/20">
+                  <span>Montage (min):</span>
+                  <span className="font-bold">€200</span>
+                </div>
+                <div className="flex justify-between pb-2 border-b border-white/20">
+                  <span>Subtotaal excl BTW:</span>
+                  <span className="font-bold">€381.61</span>
+                </div>
+                <div className="flex justify-between pb-2 border-b border-white/20">
+                  <span>BTW (21%):</span>
+                  <span className="font-bold">€80.14</span>
+                </div>
+                <div className="flex justify-between pt-2 text-lg">
+                  <span className="font-bold">TOTAAL incl BTW:</span>
+                  <span className="font-bold text-yellow-300">€461.75</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Improvement Suggestions */}
           <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-orange-200 rounded-lg p-6 lg:p-8">
             <div className="flex items-center gap-3 mb-6">
               <TrendingUp className="w-8 h-8 text-orange-600" />
-              <h2 className="text-2xl font-bold">Verbeterpunten voor Kozijnprovider Gesprek</h2>
+              <h2 className="text-2xl font-bold">Discussiepunten voor Kozijnprovider</h2>
             </div>
 
             <div className="space-y-4">
               <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">1. Prijsnauwkeurigheid</h3>
-                <p className="text-gray-700 text-sm">
-                  Zijn de huidige prijs/m² accuraat voor verschillende glastypen? 
-                  Welke factoren missen we (bijvoorbeeld: kleur, aantal ramen, locatie)?
+                <h3 className="font-semibold mb-2 text-orange-900">1. Zijn deze formules correct?</h3>
+                <p className="text-gray-700 text-sm mb-2">
+                  Kloppen de basis berekeningen? Missen we stappen of factoren?
                 </p>
+                <ul className="text-sm text-gray-600 ml-4 space-y-1">
+                  <li>• Is de prijs/m² juist voor HR++ (€94) en HR+++ (€177)?</li>
+                  <li>• Zijn de multipliers correct voor verschillende kozijntypen?</li>
+                  <li>• Klopt de montage van €100/raam, minimum €200?</li>
+                </ul>
               </div>
 
               <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">2. Montagekosten</h3>
-                <p className="text-gray-700 text-sm">
-                  Klopt de €100 per kozijn? Zijn er variaties op basis van verdieping, 
-                  toegankelijkheid, of type kozijn?
+                <h3 className="font-semibold mb-2 text-orange-900">2. Welke variabelen ontbreken?</h3>
+                <p className="text-gray-700 text-sm mb-2">
+                  Welke factoren beïnvloeden de prijs maar zitten niet in de formule?
                 </p>
+                <ul className="text-sm text-gray-600 ml-4 space-y-1">
+                  <li>• Kleur kozijn (wit standaard, RAL kleuren duurder?)</li>
+                  <li>• Aantal ramen (volumekorting vanaf X stuks?)</li>
+                  <li>• Verdieping (hoger = duurder montage?)</li>
+                  <li>• Toegankelijkheid (steiger nodig = extra kosten?)</li>
+                </ul>
               </div>
 
               <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">3. AI Nauwkeurigheid</h3>
-                <p className="text-gray-700 text-sm">
-                  Hoe nauwkeurig moeten de afmetingen zijn? Wat is acceptabele marge? 
-                  Welke extra data kunnen we verzamelen voor betere schattingen?
+                <h3 className="font-semibold mb-2 text-orange-900">3. Toeslagen & Kortingen</h3>
+                <p className="text-gray-700 text-sm mb-2">
+                  Welke percentages zijn realistisch?
                 </p>
+                <ul className="text-sm text-gray-600 ml-4 space-y-1">
+                  <li>• Spoed toeslag van +20% - te hoog/laag?</li>
+                  <li>• Hele woning korting -10% - correct vanaf hoeveel ramen?</li>
+                  <li>• Monument toeslag +25% - accuraat?</li>
+                </ul>
               </div>
 
               <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">4. Extra Opties</h3>
-                <p className="text-gray-700 text-sm">
-                  Welke opties moeten we toevoegen? (zonwering, horren, veiligheidsglas, 
-                  kleuren, etc.) En wat zijn de meerkosten?
+                <h3 className="font-semibold mb-2 text-orange-900">4. Extra opties toevoegen</h3>
+                <p className="text-gray-700 text-sm mb-2">
+                  Welke opties moeten we kunnen berekenen?
                 </p>
+                <ul className="text-sm text-gray-600 ml-4 space-y-1">
+                  <li>• Zonwering (€X per m²)</li>
+                  <li>• Horren (€X per stuk)</li>
+                  <li>• Veiligheidsglas (€X extra per m²)</li>
+                  <li>• Geluidwerend glas (€X extra per m²)</li>
+                  <li>• Speciale kleuren/finishes</li>
+                </ul>
               </div>
 
               <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">5. Regionale Verschillen</h3>
-                <p className="text-gray-700 text-sm">
-                  Zijn er prijsverschillen per regio? Moeten we reiskosten anders berekenen?
+                <h3 className="font-semibold mb-2 text-orange-900">5. Regionale & Seizoensprijzen</h3>
+                <p className="text-gray-700 text-sm mb-2">
+                  Zijn er regionale of seizoensgebonden verschillen?
                 </p>
+                <ul className="text-sm text-gray-600 ml-4 space-y-1">
+                  <li>• Reiskosten per regio - zijn de bedragen realistisch?</li>
+                  <li>• Drukte seizoenen - prijsverschil zomer vs winter?</li>
+                  <li>• Leveringstijden per seizoen</li>
+                </ul>
               </div>
             </div>
           </div>
