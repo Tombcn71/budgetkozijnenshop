@@ -8,7 +8,7 @@ import { Footer } from "@/components/footer"
 import { AIQuoteForm } from "@/components/ai-quote-form"
 import { HowItWorks } from "@/components/how-it-works"
 import { FAQ } from "@/components/faq"
-import { CheckCircle2, MapPin } from "lucide-react"
+import { CheckCircle2, MapPin, Home, TrendingUp, Euro, Shield } from "lucide-react"
 
 // Structured Data
 const structuredData = {
@@ -151,6 +151,42 @@ const structuredData = {
           }
         }
       ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://budgetkozijnenshop.nl/kozijnen-utrecht#waarom-vervangen",
+      "headline": "Kozijnen Vervangen in Utrecht: Waardestijging en Energielabel-eisen",
+      "description": "Alles over kozijnen vervangen in Utrecht: woningwaardestijging, energielabel-eisen en verhuurders.",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Woningwaarde Utrecht"
+        },
+        {
+          "@type": "Thing",
+          "name": "Energielabel eisen 2030"
+        },
+        {
+          "@type": "Thing",
+          "name": "Verhuurders energielabel"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "MonetaryAmount",
+          "currency": "EUR",
+          "minValue": "750",
+          "maxValue": "1100",
+          "description": "Gemiddelde jaarlijkse energiebesparing"
+        },
+        {
+          "@type": "MonetaryAmount",
+          "currency": "EUR",
+          "minValue": "10000",
+          "maxValue": "18000",
+          "description": "Waardestijging woning"
+        }
+      ]
     }
   ]
 }
@@ -247,6 +283,202 @@ export default function KozijnenUtrechtPage() {
         
         <HowItWorks />
         
+        {/* Waarom Kozijnen Vervangen in Utrecht */}
+        <section className="py-12 lg:py-16 bg-gradient-to-b from-white to-gray-50">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+                  Kozijnen Vervangen in Utrecht
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  Waardestijging, energielabel-eisen en voorbereiding op 2030
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                {/* Waarom in Utrecht */}
+                <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                    <Home className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">Waarom in Utrecht?</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Snelst stijgende woningprijzen: investering loont direct</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Energielabel C of hoger verplicht bij verkoop (vanaf 2030)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Veel studenten/huurwoningen: hogere eisen energielabel</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Historisch centrum + moderne wijken: diverse oplossingen</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Wanneer vervangen */}
+                <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+                  <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                    <TrendingUp className="w-6 h-6 text-orange-600" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">Wanneer vervangen?</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                      <span>Verhuur: energielabel verbeteren voor hogere huur</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                      <span>Verkoop: energielabel B of hoger = snellere verkoop</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                      <span>Tocht en hoge stookkosten</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                      <span>Voorbereiding op 2030 energielabel-eis</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Besparing Utrecht */}
+                <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <Euro className="w-6 h-6 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">Besparing Utrecht</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>€750-€1.100/jaar energiebesparing</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Huurinkomsten: +€50-€100/maand bij beter energielabel</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Woningwaarde stijgt €10.000-€18.000</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Extra Voordelen */}
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-8">
+                <h3 className="text-2xl font-bold mb-6 text-center">Extra Voordelen in Utrecht</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-white rounded-lg p-4 text-center">
+                    <Shield className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+                    <p className="font-semibold">2030-proof</p>
+                    <p className="text-sm text-gray-600">Voldoet aan toekomstige eisen</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 text-center">
+                    <Home className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                    <p className="font-semibold">Waardestijging</p>
+                    <p className="text-sm text-gray-600">€10.000-€18.000</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 text-center">
+                    <Euro className="w-8 h-8 text-orange-600 mx-auto mb-2" />
+                    <p className="font-semibold">Verhuurvoordeel</p>
+                    <p className="text-sm text-gray-600">+€50-€100/maand</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 text-center">
+                    <TrendingUp className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                    <p className="font-semibold">Snellere verkoop</p>
+                    <p className="text-sm text-gray-600">Label B of hoger</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* SEO Artikel Utrecht */}
+        <section className="py-12 lg:py-16 bg-white">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-4xl mx-auto prose prose-lg">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-8">Kozijnen Vervangen in Utrecht: Waardestijging en Toekomstbestendigheid</h2>
+              
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                Utrecht groeit en floreert. De woningprijzen stijgen sneller dan in de meeste andere steden, en de vraag naar kwaliteitswoningen is enorm. Voor woningeigenaren in Utrecht betekent dit dat investeren in uw woning extra loont. Het vervangen van kozijnen is zo'n investering die direct zichtbaar is en bijdraagt aan zowel wooncomfort als woningwaarde.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Energielabel-eisen vanaf 2030</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Nederland bereidt zich voor op aangescherpte energielabel-eisen. Vanaf 2030 wordt minimaal energielabel C verplicht voor alle woningen die verkocht of verhuurd worden. Voor veel Utrechtse woningen betekent dit dat er stappen gezet moeten worden. Het vervangen van oude kozijnen is vaak één van de meest effectieve manieren om het energielabel te verbeteren.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Door nu al te investeren in nieuwe, goed isolerende kozijnen, bent u voorbereid op de toekomst. U voorkomt dat u vlak voor verkoop of verhuur onder tijdsdruk alsnog grote investeringen moet doen. Bovendien profiteert u direct van het verhoogde wooncomfort en de lagere energiekosten.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Utrecht als studentenstad en verhuurmarkt</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Utrecht kent een grote verhuurmarkt. Veel woningeigenaren verhuren kamers of complete woningen aan studenten, young professionals of gezinnen. Voor verhuurders is een goed energielabel steeds belangrijker. Huurders letten hier op, en terecht: een energiezuinige woning betekent lagere woonlasten.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Woningen met een goed energielabel worden sneller verhuurd en tegen een hogere huurprijs. Bovendien voldoet u als verhuurder aan de toekomstige wetgeving. Investeren in goede kozijnen is dus niet alleen goed voor uw huurders, maar ook voor uw eigen rendement.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Historisch centrum en moderne uitleggebieden</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Utrecht kent een rijke variatie aan bouwstijlen. Van middeleeuwse panden in de binnenstad tot nieuwbouwwijken zoals Leidsche Rijn. Elk type woning vraagt om een eigen aanpak als het gaat om kozijnvervanging.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                In het historische centrum zijn welstandseisen van toepassing. Kozijnen moeten passen bij het karakter van het pand en de omgeving. Gelukkig zijn er tegenwoordig uitstekende oplossingen die modern isoleren maar traditioneel ogen. In nieuwere wijken is er meer vrijheid, en ligt de focus vooral op optimale isolatie en duurzaamheid.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Financiële voordelen en return on investment</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Het vervangen van kozijnen is een investering met een aantrekkelijk rendement. Allereerst bespaart u direct op energiekosten. Oude kozijnen kunnen verantwoordelijk zijn voor tot 25% van het warmteverlies in een woning. Nieuwe, goed isolerende kozijnen verminderen dit drastisch.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Daarnaast stijgt de waarde van uw woning. In Utrecht, waar de vraag naar woningen hoog is, maken details het verschil. Een woning met een recent verbeterd energielabel, nieuwe kozijnen en laag energieverbruik is aantrekkelijk voor kopers. Dit vertaalt zich direct in een hogere verkoopprijs en snellere verkoop.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Subsidies en financiering</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Ook in Utrecht zijn verschillende subsidiemogelijkheden beschikbaar. De landelijke ISDE-subsidie biedt een bijdrage per vierkante meter glas. Afhankelijk van het type beglazing (HR++ of HR+++) varieert de hoogte van de subsidie. Deze regeling is bedoeld om energiebesparende maatregelen toegankelijker te maken.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Daarnaast is er de Energiebespaarlening van het Nationaal Warmtefonds. Deze lening biedt aantrekkelijke voorwaarden en is speciaal bedoeld voor verduurzaming. U kunt hiermee uw kozijnvervanging financieren zonder grote eenmalige uitgave, terwijl u wel direct profiteert van de voordelen.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Praktische tips voor Utrechtse woningeigenaren</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Als u overweegt om uw kozijnen te vervangen, begin dan met een goede inventarisatie. Welke kozijnen zijn het meest urgent? Waar treedt de meeste tocht of condensvorming op? Dit helpt bij het stellen van prioriteiten.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Vraag meerdere offertes aan en vergelijk niet alleen op prijs. Kijk naar de kwaliteit van de materialen, de U-waarde (isolatiewaarde), de garantievoorwaarden en de ervaring van het bedrijf. Een professionele partij denkt met u mee en adviseert eerlijk over de beste oplossing voor uw situatie.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Tot slot: zorg dat alle papierwerk op orde is. Voor sommige panden of locaties kan een vergunning nodig zijn. Informeer hiernaar bij de gemeente of laat dit uitzoeken door het kozijnenbedrijf. Zo voorkomt u verrassingen tijdens of na de plaatsing.
+              </p>
+            </div>
+          </div>
+        </section>
+        
         {/* SEO Wijken Sectie */}
         <section className="py-12 lg:py-16 bg-white">
           <div className="container mx-auto px-4 lg:px-8">
@@ -299,206 +531,36 @@ export default function KozijnenUtrechtPage() {
         
         <FAQ />
 
-        <Footer />
-      </div>
-    </>
-  )
-}
-
+        {/* Google Maps Sectie */}
+        <section className="py-12 lg:py-16 bg-gradient-to-b from-gray-50 to-white">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-12">
-                <MapPin className="w-12 h-12 mx-auto mb-4 text-purple-600" />
+              <div className="text-center mb-8">
+                <MapPin className="w-12 h-12 mx-auto mb-4 text-primary" />
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                  Kozijnen in heel Utrecht
+                  Actief in Utrecht
                 </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Wij leveren en plaatsen hoogwaardige kozijnen in alle wijken en stadsdelen van Utrecht. 
-                  Van historische grachtenpanden tot moderne nieuwbouwwijken.
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-2">
+                  Wij kennen Utrecht als onze broekzak en werken in het hele gebied. Lokale kennis gecombineerd met professionele service.
+                </p>
+                <p className="text-lg text-gray-500">
+                  📍 Werkgebied: Utrecht • Postcodes: 3400-3584
                 </p>
               </div>
 
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-8 lg:p-10 shadow-lg">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {utrechtWijken.map((wijk, index) => (
-                    <div 
-                      key={index}
-                      className="flex items-center gap-2 text-gray-700 hover:text-purple-600 transition-colors"
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
-                      <span className="text-sm font-medium">{wijk}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-8 pt-8 border-t border-purple-200">
-                  <h3 className="font-bold text-lg mb-4 text-center">Speciale aandacht voor:</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                    <div className="bg-white rounded-lg p-4 shadow-sm">
-                      <p className="font-semibold text-purple-600 mb-1">Monumentale Panden</p>
-                      <p className="text-sm text-gray-600">Binnenstad, Wittevrouwenbuurt, Museumkwartier</p>
-                    </div>
-                    <div className="bg-white rounded-lg p-4 shadow-sm">
-                      <p className="font-semibold text-blue-600 mb-1">Nieuwbouw Projecten</p>
-                      <p className="text-sm text-gray-600">Leidsche Rijn, Rijnvliet, Terwijde</p>
-                    </div>
-                    <div className="bg-white rounded-lg p-4 shadow-sm">
-                      <p className="font-semibold text-green-600 mb-1">Renovatie & Verduurzaming</p>
-                      <p className="text-sm text-gray-600">Alle wijken in Utrecht</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="rounded-xl overflow-hidden shadow-2xl">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155358.05892841856!2d5.08754!3d52.09073935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66f5350189c89%3A0x47d895c2c2c5e42!2sUtrecht!5e0!3m2!1snl!2snl!4v1234567890123!5m2!1snl!2snl"
+                  width="100%"
+                  height="450"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Werkgebied Utrecht"
+                ></iframe>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Calculator Section */}
-        <section id="calculator" className="py-12 lg:py-16 bg-gray-50">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-10">
-                <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                  Bereken Direct Uw Kozijn Prijs in Utrecht
-                </h2>
-                <p className="text-xl text-gray-600">
-                  Upload een foto of beschrijf uw kozijnen en ontvang binnen enkele seconden een indicatieve prijs
-                </p>
-              </div>
-              
-              <HeroAI />
-            </div>
-          </div>
-        </section>
-
-        {/* Why Choose Us Utrecht */}
-        <section className="py-12 lg:py-16 bg-white">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12">
-                Waarom Budget Kozijnenshop in Utrecht?
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mb-6">
-                    <MapPin className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4">Lokale Service in Utrecht</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Snelle service in alle Utrechtse wijken. Wij kennen de Domstad en haar 
-                    karakteristieke architectuur, van grachtenpanden tot moderne nieuwbouw.
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-6">
-                    <Shield className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4">10 Jaar Garantie</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Volledige garantie op materiaal en montage. Duitse kwaliteit betekent 
-                    jarenlang zorgeloos wooncomfort in uw Utrechtse woning.
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6">
-                    <Star className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4">Monumentale Expertise</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Ervaring met welstandseisen en monumentenvergunningen. Perfect voor 
-                    historische panden in de binnenstad en beschermde stadsgezichten.
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mb-6">
-                    <Home className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4">ISDE Subsidie Hulp</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Wij helpen u met de subsidieaanvraag. Tot €111 per m² voor triple glas 
-                    bij verduurzaming van uw Utrechtse woning.
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center mb-6">
-                    <Clock className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4">Snelle Levertijd</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Van adviesgesprek tot montage in 4-6 weken. Efficiënte planning, 
-                    professionele uitvoering, minimale overlast.
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-16 h-16 bg-pink-600 rounded-full flex items-center justify-center mb-6">
-                    <CheckCircle2 className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4">Complete Ontzorging</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Van advies tot afvoer oude kozijnen. Wij regelen alles voor u, 
-                    inclusief vergunningen indien nodig in Utrecht.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Utrecht */}
-        <section className="py-12 lg:py-16 bg-gray-50">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12">
-                Veelgestelde Vragen over Kozijnen in Utrecht
-              </h2>
-
-              <div className="space-y-4">
-                {structuredData["@graph"][3].mainEntity.map((faq: any, index: number) => (
-                  <details 
-                    key={index}
-                    className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow group"
-                  >
-                    <summary className="px-6 py-4 cursor-pointer font-semibold text-lg flex items-center justify-between">
-                      <span>{faq.name}</span>
-                      <span className="text-purple-600 group-open:rotate-180 transition-transform">▼</span>
-                    </summary>
-                    <div className="px-6 pb-4 text-gray-700 leading-relaxed border-t border-gray-100 pt-4">
-                      {faq.acceptedAnswer.text}
-                    </div>
-                  </details>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-16 lg:py-20 bg-gradient-to-br from-purple-600 to-purple-800 text-white">
-          <div className="container mx-auto px-4 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-              Klaar voor Nieuwe Kozijnen in Utrecht?
-            </h2>
-            <p className="text-xl lg:text-2xl mb-10 text-purple-100 max-w-3xl mx-auto">
-              Plan een gratis adviesgesprek en ontdek wat wij voor uw Utrechtse woning kunnen betekenen
-            </p>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                if (typeof window !== 'undefined' && (window as any).Calendly) {
-                  (window as any).Calendly.initPopupWidget({url: 'https://calendly.com/tbvanreijn'});
-                }
-              }}
-              className="inline-flex items-center justify-center px-10 py-5 bg-orange-500 text-white rounded-lg font-bold text-xl hover:bg-orange-600 transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
-            >
-              Plan Gratis Adviesgesprek
-            </a>
           </div>
         </section>
 
@@ -507,4 +569,3 @@ export default function KozijnenUtrechtPage() {
     </>
   )
 }
-

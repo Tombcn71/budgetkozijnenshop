@@ -8,7 +8,7 @@ import { Footer } from "@/components/footer"
 import { AIQuoteForm } from "@/components/ai-quote-form"
 import { HowItWorks } from "@/components/how-it-works"
 import { FAQ } from "@/components/faq"
-import { CheckCircle2, MapPin } from "lucide-react"
+import { CheckCircle2, MapPin, Home, TrendingUp, Euro, Shield } from "lucide-react"
 
 // Structured Data
 const structuredData = {
@@ -151,6 +151,35 @@ const structuredData = {
           }
         }
       ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://budgetkozijnenshop.nl/kozijnen-den-haag#waarom-vervangen",
+      "headline": "Kozijnen Vervangen in Den Haag: Kustklimaat en Geluidsisolatie",
+      "description": "Alles over kozijnen vervangen in Den Haag: kustklimaat, monumentale panden en geluidsisolatie.",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Kustklimaat Den Haag kozijnen"
+        },
+        {
+          "@type": "Thing",
+          "name": "Scheveningen kozijnen"
+        },
+        {
+          "@type": "Thing",
+          "name": "Geluidsisolatie Den Haag"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "MonetaryAmount",
+          "currency": "EUR",
+          "minValue": "700",
+          "maxValue": "1100",
+          "description": "Gemiddelde jaarlijkse energiebesparing"
+        }
+      ]
     }
   ]
 }
@@ -255,6 +284,216 @@ export default function KozijnenDenHaagPage() {
         
         <HowItWorks />
         
+        {/* Waarom Kozijnen Vervangen in Den Haag */}
+        <section className="py-12 lg:py-16 bg-gradient-to-b from-white to-gray-50">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+                  Kozijnen Vervangen in Den Haag
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  Kustklimaat, monumentale panden en geluidsisolatie
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                {/* Waarom in Den Haag */}
+                <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <Home className="w-6 h-6 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">Waarom in Den Haag?</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Kustklimaat: zout, wind en regen versnellen slijtage</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Scheveningen: extra onderhoud nodig door zeelucht</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Mix van monumentale panden en naoorlogse bouw</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Geluidsisolatie: stad én kustweer</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Wanneer vervangen */}
+                <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+                  <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                    <TrendingUp className="w-6 h-6 text-orange-600" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">Wanneer vervangen?</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                      <span>Roest en corrosie (vooral bij kust)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                      <span>Zoutkristallen op glas en kozijnen</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                      <span>Houtrot en vochtproblemen</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                      <span>Slecht sluitende ramen door wind</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Besparing Den Haag */}
+                <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <Euro className="w-6 h-6 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">Besparing Den Haag</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>€700-€1.100/jaar energiebesparing</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>30-40% minder warmteverlies</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>25-35% minder geluidsoverlast</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span>Minder onderhoudskosten aan de kust</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Extra Voordelen */}
+              <div className="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-8">
+                <h3 className="text-2xl font-bold mb-6 text-center">Extra Voordelen in Den Haag</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-white rounded-lg p-4 text-center">
+                    <Shield className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                    <p className="font-semibold">Kustbestendig</p>
+                    <p className="text-sm text-gray-600">Bestand tegen zout & wind</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 text-center">
+                    <Home className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                    <p className="font-semibold">Monumentaal</p>
+                    <p className="text-sm text-gray-600">Ook voor beschermde panden</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 text-center">
+                    <Euro className="w-8 h-8 text-orange-600 mx-auto mb-2" />
+                    <p className="font-semibold">ISDE Subsidie</p>
+                    <p className="text-sm text-gray-600">Tot €111 per m²</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 text-center">
+                    <TrendingUp className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+                    <p className="font-semibold">Geluidsisolatie</p>
+                    <p className="text-sm text-gray-600">25-35% minder geluid</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* SEO Artikel Den Haag */}
+        <section className="py-12 lg:py-16 bg-white">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-4xl mx-auto prose prose-lg">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-8">Kozijnen Vervangen in Den Haag: Kustklimaat en Geluidsisolatie</h2>
+              
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                Den Haag combineert stads- en kustleven op unieke wijze. Van de historische hofstad met monumentale panden tot het bruisende Scheveningen aan zee - de Haagse woningvoorraad is divers en vraagt om specifieke oplossingen. Het vervangen van kozijnen in Den Haag vereist kennis van het lokale klimaat en de architectuur.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">De uitdaging van het kustklimaat</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                De nabijheid van de Noordzee heeft grote invloed op woningen in Den Haag. Vooral in wijken zoals Scheveningen, Duindorp en Kijkduin is de invloed van zeelucht dagelijks merkbaar. Zout, vocht en wind zorgen voor versnelde slijtage van kozijnen. Houten kozijnen kunnen gaan rotten, metalen onderdelen roesten en verflagen bladderen sneller af.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Moderne kozijnen zijn speciaal ontwikkeld om bestand te zijn tegen deze omstandigheden. Kunststof kozijnen met UV-bestendige coatings, aluminium kozijnen met zee-watervaste behandeling en roestvrij beslag zorgen ervoor dat uw kozijnen decennialang meegaan, ook in het zware kustklimaat.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Monumentale panden en welstandseisen</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Den Haag kent vele monumentale panden en beschermde stadsgezichten. In wijken zoals het Statenkwartier, Archipelbuurt en het Centrum zijn strikte welstandseisen van toepassing. Dit betekent dat nieuwe kozijnen moeten passen bij het karakter van het pand en de omgeving.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Gelukkig zijn er uitstekende oplossingen die modern isoleren maar traditioneel ogen. Smalle kozijnprofielen, authentieke kleuren en klassieke raamindelingen zorgen ervoor dat het monumentale karakter behouden blijft, terwijl u wel profiteert van moderne isolatie en onderhoudsgemak.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Geluidsisolatie in de stad</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Als residentie en internationalestad is Den Haag levendig en dynamisch. Veel Hagenaars wonen aan drukke straten of in de buurt van uitgaansgebieden. Geluidsoverlast kan het woongenot flink beïnvloeden. Moderne kozijnen met hoogwaardige beglazing bieden uitstekende akoestische isolatie.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Door te investeren in kozijnen met speciale geluidswerend glas, kunt u de geluidsoverlast aanzienlijk verminderen. Dit draagt bij aan rust, concentratie en slaapkwaliteit. Vooral in de binnenstad en in wijken nabij hoofdwegen merken bewoners direct het verschil.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Naoorlogse woonwijken</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Delen van Den Haag, zoals de Schilderswijk, Transvaal en Morgenstond, kennen veel naoorlogse woningbouw. Deze woningen hebben vaak originele kozijnen uit de jaren 50, 60 of 70. Deze kozijnen voldoen niet meer aan moderne isolatie-eisen en zijn vaak dringend aan vervanging toe.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Het vervangen van deze kozijnen is relatief eenvoudig en levert direct resultaat op. De woningen worden comfortabeler, de energierekening daalt en het energielabel verbetert. In veel gevallen is dit onderdeel van een bredere verduurzaming, samen met andere isolatiemaatregelen.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Energiebesparing en duurzaamheid</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Den Haag zet sterk in op duurzaamheid en klimaatadaptatie. De gemeente stimuleert woningeigenaren om te verduurzamen via verschillende regelingen en voorlichtingscampagnes. Het vervangen van oude kozijnen past perfect in deze aanpak.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Door te kiezen voor moderne kozijnen met HR++ of HR+++ beglazing, vermindert u het energieverbruik van uw woning aanzienlijk. Dit leidt tot lagere energiekosten en een beter energielabel. Bovendien draagt u bij aan de duurzaamheidsdoelen van de stad en verhoogt u de waarde van uw woning.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Subsidies en ondersteuning</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Haagse woningeigenaren kunnen gebruikmaken van de landelijke ISDE-subsidie voor energiebesparende maatregelen. Deze subsidie biedt een financiële bijdrage per vierkante meter glas, afhankelijk van het type beglazing. Daarnaast zijn er vaak lokale initiatieven en voorlichtingsbijeenkomsten.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Ook de Energiebespaarlening van het Nationaal Warmtefonds is beschikbaar. Deze lening maakt het mogelijk om de investering te spreiden, terwijl u direct profiteert van lagere energiekosten en meer wooncomfort.
+              </p>
+
+              <h3 className="text-2xl font-bold mt-8 mb-4">Praktisch advies voor Haagse woningeigenaren</h3>
+              
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Bij het vervangen van kozijnen in Den Haag is het verstandig om te kiezen voor materialen die bestand zijn tegen het kustklimaat. Informeer naar de garantievoorwaarden, vooral met betrekking tot weer- en zoutbestendigheid. Een professioneel bedrijf met ervaring in de regio kan u hierover goed adviseren.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Let ook op de U-waarde van de kozijnen: hoe lager, hoe beter de isolatie. Voor geluidsoverlast is de Rw-waarde belangrijk: deze geeft aan hoeveel geluid wordt tegengehouden. Bespreek uw specifieke wensen en situatie met de adviseur.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Tot slot: plan de werkzaamheden zorgvuldig. In beschermde gebieden kan een vergunning nodig zijn. Informeer hierover bij de gemeente of laat dit regelen door het kozijnenbedrijf. Zo verloopt het proces soepel en zonder verrassingen.
+              </p>
+            </div>
+          </div>
+        </section>
+        
         {/* SEO Wijken Sectie */}
         <section className="py-12 lg:py-16 bg-white">
           <div className="container mx-auto px-4 lg:px-8">
@@ -307,32 +546,36 @@ export default function KozijnenDenHaagPage() {
         
         <FAQ />
 
-        <Footer />
-      </div>
-    </>
-  )
-}
+        {/* Google Maps Sectie */}
+        <section className="py-12 lg:py-16 bg-gradient-to-b from-gray-50 to-white">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-8">
+                <MapPin className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+                  Actief in Den Haag
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-2">
+                  Wij kennen Den Haag als onze broekzak en werken in het hele gebied. Lokale kennis gecombineerd met professionele service.
+                </p>
+                <p className="text-lg text-gray-500">
+                  📍 Werkgebied: Den Haag • Postcodes: 2490-2599
+                </p>
+              </div>
 
-        <section className="py-16 lg:py-20 bg-gradient-to-br from-green-600 to-green-800 text-white">
-          <div className="container mx-auto px-4 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-              Klaar voor Nieuwe Kozijnen in Den Haag?
-            </h2>
-            <p className="text-xl lg:text-2xl mb-10 text-green-100 max-w-3xl mx-auto">
-              Plan een gratis adviesgesprek en ontdek wat wij voor uw Haagse woning kunnen betekenen
-            </p>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                if (typeof window !== 'undefined' && (window as any).Calendly) {
-                  (window as any).Calendly.initPopupWidget({url: 'https://calendly.com/tbvanreijn'});
-                }
-              }}
-              className="inline-flex items-center justify-center px-10 py-5 bg-orange-500 text-white rounded-lg font-bold text-xl hover:bg-orange-600 transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
-            >
-              Plan Gratis Adviesgesprek
-            </a>
+              <div className="rounded-xl overflow-hidden shadow-2xl">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d156478.28826571607!2d4.23997785!3d52.07050465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5b72f78f9f635%3A0xd7d2c3c8c8c8c8c8!2sDen%20Haag!5e0!3m2!1snl!2snl!4v1234567890123!5m2!1snl!2snl"
+                  width="100%"
+                  height="450"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Werkgebied Den Haag"
+                ></iframe>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -341,4 +584,3 @@ export default function KozijnenDenHaagPage() {
     </>
   )
 }
-
