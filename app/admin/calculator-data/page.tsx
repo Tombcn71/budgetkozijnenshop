@@ -41,6 +41,15 @@ const LEGE_PRIJSMATRIX = {
   "montage-per-raam": 75,
   "afvoer-forfait": 200,
   "minimum-order": 1500,
+  
+  // Arbeid
+  "arbeid-uurloon": 65,
+  "arbeid-uren-per-raam": 1.5,
+  "arbeid-inmeten": 125,
+  
+  // BTW
+  "btw-percentage": 21,
+  "prijzen-zijn-inclusief-btw": true,
 }
 
 export default function CalculatorDataPage() {
@@ -74,23 +83,56 @@ export default function CalculatorDataPage() {
     // Montage
     const montage = testBerekening.metMontage ? testBerekening.aantalRamen * (prijzen["montage-per-raam"] as number) : 0
     
+    // Arbeid (inmeten + plaatsen)
+    const uurloon = prijzen["arbeid-uurloon"] as number
+    const urenPerRaam = prijzen["arbeid-uren-per-raam"] as number
+    const inmeten = prijzen["arbeid-inmeten"] as number
+    const arbeid = testBerekening.metMontage ? (inmeten + (testBerekening.aantalRamen * urenPerRaam * uurloon)) : 0
+    
     // Afvoer
     const afvoer = testBerekening.metAfvoer ? prijzen["afvoer-forfait"] as number : 0
     
-    const subtotaal = kozijn + kleur + montage + afvoer
-    const totaal = Math.max(subtotaal, prijzen["minimum-order"] as number)
+    const subtotaal = kozijn + kleur + montage + arbeid + afvoer
+    
+    // BTW berekening
+    const inclusiefBTW = prijzen["prijzen-zijn-inclusief-btw"] as boolean
+    const btwPercentage = prijzen["btw-percentage"] as number
+    
+    let totaalExclBTW = subtotaal
+    let btwBedrag = 0
+    let totaalInclBTW = subtotaal
+    
+    if (inclusiefBTW) {
+      // Prijzen zijn al inclusief BTW, bereken exclusief
+      totaalExclBTW = subtotaal / (1 + btwPercentage / 100)
+      btwBedrag = subtotaal - totaalExclBTW
+      totaalInclBTW = subtotaal
+    } else {
+      // Prijzen zijn exclusief, bereken inclusief
+      totaalExclBTW = subtotaal
+      btwBedrag = subtotaal * (btwPercentage / 100)
+      totaalInclBTW = subtotaal + btwBedrag
+    }
+    
+    const totaal = Math.max(totaalInclBTW, prijzen["minimum-order"] as number)
     
     return {
       kozijn: Math.round(kozijn),
       kleur: Math.round(kleur),
       montage: Math.round(montage),
+      arbeid: Math.round(arbeid),
       afvoer: Math.round(afvoer),
       subtotaal: Math.round(subtotaal),
+      totaalExclBTW: Math.round(totaalExclBTW),
+      btwBedrag: Math.round(btwBedrag),
+      totaalInclBTW: Math.round(totaalInclBTW),
       totaal: Math.round(totaal),
       basisPrijs,
       profielToeslag,
       typeMultiplier,
       kleurToeslag,
+      uurloon,
+      urenPerRaam,
     }
   }
 
@@ -389,7 +431,7 @@ export default function CalculatorDataPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Kleuren */}
               <div className="bg-white rounded-lg shadow-lg p-6">
                 <h2 className="text-xl font-bold mb-4 text-green-600">4. Kleur Toeslagen (per raam)</h2>
@@ -411,9 +453,54 @@ export default function CalculatorDataPage() {
                 </div>
               </div>
 
+              {/* Arbeid */}
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h2 className="text-xl font-bold mb-4 text-amber-600">5. Arbeid</h2>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Uurloon</span>
+                    <div className="flex items-center gap-1">
+                      <span>€</span>
+                      <input
+                        type="number"
+                        value={prijzen["arbeid-uurloon"]}
+                        onChange={(e) => setPrijzen({...prijzen, "arbeid-uurloon": parseInt(e.target.value) || 0})}
+                        className="w-20 px-2 py-1 border rounded text-sm"
+                      />
+                      <span className="text-xs text-gray-500">/uur</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Uren/raam</span>
+                    <div className="flex items-center gap-1">
+                      <input
+                        type="number"
+                        step="0.5"
+                        value={prijzen["arbeid-uren-per-raam"]}
+                        onChange={(e) => setPrijzen({...prijzen, "arbeid-uren-per-raam": parseFloat(e.target.value) || 0})}
+                        className="w-20 px-2 py-1 border rounded text-sm"
+                      />
+                      <span className="text-xs text-gray-500">uur</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Inmeten</span>
+                    <div className="flex items-center gap-1">
+                      <span>€</span>
+                      <input
+                        type="number"
+                        value={prijzen["arbeid-inmeten"]}
+                        onChange={(e) => setPrijzen({...prijzen, "arbeid-inmeten": parseInt(e.target.value) || 0})}
+                        className="w-20 px-2 py-1 border rounded text-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Service */}
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h2 className="text-xl font-bold mb-4 text-teal-600">5. Service Kosten</h2>
+                <h2 className="text-xl font-bold mb-4 text-teal-600">6. Service Kosten</h2>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">Montage/raam</span>
@@ -451,6 +538,39 @@ export default function CalculatorDataPage() {
                       />
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* BTW Sectie */}
+            <div className="bg-white rounded-lg shadow-lg p-6 border-2 border-red-200">
+              <h2 className="text-xl font-bold mb-4 text-red-600">7. BTW Instellingen</h2>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">BTW percentage</span>
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="number"
+                      value={prijzen["btw-percentage"]}
+                      onChange={(e) => setPrijzen({...prijzen, "btw-percentage": parseInt(e.target.value) || 0})}
+                      className="w-20 px-2 py-1 border rounded text-sm"
+                    />
+                    <span>%</span>
+                  </div>
+                </div>
+                <div className="border-t pt-3">
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={prijzen["prijzen-zijn-inclusief-btw"] as boolean}
+                      onChange={(e) => setPrijzen({...prijzen, "prijzen-zijn-inclusief-btw": e.target.checked})}
+                      className="w-5 h-5"
+                    />
+                    <div>
+                      <span className="text-sm font-semibold block">Alle prijzen zijn inclusief BTW</span>
+                      <span className="text-xs text-gray-600">Als uitgevinkt, worden prijzen gezien als exclusief BTW</span>
+                    </div>
+                  </label>
                 </div>
               </div>
             </div>
@@ -593,15 +713,27 @@ export default function CalculatorDataPage() {
                     <span>€{result.kleur}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Montage:</span>
+                    <span>Montage materiaal:</span>
                     <span>€{result.montage}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Arbeid ({testBerekening.aantalRamen}×{result.urenPerRaam}u×€{result.uurloon}):</span>
+                    <span>€{result.arbeid}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Afvoer:</span>
                     <span>€{result.afvoer}</span>
                   </div>
+                  <div className="flex justify-between border-t border-white/20 pt-2 mt-2">
+                    <span>{prijzen["prijzen-zijn-inclusief-btw"] ? "TOTAAL INCL" : "Subtotaal EXCL"} BTW:</span>
+                    <span>€{prijzen["prijzen-zijn-inclusief-btw"] ? result.totaalInclBTW : result.totaalExclBTW}</span>
+                  </div>
+                  <div className="flex justify-between text-yellow-200">
+                    <span>BTW ({prijzen["btw-percentage"]}%):</span>
+                    <span>€{result.btwBedrag}</span>
+                  </div>
                   <div className="flex justify-between border-t-2 border-white/40 pt-2 mt-2 text-lg font-bold">
-                    <span>TOTAAL:</span>
+                    <span>{prijzen["prijzen-zijn-inclusief-btw"] ? "Klant betaalt" : "TOTAAL INCL BTW"}:</span>
                     <span className="text-yellow-300">€{result.totaal}</span>
                   </div>
                 </div>
