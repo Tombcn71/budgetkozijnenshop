@@ -397,7 +397,7 @@ Goedkope kunststof kozijnen Zuid-Holland
     console.log('📧 Verzenden naar bedrijf')
     const { data: businessData, error: businessError } = await resend.emails.send({
       from: 'Budget Kozijnenshop <offerte@budgetkozijnenshop.nl>',
-      to: ['info@budgetkozijnenshop.nl'],
+      to: ['tbvanreijn@gmail.com'],
       replyTo: formData.email,
       subject: `Nieuwe Aanvraag - ${formData.naam} - ${formData.aantalRamen} kozijnen${priceRange ? ` - €${priceRange.min.toLocaleString('nl-NL')}-€${priceRange.max.toLocaleString('nl-NL')}` : ''}`,
       html: businessEmail,
