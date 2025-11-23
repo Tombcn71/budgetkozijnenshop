@@ -8,15 +8,12 @@ import { AlertCircle, Download, Save } from "lucide-react"
 // Lege prijsmatrix - Bart vult deze in
 const LEGE_PRIJSMATRIX = {
   // Materiaal + Glas combinaties (prijs per m²)
-  "kunststof-dubbel": 0,
   "kunststof-hr++": 0,
-  "kunststof-triple": 0,
-  "hout-dubbel": 0,
+  "kunststof-hr+++": 0,
   "hout-hr++": 0,
-  "hout-triple": 0,
-  "aluminium-dubbel": 0,
+  "hout-hr+++": 0,
   "aluminium-hr++": 0,
-  "aluminium-triple": 0,
+  "aluminium-hr+++": 0,
   
   // Kozijn profielen (toeslag per m²)
   "profiel-60mm": 0,
@@ -55,13 +52,13 @@ const LEGE_PRIJSMATRIX = {
 export default function CalculatorDataPage() {
   const [prijzen, setPrijzen] = useState(LEGE_PRIJSMATRIX)
   const [testBerekening, setTestBerekening] = useState({
-    materiaal: "kunststof",
-    glas: "hr++",
-    profiel: "70mm",
-    type: "draai-kiep",
-    kleur: "wit",
-    m2: 3.6,
-    aantalRamen: 2,
+    materiaal: "",
+    glas: "",
+    profiel: "",
+    type: "",
+    kleur: "",
+    m2: 0,
+    aantalRamen: 0,
     metMontage: true,
     metAfvoer: true,
   })
@@ -208,25 +205,13 @@ export default function CalculatorDataPage() {
                   <thead className="bg-gray-100">
                     <tr>
                       <th className="px-4 py-3 text-left font-semibold">Materiaal</th>
-                      <th className="px-4 py-3 text-left font-semibold">Dubbel Glas</th>
                       <th className="px-4 py-3 text-left font-semibold">HR++ Glas</th>
-                      <th className="px-4 py-3 text-left font-semibold">Triple Glas</th>
+                      <th className="px-4 py-3 text-left font-semibold">HR+++ Glas</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y">
                     <tr>
                       <td className="px-4 py-3 font-medium">Kunststof</td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-1">
-                          <span>€</span>
-                          <input
-                            type="number"
-                            value={prijzen["kunststof-dubbel"]}
-                            onChange={(e) => setPrijzen({...prijzen, "kunststof-dubbel": parseInt(e.target.value) || 0})}
-                            className="w-24 px-2 py-1 border rounded"
-                          />
-                        </div>
-                      </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-1">
                           <span>€</span>
@@ -243,8 +228,8 @@ export default function CalculatorDataPage() {
                           <span>€</span>
                           <input
                             type="number"
-                            value={prijzen["kunststof-triple"]}
-                            onChange={(e) => setPrijzen({...prijzen, "kunststof-triple": parseInt(e.target.value) || 0})}
+                            value={prijzen["kunststof-hr+++"]}
+                            onChange={(e) => setPrijzen({...prijzen, "kunststof-hr+++": parseInt(e.target.value) || 0})}
                             className="w-24 px-2 py-1 border rounded"
                           />
                         </div>
@@ -252,17 +237,6 @@ export default function CalculatorDataPage() {
                     </tr>
                     <tr>
                       <td className="px-4 py-3 font-medium">Hout</td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-1">
-                          <span>€</span>
-                          <input
-                            type="number"
-                            value={prijzen["hout-dubbel"]}
-                            onChange={(e) => setPrijzen({...prijzen, "hout-dubbel": parseInt(e.target.value) || 0})}
-                            className="w-24 px-2 py-1 border rounded"
-                          />
-                        </div>
-                      </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-1">
                           <span>€</span>
@@ -279,8 +253,8 @@ export default function CalculatorDataPage() {
                           <span>€</span>
                           <input
                             type="number"
-                            value={prijzen["hout-triple"]}
-                            onChange={(e) => setPrijzen({...prijzen, "hout-triple": parseInt(e.target.value) || 0})}
+                            value={prijzen["hout-hr+++"]}
+                            onChange={(e) => setPrijzen({...prijzen, "hout-hr+++": parseInt(e.target.value) || 0})}
                             className="w-24 px-2 py-1 border rounded"
                           />
                         </div>
@@ -288,17 +262,6 @@ export default function CalculatorDataPage() {
                     </tr>
                     <tr>
                       <td className="px-4 py-3 font-medium">Aluminium</td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-1">
-                          <span>€</span>
-                          <input
-                            type="number"
-                            value={prijzen["aluminium-dubbel"]}
-                            onChange={(e) => setPrijzen({...prijzen, "aluminium-dubbel": parseInt(e.target.value) || 0})}
-                            className="w-24 px-2 py-1 border rounded"
-                          />
-                        </div>
-                      </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-1">
                           <span>€</span>
@@ -315,8 +278,8 @@ export default function CalculatorDataPage() {
                           <span>€</span>
                           <input
                             type="number"
-                            value={prijzen["aluminium-triple"]}
-                            onChange={(e) => setPrijzen({...prijzen, "aluminium-triple": parseInt(e.target.value) || 0})}
+                            value={prijzen["aluminium-hr+++"]}
+                            onChange={(e) => setPrijzen({...prijzen, "aluminium-hr+++": parseInt(e.target.value) || 0})}
                             className="w-24 px-2 py-1 border rounded"
                           />
                         </div>
@@ -589,6 +552,7 @@ export default function CalculatorDataPage() {
                     onChange={(e) => setTestBerekening({...testBerekening, materiaal: e.target.value})}
                     className="w-full px-3 py-2 border rounded text-sm"
                   >
+                    <option value="">Kies materiaal</option>
                     <option value="kunststof">Kunststof</option>
                     <option value="hout">Hout</option>
                     <option value="aluminium">Aluminium</option>
@@ -602,9 +566,9 @@ export default function CalculatorDataPage() {
                     onChange={(e) => setTestBerekening({...testBerekening, glas: e.target.value})}
                     className="w-full px-3 py-2 border rounded text-sm"
                   >
-                    <option value="dubbel">Dubbel</option>
+                    <option value="">Kies glas</option>
                     <option value="hr++">HR++</option>
-                    <option value="triple">Triple</option>
+                    <option value="hr+++">HR+++</option>
                   </select>
                 </div>
 
@@ -615,6 +579,7 @@ export default function CalculatorDataPage() {
                     onChange={(e) => setTestBerekening({...testBerekening, profiel: e.target.value})}
                     className="w-full px-3 py-2 border rounded text-sm"
                   >
+                    <option value="">Kies profiel</option>
                     <option value="60mm">60mm</option>
                     <option value="70mm">70mm</option>
                     <option value="80mm">80mm</option>
@@ -628,6 +593,7 @@ export default function CalculatorDataPage() {
                     onChange={(e) => setTestBerekening({...testBerekening, type: e.target.value})}
                     className="w-full px-3 py-2 border rounded text-sm"
                   >
+                    <option value="">Kies type</option>
                     <option value="draai">Draai</option>
                     <option value="draai-kiep">Draai-kiep</option>
                     <option value="schuif">Schuif</option>
@@ -642,6 +608,7 @@ export default function CalculatorDataPage() {
                     onChange={(e) => setTestBerekening({...testBerekening, kleur: e.target.value})}
                     className="w-full px-3 py-2 border rounded text-sm"
                   >
+                    <option value="">Kies kleur</option>
                     <option value="wit">Wit</option>
                     <option value="creme">Creme</option>
                     <option value="grijs">Grijs</option>
@@ -657,8 +624,9 @@ export default function CalculatorDataPage() {
                     <input
                       type="number"
                       step="0.1"
-                      value={testBerekening.m2}
-                      onChange={(e) => setTestBerekening({...testBerekening, m2: parseFloat(e.target.value)})}
+                      value={testBerekening.m2 || ""}
+                      onChange={(e) => setTestBerekening({...testBerekening, m2: parseFloat(e.target.value) || 0})}
+                      placeholder="0"
                       className="w-full px-3 py-2 border rounded text-sm"
                     />
                   </div>
@@ -666,8 +634,9 @@ export default function CalculatorDataPage() {
                     <label className="block text-xs font-semibold mb-1">Ramen</label>
                     <input
                       type="number"
-                      value={testBerekening.aantalRamen}
-                      onChange={(e) => setTestBerekening({...testBerekening, aantalRamen: parseInt(e.target.value)})}
+                      value={testBerekening.aantalRamen || ""}
+                      onChange={(e) => setTestBerekening({...testBerekening, aantalRamen: parseInt(e.target.value) || 0})}
+                      placeholder="0"
                       className="w-full px-3 py-2 border rounded text-sm"
                     />
                   </div>
