@@ -257,7 +257,7 @@ export default function KozijnenRotterdamPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/25 to-transparent" />
           </div>
 
-          <div className="container mx-auto px-4 lg:px-8 relative z-10 py-8 lg:py-16">
+          <div className="container mx-auto px-4 lg:px-8 relative z-10 py-20 lg:py-28">
             <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-start">
               <div className="text-center lg:text-left">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 lg:mb-6 leading-tight text-balance">
