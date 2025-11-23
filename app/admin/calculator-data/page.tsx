@@ -3,613 +3,601 @@
 import { useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { 
-  AlertCircle, 
-  Calculator, 
-  Database, 
-  FileText,
-  Settings,
-  TrendingUp,
-  Eye,
-  Download
-} from "lucide-react"
+import { AlertCircle, Calculator, CheckCircle } from "lucide-react"
+
+// START TARIEVEN (uit lib/pricing/ai-calculator.ts)
+const START_TARIEVEN = {
+  materiaal: {
+    kunststof: 280,
+    hout: 450,
+    aluminium: 550,
+  },
+  glas: {
+    dubbel: 80,
+    "hr++": 120,
+    triple: 180,
+  },
+  type: {
+    draai: 0.9,
+    "draai-kiep": 1.0,
+    schuif: 1.2,
+  },
+  kleur: {
+    wit: 0,
+    grijs: 50,
+    zwart: 75,
+  },
+  montage: 75,
+  afvoer: 200,
+  minimum: 1500,
+}
 
 export default function CalculatorDataPage() {
-  const [showRawData, setShowRawData] = useState(false)
+  // BEWERKBARE TARIEVEN - Provider kan hier mee spelen
+  const [tarieven, setTarieven] = useState(START_TARIEVEN)
+  
+  const [testScenario, setTestScenario] = useState({
+    m2: 3.6,
+    aantalRamen: 2,
+    materiaal: "kunststof",
+    glas: "hr++",
+    type: "draai-kiep",
+    kleur: "wit",
+    metMontage: true,
+    metAfvoer: true,
+  })
 
-  // Voorbeelddata - dit zou later uit een database komen
-  const calculationExamples = [
-    {
-      id: 1,
-      date: "2025-01-20",
-      imageAnalysis: {
-        detectedWindows: 2,
-        estimatedWidth: 1200,
-        estimatedHeight: 1400,
-        totalArea: 3.36,
-        frameType: "draaikiepraam"
-      },
-      pricing: {
-        glassType: "HR++",
-        pricePerM2: 94,
-        frameCost: 316.8,
-        laborCost: 200,
-        totalEstimate: 516.8
-      },
-      userInputs: {
-        location: "Rotterdam",
-        floors: 2,
-        urgency: "binnen 3 maanden"
-      }
-    },
-    {
-      id: 2,
-      date: "2025-01-19",
-      imageAnalysis: {
-        detectedWindows: 4,
-        estimatedWidth: 800,
-        estimatedHeight: 1200,
-        totalArea: 3.84,
-        frameType: "draairaam"
-      },
-      pricing: {
-        glassType: "Triple",
-        pricePerM2: 177,
-        frameCost: 679.68,
-        laborCost: 400,
-        totalEstimate: 1079.68
-      },
-      userInputs: {
-        location: "Den Haag",
-        floors: 1,
-        urgency: "zo snel mogelijk"
-      }
+  // BEREKEN MET INGESTELDE TARIEVEN
+  const berekenPrijs = () => {
+    const m2 = testScenario.m2
+    const aantal = testScenario.aantalRamen
+
+    // 1. Kozijn
+    const materiaalPrijs = tarieven.materiaal[testScenario.materiaal as keyof typeof tarieven.materiaal]
+    const typeMultiplier = tarieven.type[testScenario.type as keyof typeof tarieven.type]
+    const kozijn = m2 * materiaalPrijs * typeMultiplier
+
+    // 2. Kleur
+    const kleur = aantal * tarieven.kleur[testScenario.kleur as keyof typeof tarieven.kleur]
+
+    // 3. Glas
+    const glasPrijs = tarieven.glas[testScenario.glas as keyof typeof tarieven.glas]
+    const glas = m2 * glasPrijs
+
+    // 4. Montage
+    const montage = testScenario.metMontage ? aantal * tarieven.montage : 0
+
+    // 5. Afvoer
+    const afvoer = testScenario.metAfvoer ? tarieven.afvoer : 0
+
+    // Totaal
+    const subtotaal = kozijn + kleur + glas + montage + afvoer
+    const totaal = Math.max(subtotaal, tarieven.minimum)
+
+    return {
+      kozijn: Math.round(kozijn),
+      kleur: Math.round(kleur),
+      glas: Math.round(glas),
+      montage,
+      afvoer,
+      subtotaal: Math.round(subtotaal),
+      totaal: Math.round(totaal),
     }
-  ]
-
-  // ECHTE TARIEVEN UIT lib/pricing/ai-calculator.ts
-  const pricingFactors = {
-    materialen: {
-      "kunststof": { pricePerM2: 280, description: "Kunststof kozijn" },
-      "hout": { pricePerM2: 450, description: "Houten kozijn" },
-      "aluminium": { pricePerM2: 550, description: "Aluminium kozijn" },
-      "hout-aluminium": { pricePerM2: 650, description: "Hout-aluminium combinatie" }
-    },
-    glassTypes: {
-      "dubbel": { pricePerM2: 80, description: "Standaard dubbel glas" },
-      "hr++": { pricePerM2: 120, description: "HR++ isolatieglas" },
-      "triple": { pricePerM2: 180, description: "Triple glas, beste isolatie" },
-      "geluidswerend": { pricePerM2: 220, description: "Geluidswerend glas" }
-    },
-    frameTypes: {
-      "draaikiepraam": { multiplier: 1.0, description: "Draai-kiep raam (standaard)" },
-      "draadraam": { multiplier: 0.9, description: "Alleen draairaam (-10%)" },
-      "kiepraam": { multiplier: 0.95, description: "Alleen kiepraam (-5%)" },
-      "schuifraam": { multiplier: 1.2, description: "Schuifraam (+20%)" },
-      "vaste-beglazing": { multiplier: 0.7, description: "Vaste beglazing (-30%)" }
-    },
-    kleurToeslagen: {
-      "wit": { toeslag: 0, description: "Wit (standaard)" },
-      "creme": { toeslag: 0, description: "Creme (standaard)" },
-      "grijs": { toeslag: 50, description: "Grijs (+€50/raam)" },
-      "antraciet": { toeslag: 50, description: "Antraciet (+€50/raam)" },
-      "zwart": { toeslag: 75, description: "Zwart (+€75/raam)" },
-      "donkergroen": { toeslag: 50, description: "Donkergroen (+€50/raam)" },
-      "houtkleur": { toeslag: 100, description: "Houtkleur (+€100/raam)" }
-    },
-    montage: 75,        // €75 per raam
-    afvoer: 200,        // €200 forfait
-    minimumPrijs: 1500  // €1500 minimum totaalprijs
   }
+
+  const prijs = berekenPrijs()
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      {/* Warning Banner */}
+      {/* Warning */}
       <div className="bg-red-600 text-white py-3">
-        <div className="container mx-auto px-4 lg:px-8">
+        <div className="container mx-auto px-4">
           <div className="flex items-center justify-center gap-2">
             <AlertCircle className="w-5 h-5" />
-            <p className="font-semibold">INTERN GEBRUIK - Niet delen met klanten</p>
+            <p className="font-semibold">INTERN - Calculator Analyse met Kozijnprovider</p>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 lg:px-8 py-12">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
-              <Database className="w-10 h-10 text-blue-600" />
-              Calculator Data & Analyse
-            </h1>
-            <p className="text-gray-600 text-lg">
-              Interne pagina om berekeningen te analyseren en te verbeteren samen met kozijnproviders
-            </p>
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Calculator Check</h1>
+          <p className="text-gray-600">Doorloop samen met de kozijnprovider of deze berekeningen kloppen</p>
+        </div>
+
+        {/* BEWERKBARE TARIEVEN */}
+        <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-lg shadow-lg p-6 mb-6">
+          <h2 className="text-2xl font-bold mb-2 text-purple-900">🎯 Pas Tarieven Aan</h2>
+          <p className="text-sm text-gray-600 mb-6">Provider: speel met deze prijzen totdat de totaalprijs klopt</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Materiaal Prijzen */}
+            <div className="bg-white rounded-lg p-4">
+              <h3 className="font-semibold mb-3 text-blue-600">Materiaal (€/m²)</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs text-gray-600">Kunststof</label>
+                  <input
+                    type="number"
+                    value={tarieven.materiaal.kunststof}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      materiaal: {...tarieven.materiaal, kunststof: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-600">Hout</label>
+                  <input
+                    type="number"
+                    value={tarieven.materiaal.hout}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      materiaal: {...tarieven.materiaal, hout: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-600">Aluminium</label>
+                  <input
+                    type="number"
+                    value={tarieven.materiaal.aluminium}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      materiaal: {...tarieven.materiaal, aluminium: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Glas Prijzen */}
+            <div className="bg-white rounded-lg p-4">
+              <h3 className="font-semibold mb-3 text-green-600">Glas (€/m²)</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs text-gray-600">Dubbel</label>
+                  <input
+                    type="number"
+                    value={tarieven.glas.dubbel}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      glas: {...tarieven.glas, dubbel: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-600">HR++</label>
+                  <input
+                    type="number"
+                    value={tarieven.glas["hr++"]}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      glas: {...tarieven.glas, "hr++": parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-600">Triple</label>
+                  <input
+                    type="number"
+                    value={tarieven.glas.triple}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      glas: {...tarieven.glas, triple: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Type Multipliers */}
+            <div className="bg-white rounded-lg p-4">
+              <h3 className="font-semibold mb-3 text-purple-600">Type (multiplier)</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs text-gray-600">Draai</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={tarieven.type.draai}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      type: {...tarieven.type, draai: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-600">Draai-kiep</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={tarieven.type["draai-kiep"]}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      type: {...tarieven.type, "draai-kiep": parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-600">Schuif</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={tarieven.type.schuif}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      type: {...tarieven.type, schuif: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Calculation Formulas */}
-          <div className="bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-lg shadow-lg p-6 lg:p-8 mb-8">
-            <div className="flex items-center gap-3 mb-6">
-              <Calculator className="w-8 h-8 text-purple-600" />
-              <h2 className="text-2xl font-bold">Berekeningsformules</h2>
-            </div>
-
-            <div className="space-y-6">
-              {/* Formula 1 */}
-              <div className="bg-white rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-purple-900">1. Kozijn Materiaalkosten</h3>
-                <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
-                  <p className="font-bold mb-2">Formule:</p>
-                  <p>Kozijn = (Oppervlakteₘ² × MateriaalPrijsₘ² × TypeMultiplier) + (AantalRamen × KleurToeslag)</p>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <p><strong>Oppervlakte:</strong> Totale m² van alle ramen</p>
-                  <p><strong>MateriaalPrijsₘ²:</strong> Kunststof €280 | Hout €450 | Aluminium €550</p>
-                  <p><strong>TypeMultiplier:</strong> Draai-kiep 1.0× | Draai 0.9× | Schuif 1.2× | Vast 0.7×</p>
-                  <p><strong>KleurToeslag:</strong> Wit/Creme €0 | Grijs/Antraciet €50 | Zwart €75 | Houtkleur €100</p>
-                </div>
-                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
-                  <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
-                  <p className="text-sm">2 ramen van 1.5m × 1.2m = 3.6m², kunststof, draai-kiep, wit</p>
-                  <p className="text-sm">(3.6 × 280 × 1.0) + (2 × 0) = <strong>€1,008</strong></p>
-                </div>
-              </div>
-
-              {/* Formula 2 */}
-              <div className="bg-white rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-purple-900">2. Glaskosten</h3>
-                <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
-                  <p className="font-bold mb-2">Formule:</p>
-                  <p>Glas = Oppervlakteₘ² × GlasPrijsₘ²</p>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <p><strong>Dubbel glas:</strong> €80/m²</p>
-                  <p><strong>HR++ glas:</strong> €120/m²</p>
-                  <p><strong>Triple glas:</strong> €180/m²</p>
-                  <p><strong>Geluidswerend:</strong> €220/m²</p>
-                </div>
-                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
-                  <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
-                  <p className="text-sm">3.6m² met HR++ glas</p>
-                  <p className="text-sm">3.6 × 120 = <strong>€432</strong></p>
-                </div>
-              </div>
-
-              {/* Formula 3 */}
-              <div className="bg-white rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-purple-900">3. Montage & Afvoer</h3>
-                <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
-                  <p className="font-bold mb-2">Formule:</p>
-                  <p>Montage = AantalRamen × €75 (indien gekozen)</p>
-                  <p>Afvoer = €200 forfait (indien gekozen)</p>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <p><strong>Montage:</strong> €75 per raam (optioneel)</p>
-                  <p><strong>Afvoer oude kozijnen:</strong> €200 forfait (optioneel)</p>
-                </div>
-                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
-                  <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
-                  <p className="text-sm">2 ramen met montage + afvoer</p>
-                  <p className="text-sm">(2 × 75) + 200 = <strong>€350</strong></p>
-                </div>
-              </div>
-
-              {/* Formula 4 */}
-              <div className="bg-white rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-purple-900">4. Totaalprijs & Minimum</h3>
-                <div className="bg-purple-100 rounded-lg p-4 mb-4 font-mono text-sm">
-                  <p className="font-bold mb-2">Formule:</p>
-                  <p>Subtotaal = Kozijn + Glas + Montage + Afvoer</p>
-                  <p className="mt-2"><strong>Totaal = MAX(Subtotaal, €1.500)</strong></p>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <p><strong>Minimum totaalprijs:</strong> €1.500</p>
-                  <p><strong>Alle prijzen zijn inclusief BTW</strong></p>
-                </div>
-                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
-                  <p className="font-semibold text-green-900 mb-2">Voorbeeld:</p>
-                  <p className="text-sm">Kozijn €1,008 + Glas €432 + Montage €150 + Afvoer €200</p>
-                  <p className="text-sm">MAX(1790, 1500) = <strong>€1,790</strong></p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Current Pricing Factors */}
-          <div className="bg-white rounded-lg shadow-lg p-6 lg:p-8 mb-8">
-            <div className="flex items-center gap-3 mb-6">
-              <Settings className="w-8 h-8 text-blue-600" />
-              <h2 className="text-2xl font-bold">Huidige Prijsfactoren</h2>
-            </div>
-
-            {/* Materialen */}
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Kozijn Materialen</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="px-4 py-3 text-left font-semibold">Type</th>
-                      <th className="px-4 py-3 text-left font-semibold">Prijs/m²</th>
-                      <th className="px-4 py-3 text-left font-semibold">Omschrijving</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {Object.entries(pricingFactors.materialen).map(([key, value]) => (
-                      <tr key={key} className="hover:bg-gray-50">
-                        <td className="px-4 py-3 font-medium capitalize">{key}</td>
-                        <td className="px-4 py-3 font-bold text-blue-600">€{value.pricePerM2}</td>
-                        <td className="px-4 py-3 text-gray-600">{value.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Glass Types */}
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Glastypen</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="px-4 py-3 text-left font-semibold">Type</th>
-                      <th className="px-4 py-3 text-left font-semibold">Prijs/m²</th>
-                      <th className="px-4 py-3 text-left font-semibold">Omschrijving</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {Object.entries(pricingFactors.glassTypes).map(([key, value]) => (
-                      <tr key={key} className="hover:bg-gray-50">
-                        <td className="px-4 py-3 font-medium capitalize">{key}</td>
-                        <td className="px-4 py-3 font-bold text-green-600">€{value.pricePerM2}</td>
-                        <td className="px-4 py-3 text-gray-600">{value.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Frame Types */}
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Kozijntypen</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="px-4 py-3 text-left font-semibold">Type</th>
-                      <th className="px-4 py-3 text-left font-semibold">Multiplier</th>
-                      <th className="px-4 py-3 text-left font-semibold">Impact</th>
-                      <th className="px-4 py-3 text-left font-semibold">Omschrijving</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {Object.entries(pricingFactors.frameTypes).map(([key, value]) => (
-                      <tr key={key} className="hover:bg-gray-50">
-                        <td className="px-4 py-3 font-medium">{key}</td>
-                        <td className="px-4 py-3">{value.multiplier}x</td>
-                        <td className="px-4 py-3">
-                          <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            value.multiplier === 1.0 ? 'bg-green-100 text-green-800' :
-                            value.multiplier <= 1.2 ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-orange-100 text-orange-800'
-                          }`}>
-                            +{Math.round((value.multiplier - 1) * 100)}%
-                          </span>
-                        </td>
-                        <td className="px-4 py-3 text-gray-600">{value.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             {/* Kleur Toeslagen */}
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Kleur Toeslagen (per raam)</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="px-4 py-3 text-left font-semibold">Kleur</th>
-                      <th className="px-4 py-3 text-left font-semibold">Toeslag per raam</th>
-                      <th className="px-4 py-3 text-left font-semibold">Omschrijving</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {Object.entries(pricingFactors.kleurToeslagen).map(([key, value]) => (
-                      <tr key={key} className="hover:bg-gray-50">
-                        <td className="px-4 py-3 font-medium capitalize">{key}</td>
-                        <td className="px-4 py-3 font-bold text-orange-600">
-                          {value.toeslag === 0 ? '€0' : `+€${value.toeslag}`}
-                        </td>
-                        <td className="px-4 py-3 text-gray-600">{value.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            <div className="bg-white rounded-lg p-4">
+              <h3 className="font-semibold mb-3 text-orange-600">Kleur (€/raam)</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs text-gray-600">Wit</label>
+                  <input
+                    type="number"
+                    value={tarieven.kleur.wit}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      kleur: {...tarieven.kleur, wit: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-600">Grijs</label>
+                  <input
+                    type="number"
+                    value={tarieven.kleur.grijs}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      kleur: {...tarieven.kleur, grijs: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-600">Zwart</label>
+                  <input
+                    type="number"
+                    value={tarieven.kleur.zwart}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      kleur: {...tarieven.kleur, zwart: parseFloat(e.target.value) || 0}
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
               </div>
             </div>
 
-            {/* Service Costs */}
-            <div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Service Kosten</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-blue-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Montage per Raam</p>
-                  <p className="text-2xl font-bold text-blue-600">
-                    €{pricingFactors.montage}
-                  </p>
+            {/* Service */}
+            <div className="bg-white rounded-lg p-4">
+              <h3 className="font-semibold mb-3 text-teal-600">Service (€)</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs text-gray-600">Montage/raam</label>
+                  <input
+                    type="number"
+                    value={tarieven.montage}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      montage: parseFloat(e.target.value) || 0
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
                 </div>
-                <div className="bg-green-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Afvoer Oude Kozijnen</p>
-                  <p className="text-2xl font-bold text-green-600">
-                    €{pricingFactors.afvoer}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">Forfait</p>
+                <div>
+                  <label className="text-xs text-gray-600">Afvoer forfait</label>
+                  <input
+                    type="number"
+                    value={tarieven.afvoer}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      afvoer: parseFloat(e.target.value) || 0
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
                 </div>
-                <div className="bg-purple-50 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Minimum Totaalprijs</p>
-                  <p className="text-2xl font-bold text-purple-600">
-                    €{pricingFactors.minimumPrijs}
-                  </p>
+                <div>
+                  <label className="text-xs text-gray-600">Minimum totaal</label>
+                  <input
+                    type="number"
+                    value={tarieven.minimum}
+                    onChange={(e) => setTarieven({
+                      ...tarieven,
+                      minimum: parseFloat(e.target.value) || 0
+                    })}
+                    className="w-full px-3 py-2 border rounded font-semibold"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Reset knop */}
+            <div className="bg-white rounded-lg p-4 flex flex-col justify-between">
+              <div>
+                <h3 className="font-semibold mb-3 text-gray-600">Acties</h3>
+                <button
+                  onClick={() => setTarieven(START_TARIEVEN)}
+                  className="w-full px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded font-semibold"
+                >
+                  Reset naar Start
+                </button>
+              </div>
+              <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
+                <p className="text-xs text-yellow-800">
+                  💡 Speel met de prijzen totdat de totaalprijs klopt met jouw werkelijke prijzen
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* LEFT: Test Scenario */}
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                <Calculator className="w-6 h-6 text-blue-600" />
+                Test Scenario
+              </h2>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Totale m² (alle ramen)</label>
+                  <input
+                    type="number"
+                    value={testScenario.m2}
+                    onChange={(e) => setTestScenario({...testScenario, m2: parseFloat(e.target.value)})}
+                    className="w-full px-4 py-2 border rounded-lg"
+                    step="0.1"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Aantal Ramen</label>
+                  <input
+                    type="number"
+                    value={testScenario.aantalRamen}
+                    onChange={(e) => setTestScenario({...testScenario, aantalRamen: parseInt(e.target.value)})}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Materiaal</label>
+                  <select
+                    value={testScenario.materiaal}
+                    onChange={(e) => setTestScenario({...testScenario, materiaal: e.target.value})}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  >
+                    <option value="kunststof">Kunststof (€{tarieven.materiaal.kunststof}/m²)</option>
+                    <option value="hout">Hout (€{tarieven.materiaal.hout}/m²)</option>
+                    <option value="aluminium">Aluminium (€{tarieven.materiaal.aluminium}/m²)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Glas Type</label>
+                  <select
+                    value={testScenario.glas}
+                    onChange={(e) => setTestScenario({...testScenario, glas: e.target.value})}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  >
+                    <option value="dubbel">Dubbel (€{tarieven.glas.dubbel}/m²)</option>
+                    <option value="hr++">HR++ (€{tarieven.glas["hr++"]}/m²)</option>
+                    <option value="triple">Triple (€{tarieven.glas.triple}/m²)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Kozijn Type</label>
+                  <select
+                    value={testScenario.type}
+                    onChange={(e) => setTestScenario({...testScenario, type: e.target.value})}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  >
+                    <option value="draai">Draai ({tarieven.type.draai}×)</option>
+                    <option value="draai-kiep">Draai-kiep ({tarieven.type["draai-kiep"]}×)</option>
+                    <option value="schuif">Schuif ({tarieven.type.schuif}×)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Kleur</label>
+                  <select
+                    value={testScenario.kleur}
+                    onChange={(e) => setTestScenario({...testScenario, kleur: e.target.value})}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  >
+                    <option value="wit">Wit (€{tarieven.kleur.wit}/raam)</option>
+                    <option value="grijs">Grijs (€{tarieven.kleur.grijs}/raam)</option>
+                    <option value="zwart">Zwart (€{tarieven.kleur.zwart}/raam)</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={testScenario.metMontage}
+                      onChange={(e) => setTestScenario({...testScenario, metMontage: e.target.checked})}
+                      className="w-4 h-4"
+                    />
+                    <span className="text-sm font-semibold">Montage (€{tarieven.montage}/raam)</span>
+                  </label>
+
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={testScenario.metAfvoer}
+                      onChange={(e) => setTestScenario({...testScenario, metAfvoer: e.target.checked})}
+                      className="w-4 h-4"
+                    />
+                    <span className="text-sm font-semibold">Afvoer oude kozijnen (€{tarieven.afvoer})</span>
+                  </label>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Recent Calculations */}
-          <div className="bg-white rounded-lg shadow-lg p-6 lg:p-8 mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <Calculator className="w-8 h-8 text-green-600" />
-                <h2 className="text-2xl font-bold">Recente Berekeningen</h2>
-              </div>
-              <button
-                onClick={() => setShowRawData(!showRawData)}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
-              >
-                <Eye className="w-4 h-4" />
-                {showRawData ? 'Verberg' : 'Toon'} Raw Data
-              </button>
-            </div>
-
-            <div className="space-y-6">
-              {calculationExamples.map((calc) => (
-                <div key={calc.id} className="border border-gray-200 rounded-lg p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Berekening #{calc.id}</h3>
-                    <span className="text-sm text-gray-500">{calc.date}</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Image Analysis */}
-                    <div>
-                      <h4 className="font-semibold mb-3 text-blue-600 flex items-center gap-2">
-                        <Eye className="w-4 h-4" />
-                        AI Analyse
-                      </h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Ramen:</span>
-                          <span className="font-semibold">{calc.imageAnalysis.detectedWindows}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Breedte (est):</span>
-                          <span className="font-semibold">{calc.imageAnalysis.estimatedWidth}mm</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Hoogte (est):</span>
-                          <span className="font-semibold">{calc.imageAnalysis.estimatedHeight}mm</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Oppervlakte:</span>
-                          <span className="font-semibold">{calc.imageAnalysis.totalArea}m²</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Type:</span>
-                          <span className="font-semibold">{calc.imageAnalysis.frameType}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Pricing Breakdown */}
-                    <div>
-                      <h4 className="font-semibold mb-3 text-green-600 flex items-center gap-2">
-                        <TrendingUp className="w-4 h-4" />
-                        Prijsopbouw
-                      </h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Glas type:</span>
-                          <span className="font-semibold">{calc.pricing.glassType}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Prijs/m²:</span>
-                          <span className="font-semibold">€{calc.pricing.pricePerM2}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Kozijn kosten:</span>
-                          <span className="font-semibold">€{calc.pricing.frameCost}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Montage:</span>
-                          <span className="font-semibold">€{calc.pricing.laborCost}</span>
-                        </div>
-                        <div className="flex justify-between pt-2 border-t border-gray-200">
-                          <span className="text-gray-900 font-bold">Totaal:</span>
-                          <span className="font-bold text-green-600">€{calc.pricing.totalEstimate}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* User Inputs */}
-                    <div>
-                      <h4 className="font-semibold mb-3 text-purple-600 flex items-center gap-2">
-                        <FileText className="w-4 h-4" />
-                        Klant Input
-                      </h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Locatie:</span>
-                          <span className="font-semibold">{calc.userInputs.location}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Verdiepingen:</span>
-                          <span className="font-semibold">{calc.userInputs.floors}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Urgentie:</span>
-                          <span className="font-semibold">{calc.userInputs.urgency}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {showRawData && (
-                    <div className="mt-4 pt-4 border-t border-gray-200">
-                      <pre className="bg-gray-900 text-green-400 p-4 rounded-lg text-xs overflow-x-auto">
-                        {JSON.stringify(calc, null, 2)}
-                      </pre>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Calculator */}
-          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg shadow-xl p-6 lg:p-8 mb-8 text-white">
-            <div className="flex items-center gap-3 mb-6">
-              <Calculator className="w-8 h-8" />
-              <h2 className="text-2xl font-bold">Snelle Rekencheck</h2>
-            </div>
-            
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <h3 className="font-semibold mb-4">Voorbeeld: 2 kunststof draai-kiep ramen (wit) met HR++ glas + montage + afvoer</h3>
+          {/* RIGHT: Berekening */}
+          <div className="space-y-6">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg shadow-lg p-6 text-white">
+              <h2 className="text-xl font-bold mb-4">Berekening volgens huidige formule</h2>
+              
               <div className="space-y-3 font-mono text-sm">
-                <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>Afmetingen:</span>
-                  <span className="font-bold">2× (1.5m × 1.2m) = 3.6m²</span>
+                <div className="flex justify-between items-center pb-3 border-b border-white/20">
+                  <span>Kozijn ({testScenario.m2}m² × €{tarieven.materiaal[testScenario.materiaal as keyof typeof tarieven.materiaal]} × {tarieven.type[testScenario.type as keyof typeof tarieven.type]})</span>
+                  <span className="font-bold text-lg">€{prijs.kozijn}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>Kozijn (kunststof):</span>
-                  <span className="font-bold">3.6 × €280 × 1.0 = €1,008</span>
+
+                <div className="flex justify-between items-center pb-3 border-b border-white/20">
+                  <span>Kleur ({testScenario.aantalRamen} × €{tarieven.kleur[testScenario.kleur as keyof typeof tarieven.kleur]})</span>
+                  <span className="font-bold text-lg">€{prijs.kleur}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>Kleur (wit):</span>
-                  <span className="font-bold">2 × €0 = €0</span>
+
+                <div className="flex justify-between items-center pb-3 border-b border-white/20">
+                  <span>Glas ({testScenario.m2}m² × €{tarieven.glas[testScenario.glas as keyof typeof tarieven.glas]})</span>
+                  <span className="font-bold text-lg">€{prijs.glas}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>HR++ glas:</span>
-                  <span className="font-bold">3.6 × €120 = €432</span>
+
+                <div className="flex justify-between items-center pb-3 border-b border-white/20">
+                  <span>Montage ({testScenario.aantalRamen} × €{tarieven.montage})</span>
+                  <span className="font-bold text-lg">€{prijs.montage}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>Montage:</span>
-                  <span className="font-bold">2 × €75 = €150</span>
+
+                <div className="flex justify-between items-center pb-3 border-b border-white/20">
+                  <span>Afvoer</span>
+                  <span className="font-bold text-lg">€{prijs.afvoer}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>Afvoer oude kozijnen:</span>
-                  <span className="font-bold">€200</span>
+
+                <div className="flex justify-between items-center pt-3 text-lg">
+                  <span className="font-bold">TOTAAL</span>
+                  <span className="font-bold text-2xl text-yellow-300">€{prijs.totaal}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-white/20">
-                  <span>Subtotaal:</span>
-                  <span className="font-bold">€1,790</span>
+
+                {prijs.subtotaal < tarieven.minimum && (
+                  <div className="text-xs text-yellow-200 mt-2">
+                    * Minimum prijs €{tarieven.minimum} toegepast
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Vragenlijst */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-xl font-bold mb-4 text-orange-600">Bespreek met Provider</h2>
+              
+              <div className="space-y-4">
+                <div className="border-l-4 border-orange-400 pl-4 py-2">
+                  <p className="font-semibold mb-1">1. Klopt deze totaalprijs?</p>
+                  <p className="text-sm text-gray-600">Is €{prijs.totaal} realistisch voor dit scenario?</p>
                 </div>
-                <div className="flex justify-between pt-2 text-lg">
-                  <span className="font-bold">TOTAAL (incl BTW):</span>
-                  <span className="font-bold text-yellow-300">€1,790</span>
+
+                <div className="border-l-4 border-orange-400 pl-4 py-2">
+                  <p className="font-semibold mb-1">2. Kloppen de m² prijzen?</p>
+                  <p className="text-sm text-gray-600">Materiaal: {testScenario.materiaal} €{tarieven.materiaal[testScenario.materiaal as keyof typeof tarieven.materiaal]}/m² | Glas: {testScenario.glas} €{tarieven.glas[testScenario.glas as keyof typeof tarieven.glas]}/m²</p>
                 </div>
-                <p className="text-xs text-white/70 mt-2">* Prijzen zijn inclusief BTW</p>
+
+                <div className="border-l-4 border-orange-400 pl-4 py-2">
+                  <p className="font-semibold mb-1">3. Type multiplier correct?</p>
+                  <p className="text-sm text-gray-600">{testScenario.type}: {tarieven.type[testScenario.type as keyof typeof tarieven.type]}× - realistisch?</p>
+                </div>
+
+                <div className="border-l-4 border-orange-400 pl-4 py-2">
+                  <p className="font-semibold mb-1">4. Kleur toeslagen OK?</p>
+                  <p className="text-sm text-gray-600">{testScenario.kleur}: €{tarieven.kleur[testScenario.kleur as keyof typeof tarieven.kleur]}/raam - correct bedrag?</p>
+                </div>
+
+                <div className="border-l-4 border-orange-400 pl-4 py-2">
+                  <p className="font-semibold mb-1">5. Montage & Afvoer</p>
+                  <p className="text-sm text-gray-600">€{tarieven.montage}/raam montage + €{tarieven.afvoer} afvoer - realistisch?</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Huidige Tarieven Tabel */}
+        <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-xl font-bold mb-4">Huidige Tarieven Overzicht</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <h3 className="font-semibold mb-3 text-blue-600">Materiaal (per m²)</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span>Kunststof:</span><strong>€280</strong></div>
+                <div className="flex justify-between"><span>Hout:</span><strong>€450</strong></div>
+                <div className="flex justify-between"><span>Aluminium:</span><strong>€550</strong></div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-3 text-green-600">Glas (per m²)</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span>Dubbel:</span><strong>€80</strong></div>
+                <div className="flex justify-between"><span>HR++:</span><strong>€120</strong></div>
+                <div className="flex justify-between"><span>Triple:</span><strong>€180</strong></div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-3 text-purple-600">Type Multipliers</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span>Draai:</span><strong>0.9×</strong></div>
+                <div className="flex justify-between"><span>Draai-kiep:</span><strong>1.0×</strong></div>
+                <div className="flex justify-between"><span>Schuif:</span><strong>1.2×</strong></div>
               </div>
             </div>
           </div>
 
-          {/* Improvement Suggestions */}
-          <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-orange-200 rounded-lg p-6 lg:p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <TrendingUp className="w-8 h-8 text-orange-600" />
-              <h2 className="text-2xl font-bold">Discussiepunten voor Kozijnprovider</h2>
-            </div>
-
-            <div className="space-y-4">
-              <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">1. Zijn deze formules correct?</h3>
-                <p className="text-gray-700 text-sm mb-2">
-                  Kloppen de basis berekeningen? Missen we stappen of factoren?
-                </p>
-                <ul className="text-sm text-gray-600 ml-4 space-y-1">
-                  <li>• Is de prijs/m² juist voor HR++ (€94) en HR+++ (€177)?</li>
-                  <li>• Zijn de multipliers correct voor verschillende kozijntypen?</li>
-                  <li>• Klopt de montage van €100/raam, minimum €200?</li>
-                </ul>
-              </div>
-
-              <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">2. Welke variabelen ontbreken?</h3>
-                <p className="text-gray-700 text-sm mb-2">
-                  Welke factoren beïnvloeden de prijs maar zitten niet in de formule?
-                </p>
-                <ul className="text-sm text-gray-600 ml-4 space-y-1">
-                  <li>• Kleur kozijn (wit standaard, RAL kleuren duurder?)</li>
-                  <li>• Aantal ramen (volumekorting vanaf X stuks?)</li>
-                  <li>• Verdieping (hoger = duurder montage?)</li>
-                  <li>• Toegankelijkheid (steiger nodig = extra kosten?)</li>
-                </ul>
-              </div>
-
-              <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">3. Toeslagen & Kortingen</h3>
-                <p className="text-gray-700 text-sm mb-2">
-                  Welke percentages zijn realistisch?
-                </p>
-                <ul className="text-sm text-gray-600 ml-4 space-y-1">
-                  <li>• Spoed toeslag van +20% - te hoog/laag?</li>
-                  <li>• Hele woning korting -10% - correct vanaf hoeveel ramen?</li>
-                  <li>• Monument toeslag +25% - accuraat?</li>
-                </ul>
-              </div>
-
-              <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">4. Extra opties toevoegen</h3>
-                <p className="text-gray-700 text-sm mb-2">
-                  Welke opties moeten we kunnen berekenen?
-                </p>
-                <ul className="text-sm text-gray-600 ml-4 space-y-1">
-                  <li>• Zonwering (€X per m²)</li>
-                  <li>• Horren (€X per stuk)</li>
-                  <li>• Veiligheidsglas (€X extra per m²)</li>
-                  <li>• Geluidwerend glas (€X extra per m²)</li>
-                  <li>• Speciale kleuren/finishes</li>
-                </ul>
-              </div>
-
-              <div className="bg-white rounded-lg p-4">
-                <h3 className="font-semibold mb-2 text-orange-900">5. Regionale & Seizoensprijzen</h3>
-                <p className="text-gray-700 text-sm mb-2">
-                  Zijn er regionale of seizoensgebonden verschillen?
-                </p>
-                <ul className="text-sm text-gray-600 ml-4 space-y-1">
-                  <li>• Reiskosten per regio - zijn de bedragen realistisch?</li>
-                  <li>• Drukte seizoenen - prijsverschil zomer vs winter?</li>
-                  <li>• Leveringstijden per seizoen</li>
-                </ul>
+          <div className="mt-6 pt-6 border-t grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <h3 className="font-semibold mb-3 text-orange-600">Kleur (per raam)</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span>Wit/Creme:</span><strong>€0</strong></div>
+                <div className="flex justify-between"><span>Grijs/Antraciet:</span><strong>€50</strong></div>
+                <div className="flex justify-between"><span>Zwart:</span><strong>€75</strong></div>
               </div>
             </div>
-          </div>
 
-          {/* Export Button */}
-          <div className="mt-8 flex justify-center">
-            <button className="flex items-center gap-3 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors">
-              <Download className="w-5 h-5" />
-              Exporteer Data voor Analyse
-            </button>
+            <div>
+              <h3 className="font-semibold mb-3 text-teal-600">Service</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span>Montage/raam:</span><strong>€75</strong></div>
+                <div className="flex justify-between"><span>Afvoer forfait:</span><strong>€200</strong></div>
+                <div className="flex justify-between"><span>Minimum totaal:</span><strong>€1.500</strong></div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <div className="text-center p-4 bg-green-50 rounded-lg">
+                <p className="text-xs text-gray-600 mb-1">CODE LOCATIE</p>
+                <p className="text-sm font-mono text-green-700">lib/pricing/ai-calculator.ts</p>
+                <p className="text-xs text-gray-500 mt-2">Pas hier de tarieven aan</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -618,4 +606,3 @@ export default function CalculatorDataPage() {
     </div>
   )
 }
-
