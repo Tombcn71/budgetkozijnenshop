@@ -52,18 +52,18 @@ export function Header() {
           </nav> */}
 
           <div className="flex items-center gap-4 lg:gap-6">
-            <a
-              href="#mijn-offertes"
-              className="hidden sm:inline-block text-sm lg:text-base text-primary hover:text-primary/80 transition-colors font-medium"
+            <Link
+              href="/subsidie"
+              className="hidden sm:inline-block text-sm lg:text-base text-foreground hover:text-primary transition-colors font-medium"
             >
-              Mijn Offertes
-            </a>
-            <a
-              href="#help"
-              className="hidden sm:inline-block text-sm lg:text-base text-primary hover:text-primary/80 transition-colors font-medium"
+              ISDE Subsidie
+            </Link>
+            <Link
+              href="/financiering"
+              className="hidden sm:inline-block text-sm lg:text-base text-foreground hover:text-primary transition-colors font-medium"
             >
-              Help
-            </a>
+              Financiering
+            </Link>
             <Button className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-sm lg:text-base" asChild>
               <a 
                 href="" 

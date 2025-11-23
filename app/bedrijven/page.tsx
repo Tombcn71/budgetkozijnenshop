@@ -1,5 +1,7 @@
 import { Metadata } from "next"
 import Script from "next/script"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 
 export const metadata: Metadata = {
   title: "Voor Kozijnbedrijven | Budget Kozijnenshop",
@@ -9,6 +11,8 @@ export const metadata: Metadata = {
 export default function BedrijvenPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <Header />
+      
       {/* Hero Section */}
       <section className="bg-primary text-primary-foreground py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
@@ -78,6 +82,8 @@ export default function BedrijvenPage() {
         src="//embed.typeform.com/next/embed.js"
         strategy="lazyOnload"
       />
+      
+      <Footer />
     </div>
   )
 }

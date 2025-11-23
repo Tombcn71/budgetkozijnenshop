@@ -7,6 +7,7 @@ import { HowItWorks } from "@/components/how-it-works"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
 import { QuoteFormMobile } from "@/components/quote-form-mobile"
+import { FAQ } from "@/components/faq"
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <HeroAI />
       
       <HowItWorks />
+      <FAQ />
       <Footer />
     </main>
   )

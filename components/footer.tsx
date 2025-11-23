@@ -148,6 +148,21 @@ export function Footer() {
             <h3 className="font-bold mb-4">Links</h3>
             <ul className="space-y-2 text-sm lg:text-base text-primary-foreground/80">
               <li>
+                <Link href="/hoe-het-werkt" className="hover:text-primary-foreground transition-colors">
+                  Hoe het werkt
+                </Link>
+              </li>
+              <li>
+                <Link href="/subsidie" className="hover:text-primary-foreground transition-colors">
+                  ISDE Subsidie
+                </Link>
+              </li>
+              <li>
+                <Link href="/financiering" className="hover:text-primary-foreground transition-colors">
+                  Financiering
+                </Link>
+              </li>
+              <li>
                 <Link href="/bedrijven" className="hover:text-primary-foreground transition-colors">
                   Voor Kozijnbedrijven
                 </Link>
