@@ -239,7 +239,7 @@ export default function KozijnenDenHaagPage() {
         <section className="relative min-h-[500px] lg:min-h-[600px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <Image
-              src="https://images.pexels.com/photos/5691531/pexels-photo-5691531.jpeg"
+              src="/hero-kozijnen.jpg"
               alt="Vakman installeert raamkozijnen Den Haag"
               fill
               priority

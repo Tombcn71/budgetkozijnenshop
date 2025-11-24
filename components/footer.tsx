@@ -189,8 +189,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/bedrijven" className="hover:text-primary-foreground transition-colors">
-                  Voor Kozijnbedrijven
+                <Link href="/contact" className="hover:text-primary-foreground transition-colors">
+                  Contact
                 </Link>
               </li>
             </ul>

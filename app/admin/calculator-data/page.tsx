@@ -19,6 +19,7 @@ const LEGE_PRIJSMATRIX = {
   "profiel-60mm": 0,
   "profiel-70mm": 0,
   "profiel-80mm": 0,
+  "profiel-120mm": 0,
   
   // Type multipliers
   "type-draai": 1.0,
@@ -33,6 +34,9 @@ const LEGE_PRIJSMATRIX = {
   "kleur-antraciet": 0,
   "kleur-zwart": 0,
   "kleur-houtkleur": 0,
+  
+  // Binnenafwerking (toeslag per raam)
+  "binnenafwerking": 0,
   
   // Service
   "montage-per-raam": 0,
@@ -61,6 +65,7 @@ export default function CalculatorDataPage() {
     aantalRamen: 0,
     metMontage: true,
     metAfvoer: true,
+    metBinnenafwerking: false,
   })
 
   // BEREKEN TOTAALPRIJS
@@ -89,7 +94,10 @@ export default function CalculatorDataPage() {
     // Afvoer
     const afvoer = testBerekening.metAfvoer ? prijzen["afvoer-forfait"] as number : 0
     
-    const subtotaal = kozijn + kleur + montage + arbeid + afvoer
+    // Binnenafwerking
+    const binnenafwerking = testBerekening.metBinnenafwerking ? testBerekening.aantalRamen * (prijzen["binnenafwerking"] as number) : 0
+    
+    const subtotaal = kozijn + kleur + montage + arbeid + afvoer + binnenafwerking
     
     // BTW berekening
     const inclusiefBTW = prijzen["prijzen-zijn-inclusief-btw"] as boolean
@@ -119,6 +127,7 @@ export default function CalculatorDataPage() {
       montage: Math.round(montage),
       arbeid: Math.round(arbeid),
       afvoer: Math.round(afvoer),
+      binnenafwerking: Math.round(binnenafwerking),
       subtotaal: Math.round(subtotaal),
       totaalExclBTW: Math.round(totaalExclBTW),
       btwBedrag: Math.round(btwBedrag),
@@ -331,6 +340,18 @@ export default function CalculatorDataPage() {
                       />
                     </div>
                   </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">120mm (ultra premium)</span>
+                    <div className="flex items-center gap-1">
+                      <span>€</span>
+                      <input
+                        type="number"
+                        value={prijzen["profiel-120mm"]}
+                        onChange={(e) => setPrijzen({...prijzen, "profiel-120mm": parseInt(e.target.value) || 0})}
+                        className="w-20 px-2 py-1 border rounded text-sm"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -413,6 +434,28 @@ export default function CalculatorDataPage() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Binnenafwerking */}
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h2 className="text-xl font-bold mb-4 text-cyan-600">4b. Binnenafwerking (per raam)</h2>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Binnenafwerking</span>
+                    <div className="flex items-center gap-1">
+                      <span>€</span>
+                      <input
+                        type="number"
+                        value={prijzen["binnenafwerking"]}
+                        onChange={(e) => setPrijzen({...prijzen, "binnenafwerking": parseInt(e.target.value) || 0})}
+                        className="w-20 px-2 py-1 border rounded text-sm"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Optionele toeslag voor binnenafwerking per raam
+                  </p>
                 </div>
               </div>
 
@@ -583,6 +626,7 @@ export default function CalculatorDataPage() {
                     <option value="60mm">60mm</option>
                     <option value="70mm">70mm</option>
                     <option value="80mm">80mm</option>
+                    <option value="120mm">120mm</option>
                   </select>
                 </div>
 
@@ -659,6 +703,14 @@ export default function CalculatorDataPage() {
                     />
                     <span>Afvoer</span>
                   </label>
+                  <label className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={testBerekening.metBinnenafwerking}
+                      onChange={(e) => setTestBerekening({...testBerekening, metBinnenafwerking: e.target.checked})}
+                    />
+                    <span>Binnenafwerking</span>
+                  </label>
                 </div>
               </div>
 
@@ -688,16 +740,22 @@ export default function CalculatorDataPage() {
                       <span>2. Kleur ({testBerekening.aantalRamen} × €{result.kleurToeslag}):</span>
                       <span>€{result.kleur}</span>
                     </div>
+                    {testBerekening.metBinnenafwerking && (
+                      <div className="flex justify-between">
+                        <span>3. Binnenafwerking ({testBerekening.aantalRamen}×):</span>
+                        <span>€{result.binnenafwerking}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between">
-                      <span>3. Montage materiaal ({testBerekening.aantalRamen}×):</span>
+                      <span>{testBerekening.metBinnenafwerking ? '4' : '3'}. Montage materiaal ({testBerekening.aantalRamen}×):</span>
                       <span>€{result.montage}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>4. Arbeid (inmeten + {testBerekening.aantalRamen}×{result.urenPerRaam}u×€{result.uurloon}):</span>
+                      <span>{testBerekening.metBinnenafwerking ? '5' : '4'}. Arbeid (inmeten + {testBerekening.aantalRamen}×{result.urenPerRaam}u×€{result.uurloon}):</span>
                       <span>€{result.arbeid}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>5. Afvoer:</span>
+                      <span>{testBerekening.metBinnenafwerking ? '6' : '5'}. Afvoer:</span>
                       <span>€{result.afvoer}</span>
                     </div>
                   </div>

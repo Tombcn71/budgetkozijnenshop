@@ -923,35 +923,20 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
           <div className="bg-primary/10 rounded-lg p-4">
             <p className="text-foreground font-bold text-lg mb-2">💰 Laagste Prijs Garantie</p>
             <p className="text-foreground text-sm">
-              Vindt u dezelfde kozijnen elders goedkoper? Dan betalen wij het verschil terug!
+              Vindt u dezelfde kozijnen elders goedkoper? Dan gaan wij eronder!
             </p>
           </div>
 
-          <div className="flex gap-3">
-            <Button 
-              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-base"
-              onClick={(e) => {
-                e.preventDefault();
-                if (typeof window !== 'undefined' && (window as any).Calendly) {
-                  (window as any).Calendly.initPopupWidget({url: 'https://calendly.com/tbvanreijn'});
-                }
-              }}
-            >
-              📞 Gratis Adviesgesprek
-            </Button>
-          </div>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-border" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-2 text-muted-foreground">Of vul uw gegevens in</span>
-            </div>
-          </div>
 
           <div className="space-y-3 text-left">
-            <Label className="text-foreground text-sm">Uw gegevens voor offerte bevestiging:</Label>
+            <div className="mb-4">
+              <h3 className="text-foreground text-lg font-bold mb-2">
+                Ontvang deze offerte per email
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                Vul uw gegevens in en ontvang de volledige offerte direct in uw inbox. U zit nergens aan vast.
+              </p>
+            </div>
             <Input
               placeholder="Naam"
               value={formData.naam}

@@ -231,7 +231,7 @@ export default function KozijnenAmsterdamPage() {
         <section className="relative min-h-[500px] lg:min-h-[600px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <Image
-              src="https://images.pexels.com/photos/5691531/pexels-photo-5691531.jpeg"
+              src="/hero-kozijnen.jpg"
               alt="Vakman installeert raamkozijnen Amsterdam"
               fill
               priority
@@ -422,7 +422,7 @@ export default function KozijnenAmsterdamPage() {
               </p>
 
               <p className="text-gray-700 leading-relaxed mb-6">
-                Een ander aspect is de bereikbaarheid. In de binnenstad zijn veel straten smal en is parkeren beperkt. Professionele kozijnenbedrijven die in Amsterdam werken, weten hier rekening mee te houden en plannen hun werkzaamheden zodanig dat overlast voor bewoners en buren tot een minimum wordt beperkt.
+                Een ander aspect is de bereikbaarheid. In de binnenstad zijn veel straten smal en is parkeren beperkt. Professionele installateurs die in Amsterdam werken, weten hier rekening mee te houden en plannen hun werkzaamheden zodanig dat overlast voor bewoners en buren tot een minimum wordt beperkt.
               </p>
 
               <h3 className="text-2xl font-bold mt-8 mb-4">Energiebesparing en waardestijging in Amsterdam</h3>
