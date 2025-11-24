@@ -71,37 +71,37 @@ export default function CalculatorDataPage() {
   // BEREKEN TOTAALPRIJS
   const berekenTotaal = () => {
     const key = `${testBerekening.materiaal}-${testBerekening.glas}`
-    const basisPrijs = prijzen[key as keyof typeof prijzen] as number
-    const profielToeslag = prijzen[`profiel-${testBerekening.profiel}` as keyof typeof prijzen] as number
-    const typeMultiplier = prijzen[`type-${testBerekening.type}` as keyof typeof prijzen] as number
+    const basisPrijs = (prijzen[key as keyof typeof prijzen] as number) || 0
+    const profielToeslag = (prijzen[`profiel-${testBerekening.profiel}` as keyof typeof prijzen] as number) || 0
+    const typeMultiplier = (prijzen[`type-${testBerekening.type}` as keyof typeof prijzen] as number) || 0
     
     // Kozijn
     const kozijn = testBerekening.m2 * (basisPrijs + profielToeslag) * typeMultiplier
     
     // Kleur
-    const kleurToeslag = prijzen[`kleur-${testBerekening.kleur}` as keyof typeof prijzen] as number
+    const kleurToeslag = (prijzen[`kleur-${testBerekening.kleur}` as keyof typeof prijzen] as number) || 0
     const kleur = testBerekening.aantalRamen * kleurToeslag
     
     // Montage
-    const montage = testBerekening.metMontage ? testBerekening.aantalRamen * (prijzen["montage-per-raam"] as number) : 0
+    const montage = testBerekening.metMontage ? testBerekening.aantalRamen * ((prijzen["montage-per-raam"] as number) || 0) : 0
     
     // Arbeid (inmeten + plaatsen)
-    const uurloon = prijzen["arbeid-uurloon"] as number
-    const urenPerRaam = prijzen["arbeid-uren-per-raam"] as number
-    const inmeten = prijzen["arbeid-inmeten"] as number
+    const uurloon = (prijzen["arbeid-uurloon"] as number) || 0
+    const urenPerRaam = (prijzen["arbeid-uren-per-raam"] as number) || 0
+    const inmeten = (prijzen["arbeid-inmeten"] as number) || 0
     const arbeid = testBerekening.metMontage ? (inmeten + (testBerekening.aantalRamen * urenPerRaam * uurloon)) : 0
     
     // Afvoer
-    const afvoer = testBerekening.metAfvoer ? prijzen["afvoer-forfait"] as number : 0
+    const afvoer = testBerekening.metAfvoer ? ((prijzen["afvoer-forfait"] as number) || 0) : 0
     
     // Binnenafwerking
-    const binnenafwerking = testBerekening.metBinnenafwerking ? testBerekening.aantalRamen * (prijzen["binnenafwerking"] as number) : 0
+    const binnenafwerking = testBerekening.metBinnenafwerking ? testBerekening.aantalRamen * ((prijzen["binnenafwerking"] as number) || 0) : 0
     
     const subtotaal = kozijn + kleur + montage + arbeid + afvoer + binnenafwerking
     
     // BTW berekening
     const inclusiefBTW = prijzen["prijzen-zijn-inclusief-btw"] as boolean
-    const btwPercentage = prijzen["btw-percentage"] as number
+    const btwPercentage = (prijzen["btw-percentage"] as number) || 21
     
     let totaalExclBTW = subtotaal
     let btwBedrag = 0
@@ -119,7 +119,7 @@ export default function CalculatorDataPage() {
       totaalInclBTW = subtotaal + btwBedrag
     }
     
-    const totaal = Math.max(totaalInclBTW, prijzen["minimum-order"] as number)
+    const totaal = Math.max(totaalInclBTW, (prijzen["minimum-order"] as number) || 0)
     
     return {
       kozijn: Math.round(kozijn),
