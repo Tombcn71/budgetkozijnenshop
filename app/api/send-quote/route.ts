@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY)
+
 export const maxDuration = 60
 
 export async function POST(request: Request) {
   try {
-    // Initialize Resend with API key
-    const resend = new Resend(process.env.RESEND_API_KEY)
-    
     const body = await request.json()
     const {
       formData,
