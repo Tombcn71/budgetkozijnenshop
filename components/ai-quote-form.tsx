@@ -239,14 +239,8 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
       setEmailSent(true)
       console.log('✅ Offerte verzonden:', data)
 
-      // Toon succes bericht
-      setTimeout(() => {
-        alert('✅ Offerte verzonden! Check uw email en we nemen zo spoedig mogelijk contact met u op.')
-      }, 500)
-
     } catch (error: any) {
       console.error('❌ Offerte verzenden mislukt:', error)
-      alert('Er ging iets mis bij het verzenden. Probeer het opnieuw of neem contact op.')
     } finally {
       setIsSendingEmail(false)
     }
