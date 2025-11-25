@@ -266,6 +266,12 @@ export default function KozijnenDenHaagPage() {
                   Krijg direct een prijsindicatie voor uw kozijnen in Den Haag. Van Centrum tot Scheveningen. Laagste prijs garantie!
                 </p>
 
+                <div className="inline-block bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-4">
+                  <p className="text-md sm:text-lg font-semibold text-white">
+                    🏆 Laagste Prijs Garantie Kozijnen Den Haag
+                  </p>
+                </div>
+
                 <div className="hidden sm:flex flex-wrap gap-3 md:gap-4 text-sm md:text-base text-white">
                   <span>Kunststof</span>
                   <span>|</span>
