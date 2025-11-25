@@ -70,7 +70,7 @@ export function Header() {
                 onClick={(e) => {
                   e.preventDefault();
                   if (typeof window !== 'undefined' && (window as any).Calendly) {
-                    (window as any).Calendly.initPopupWidget({url: 'https://calendly.com/tbvanreijn'});
+                    (window as any).Calendly.initPopupWidget({url: 'https://calendly.com/budgetgroep/30min'});
                   }
                   return false;
                 }}

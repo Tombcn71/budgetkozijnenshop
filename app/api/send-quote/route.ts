@@ -77,7 +77,7 @@ ${afvoerIncluded ? 'Inclusief: Afvoer oude kozijnen' : ''}
 
 VOLGENDE STAPPEN
 ----------------
-Plan uw gratis adviesgesprek: https://calendly.com/tbvanreijn
+Plan uw gratis adviesgesprek: https://calendly.com/budgetgroep/30min
 
 Vragen? Bel ons of reply op deze email.
 
@@ -200,7 +200,7 @@ Goedkope kunststof kozijnen Zuid-Holland
     <div style="background-color: #fef3c7; padding: 24px; border-radius: 8px; text-align: center; margin-bottom: 20px; border: 2px solid #fde68a;">
       <p style="color: #92400e; font-size: 16px; font-weight: 600; margin: 0 0 16px 0;">Volgende stap: Plan uw gratis adviesgesprek</p>
       <div style="margin-bottom: 16px;">
-        <a href="https://calendly.com/tbvanreijn" style="display: inline-block; background-color: #f97316; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;">
+        <a href="https://calendly.com/budgetgroep/30min" style="display: inline-block; background-color: #f97316; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;">
           Plan Adviesgesprek
         </a>
       </div>
