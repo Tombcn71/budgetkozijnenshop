@@ -51,30 +51,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nl">
-      <head>
-        <link rel="preconnect" href="https://assets.calendly.com" />
-        <link rel="dns-prefetch" href="https://assets.calendly.com" />
-      </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
-        <script 
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.addEventListener('load', function() {
-                var link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = 'https://assets.calendly.com/assets/external/widget.css';
-                document.head.appendChild(link);
-                
-                var script = document.createElement('script');
-                script.src = 'https://assets.calendly.com/assets/external/widget.js';
-                script.async = true;
-                document.body.appendChild(script);
-              });
-            `
-          }}
-        />
       </body>
     </html>
   )
