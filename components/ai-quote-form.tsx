@@ -953,6 +953,18 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
             />
           </div>
 
+          {emailSent && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+              <div className="flex items-center justify-center gap-2 text-green-700 font-semibold mb-1">
+                <Check className="w-5 h-5" />
+                Offerte verzonden!
+              </div>
+              <p className="text-sm text-green-600">
+                Check uw email inbox. We nemen zo snel mogelijk contact met u op.
+              </p>
+            </div>
+          )}
+
           <Button 
             type="submit"
             onClick={handleSubmit}
