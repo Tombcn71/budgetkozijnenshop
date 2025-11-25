@@ -960,7 +960,7 @@ export function AIQuoteForm({ className = "" }: AIQuoteFormProps) {
                 Offerte verzonden!
               </div>
               <p className="text-sm text-green-600">
-                Check uw email inbox. We nemen zo snel mogelijk contact met u op.
+                U ontvangt de offerte direct in uw inbox.
               </p>
             </div>
           )}
