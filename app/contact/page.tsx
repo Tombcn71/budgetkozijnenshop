@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer"
 
 export const metadata: Metadata = {
   title: "Contact | Budget Kozijnenshop",
-  description: "Neem contact met ons op voor een vrijblijvende offerte op nieuwe kozijnen. Vul het formulier in en wij nemen zo snel mogelijk contact met u op.",
+  description: "Heeft u een vraag over kozijnen? Stuur ons een bericht via het contactformulier. Vrijblijvende offerte direct online berekenen.",
 }
 
 export default function ContactPage() {

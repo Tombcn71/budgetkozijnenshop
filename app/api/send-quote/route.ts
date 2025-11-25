@@ -178,7 +178,7 @@ Goedkope kunststof kozijnen Zuid-Holland
         </p>
         ` : `
         <p style="margin: 0; color: #92400e; font-size: 16px; font-weight: 600;">Prijsindicatie op aanvraag</p>
-        <p style="margin: 8px 0 0 0; color: #92400e; font-size: 13px;">We nemen contact op voor een definitieve offerte</p>
+        <p style="margin: 8px 0 0 0; color: #92400e; font-size: 13px;">Bekijk uw offerte in deze email</p>
         `}
       </div>
     </div>

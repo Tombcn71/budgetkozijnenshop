@@ -13,7 +13,7 @@ export function Contact() {
               Stuur ons een bericht
             </h2>
             <p className="text-base text-muted-foreground">
-              Vul het formulier in en wij nemen zo snel mogelijk contact met u op.
+              Heeft u een vraag? Stuur ons een bericht.
             </p>
           </div>
 
