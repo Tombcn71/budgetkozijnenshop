@@ -33,11 +33,11 @@ export const metadata: Metadata = {
     description: "Vindt u een goedkopere offerte? Wij betalen u het verschil terug.",
   },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
+      index: true,
+      follow: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
