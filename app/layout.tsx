@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
+import UnderConstruction from "@/components/under-construction"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -32,11 +33,11 @@ export const metadata: Metadata = {
     description: "Vindt u een goedkopere offerte? Wij betalen u het verschil terug.",
   },
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
     googleBot: {
-      index: true,
-      follow: true,
+      index: false,
+      follow: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -52,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="nl">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <Suspense fallback={null}>{children}</Suspense>
+        <UnderConstruction />
         <Analytics />
       </body>
     </html>
